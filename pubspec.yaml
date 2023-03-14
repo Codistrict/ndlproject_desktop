@@ -39,6 +39,7 @@ dependencies:
   responsive_framework: ^0.2.0
   shared_preferences: ^2.0.18
   sidebarx: ^0.14.0
+  syncfusion_flutter_datagrid: ^20.4.53
 
 dev_dependencies:
   flutter_lints: ^2.0.0
