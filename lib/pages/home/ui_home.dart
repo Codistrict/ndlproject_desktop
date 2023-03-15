@@ -37,6 +37,8 @@ class _HomePageState extends State<HomePage> {
     final deviceWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color(0xff13293D),
+        //diisi warna nek wes sesuai
         automaticallyImplyLeading: false,
         title: Container(
           width: 220,
@@ -148,7 +150,8 @@ class NavSideBarX extends StatelessWidget {
       controller: _controller,
       theme: SidebarXTheme(
         decoration: const BoxDecoration(
-          color: secondaryColor,
+          //diisi warna nek wes sesuai
+          color: Color(0xff13293D),
         ),
         padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 14),
         hoverColor: scaffoldBackgroundColor.withOpacity(0.2),
@@ -201,7 +204,7 @@ class NavSideBarX extends StatelessWidget {
         ),
         SidebarXItem(
           icon: Icons.library_books,
-          label: "Recap",
+          label: "Rekapan",
         ),
       ],
     );
@@ -221,7 +224,7 @@ class NavScreen extends StatelessWidget {
           case 0:
             return const NdlPage();
           case 1:
-            return const RecapPage();
+            return const AdminControllerRecapPage();
           case 2:
             return Container();
           default:
