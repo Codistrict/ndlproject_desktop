@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ndlproject_desktop/pages/widgets/textview.dart';
@@ -39,7 +40,9 @@ class _AdminControllerRecapPageState extends State<AdminControllerRecapPage> {
       physics: const NeverScrollableScrollPhysics(),
       children: [
         RecapPage(controllerPageRecap: _controllerPageRecap),
-        DetailRecapPage(controllerPageRecapDetail: _controllerPageRecapDetail)
+        DetailRecapPage(
+            controllerPageRecapDetail: _controllerPageRecapDetail,
+            controllerPageRecap: _controllerPageRecap)
       ],
     );
   }
@@ -368,7 +371,354 @@ class _RecapPageState extends State<RecapPage> {
                       (index) {
                         return DataRow(
                           cells: [
-                            datRow3(1, context)
+                            DataCell(
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      showDialog(
+                                        barrierDismissible: false,
+                                        useRootNavigator: true,
+                                        context: context,
+                                        builder: (context) {
+                                          return StatefulBuilder(
+                                            builder: (context, setState) {
+                                              return Dialog(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                child: ScrollConfiguration(
+                                                  behavior:
+                                                      ScrollConfiguration.of(
+                                                              context)
+                                                          .copyWith(
+                                                    dragDevices: {
+                                                      PointerDeviceKind.touch,
+                                                      PointerDeviceKind.mouse,
+                                                    },
+                                                  ),
+                                                  child: SingleChildScrollView(
+                                                    physics:
+                                                        const ClampingScrollPhysics(),
+                                                    controller:
+                                                        ScrollController(),
+                                                    child: Container(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.5,
+                                                      padding: const EdgeInsets
+                                                              .fromLTRB(
+                                                          0, 15, 0, 0),
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          const Center(
+                                                            child: Padding(
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .all(8),
+                                                              child: TextView(
+                                                                val:
+                                                                    "Update Rekap",
+                                                                color: darkText,
+                                                                size: 25,
+                                                                weight:
+                                                                    FontWeight
+                                                                        .w700,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          const Divider(
+                                                            thickness: 1,
+                                                            height: 20,
+                                                            color: darkText,
+                                                          ),
+                                                          Container(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .fromLTRB(
+                                                                      20,
+                                                                      20,
+                                                                      20,
+                                                                      15),
+                                                              child: Column(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  const TextView(
+                                                                    val:
+                                                                        "Update Status",
+                                                                    color:
+                                                                        darkText,
+                                                                    size: 16,
+                                                                    weight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                  ),
+                                                                  SizedBox(
+                                                                      height:
+                                                                          13),
+                                                                  SizedBox(
+                                                                    width: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width *
+                                                                        0.5,
+                                                                    child: DropdownSearch<
+                                                                        String>(
+                                                                      dropdownDecoratorProps: DropDownDecoratorProps(
+                                                                          textAlign: TextAlign.left,
+                                                                          dropdownSearchDecoration: InputDecoration(
+                                                                            filled:
+                                                                                true,
+                                                                            fillColor:
+                                                                                Colors.transparent,
+                                                                            iconColor:
+                                                                                darkText,
+                                                                            contentPadding:
+                                                                                const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                                                                            focusedBorder:
+                                                                                OutlineInputBorder(
+                                                                              borderRadius: BorderRadius.circular(10),
+                                                                              borderSide: BorderSide(
+                                                                                color: darkText,
+                                                                              ),
+                                                                            ),
+                                                                            enabledBorder:
+                                                                                OutlineInputBorder(
+                                                                              borderRadius: BorderRadius.circular(10),
+                                                                              borderSide: BorderSide(
+                                                                                color: darkText,
+                                                                              ),
+                                                                            ),
+                                                                            border:
+                                                                                OutlineInputBorder(
+                                                                              borderRadius: BorderRadius.circular(10),
+                                                                              borderSide: BorderSide(
+                                                                                color: darkText,
+                                                                              ),
+                                                                            ),
+                                                                          )),
+                                                                      popupProps:
+                                                                          const PopupProps
+                                                                              .menu(
+                                                                        fit: FlexFit
+                                                                            .loose,
+                                                                        showSelectedItems:
+                                                                            false,
+                                                                        menuProps:
+                                                                            MenuProps(backgroundColor: Color(0xffeee8f4)),
+                                                                      ),
+                                                                      items: const [
+                                                                        "Completed 1",
+                                                                        "Completed 2",
+                                                                        "Completed 3",
+                                                                      ],
+                                                                      onChanged:
+                                                                          (val) {
+                                                                        setState(
+                                                                            () {});
+                                                                      },
+                                                                      selectedItem:
+                                                                          "",
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(
+                                                                      height:
+                                                                          25),
+                                                                  const TextView(
+                                                                    val:
+                                                                        "Update Delivery Period",
+                                                                    color:
+                                                                        darkText,
+                                                                    size: 16,
+                                                                    weight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                  ),
+                                                                  SizedBox(
+                                                                      height:
+                                                                          13),
+                                                                  SizedBox(
+                                                                    width: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width *
+                                                                        0.5,
+                                                                    child: DropdownSearch<
+                                                                        String>(
+                                                                      dropdownDecoratorProps: DropDownDecoratorProps(
+                                                                          textAlign: TextAlign.left,
+                                                                          dropdownSearchDecoration: InputDecoration(
+                                                                            filled:
+                                                                                true,
+                                                                            fillColor:
+                                                                                Colors.transparent,
+                                                                            iconColor:
+                                                                                darkText,
+                                                                            contentPadding:
+                                                                                const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                                                                            focusedBorder:
+                                                                                OutlineInputBorder(
+                                                                              borderRadius: BorderRadius.circular(10),
+                                                                              borderSide: BorderSide(
+                                                                                color: darkText,
+                                                                              ),
+                                                                            ),
+                                                                            enabledBorder:
+                                                                                OutlineInputBorder(
+                                                                              borderRadius: BorderRadius.circular(10),
+                                                                              borderSide: BorderSide(
+                                                                                color: darkText,
+                                                                              ),
+                                                                            ),
+                                                                            border:
+                                                                                OutlineInputBorder(
+                                                                              borderRadius: BorderRadius.circular(10),
+                                                                              borderSide: BorderSide(
+                                                                                color: darkText,
+                                                                              ),
+                                                                            ),
+                                                                          )),
+                                                                      popupProps:
+                                                                          const PopupProps
+                                                                              .menu(
+                                                                        fit: FlexFit
+                                                                            .loose,
+                                                                        showSelectedItems:
+                                                                            false,
+                                                                        menuProps:
+                                                                            MenuProps(backgroundColor: Color(0xffeee8f4)),
+                                                                      ),
+                                                                      items: const [
+                                                                        "Completed 1",
+                                                                        "Completed 2",
+                                                                        "Completed 3",
+                                                                      ],
+                                                                      onChanged:
+                                                                          (val) {
+                                                                        setState(
+                                                                            () {});
+                                                                      },
+                                                                      selectedItem:
+                                                                          "",
+                                                                    ),
+                                                                  ),
+                                                                  const SizedBox(
+                                                                    height: 40,
+                                                                  ),
+                                                                  Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .center,
+                                                                    children: [
+                                                                      ElevatedButton(
+                                                                        style: TextButton
+                                                                            .styleFrom(
+                                                                          padding: const EdgeInsets.symmetric(
+                                                                              horizontal: 55,
+                                                                              vertical: 22),
+                                                                          primary:
+                                                                              Colors.white,
+                                                                          backgroundColor:
+                                                                              navButtonThird,
+                                                                          shape:
+                                                                              RoundedRectangleBorder(
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(5),
+                                                                          ),
+                                                                        ),
+                                                                        onPressed:
+                                                                            () {
+                                                                          Navigator.pop(
+                                                                              context);
+                                                                        },
+                                                                        child:
+                                                                            const TextView(
+                                                                          val:
+                                                                              "Submit",
+                                                                          color:
+                                                                              lightText,
+                                                                          size:
+                                                                              15,
+                                                                          weight:
+                                                                              FontWeight.w600,
+                                                                        ),
+                                                                      ),
+                                                                      const SizedBox(
+                                                                          width:
+                                                                              20),
+                                                                      ElevatedButton(
+                                                                        onPressed:
+                                                                            () {
+                                                                          Navigator.pop(
+                                                                              context);
+                                                                        },
+                                                                        style: ElevatedButton.styleFrom(
+                                                                            padding: const EdgeInsets.symmetric(horizontal: 55, vertical: 22),
+                                                                            shape: RoundedRectangleBorder(
+                                                                              borderRadius: BorderRadius.circular(5),
+                                                                            ),
+                                                                            side: const BorderSide(
+                                                                                width: 2, // the thickness
+                                                                                color: ColorThird // the color of the border
+                                                                                )),
+                                                                        child:
+                                                                            const TextView(
+                                                                          val:
+                                                                              "Batal",
+                                                                          color:
+                                                                              ColorThird,
+                                                                          size:
+                                                                              15,
+                                                                          weight:
+                                                                              FontWeight.w600,
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ],
+                                                              )),
+                                                          const SizedBox(
+                                                            height: 30,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
+                                      );
+                                    },
+                                    child: Container(
+                                      width: 40,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: darkText,
+                                            width: 0.4,
+                                            style: BorderStyle.solid),
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      height: 40,
+                                      child: const Center(
+                                          child: Icon(
+                                        Icons.edit,
+                                        size: 20,
+                                      )),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                             //datRow3(2, context)
                           ],
                         );
@@ -409,7 +759,11 @@ class _RecapPageState extends State<RecapPage> {
 
 class DetailRecapPage extends StatefulWidget {
   final PageController controllerPageRecapDetail;
-  const DetailRecapPage({required this.controllerPageRecapDetail, super.key});
+  final PageController controllerPageRecap;
+  const DetailRecapPage(
+      {required this.controllerPageRecapDetail,
+      required this.controllerPageRecap,
+      super.key});
 
   @override
   State<DetailRecapPage> createState() => _DetailRecapPageState();
@@ -697,18 +1051,18 @@ class _DetailRecapPageState extends State<DetailRecapPage> {
                                       columnSpacing: 30,
                                       columns: [
                                         datColBoldSamping2("Total"),
-                                        datColBoldSamping("24.000"),
-                                        datColBoldSamping("326"),
-                                        datColBoldSamping("59.000"),
+                                        datColBoldSamping3("24.000"),
+                                        datColBoldSamping3("326"),
+                                        datColBoldSamping3("59.000"),
                                       ],
                                       rows: [
                                         DataRow(
                                           cells: [
                                             datRowBold1Samping(
                                                 "OUTSTANDING", 0, context),
-                                            datRowBold1("8.820", 0, context),
-                                            datRowBold1("125", 0, context),
-                                            datRowBold1("1.000", 0, context),
+                                            datRowBold4("8.820", 0, context),
+                                            datRowBold4("125", 0, context),
+                                            datRowBold4("1.000", 0, context),
                                           ],
                                         ),
                                       ],
@@ -733,6 +1087,9 @@ class _DetailRecapPageState extends State<DetailRecapPage> {
                       // widget.controllerPageRecapDetail.animateToPage(0,
                       //         duration: const Duration(milliseconds: 250),
                       //         curve: Curves.ease);
+                      widget.controllerPageRecap.animateToPage(0,
+                          duration: const Duration(milliseconds: 250),
+                          curve: Curves.ease);
                     },
                     style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(
