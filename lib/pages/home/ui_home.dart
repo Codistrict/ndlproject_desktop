@@ -222,7 +222,7 @@ class NavScreen extends StatelessWidget {
       builder: (context, child) {
         switch (controller.selectedIndex) {
           case 0:
-            return const AdminControllerNdlPage();
+            return const NdlPage();
           case 1:
             return const AdminControllerRecapPage();
           case 2:
