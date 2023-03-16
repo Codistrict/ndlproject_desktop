@@ -1,9 +1,11 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:ndlproject_desktop/pages/widgets/textview.dart';
 import 'package:ndlproject_desktop/themes/colors.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
+import 'package:number_paginator/number_paginator.dart';
 
 class NdlPage extends StatefulWidget {
   const NdlPage({super.key});
@@ -13,10 +15,50 @@ class NdlPage extends StatefulWidget {
 }
 
 class _NdlPageState extends State<NdlPage> {
+  int numberOfPage = 100;
+  int currentPage = 0;
+
+  DateTime _selectedDate = DateTime.now();
+  String _formattedDate = "";
+  String _date = "Date";
 
   @override
   void initState() {
     super.initState();
+  }
+
+  Future<void> selectFilterDate(context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime(DateTime.now().year - 10, 1, 1),
+      lastDate: DateTime(DateTime.now().year + 10, 12, 31),
+      builder: (context, child) {
+        return Theme(
+            data: Theme.of(context).copyWith(
+              colorScheme: const ColorScheme.light(
+                primary: Color(0xff13293D), // header background color
+                onPrimary: lightText, // header text color
+                onSurface: darkText, // body text color
+              ),
+              textButtonTheme: TextButtonThemeData(
+                style: TextButton.styleFrom(
+                  foregroundColor: Color(0xff13293D), // button text color
+                ),
+              ),
+            ),
+            child: child!);
+      },
+    );
+    if (picked != null && picked != _selectedDate) {
+      if (mounted) {
+        _selectedDate = picked;
+        _formattedDate = DateFormat('dd-MM-yyyy').format(_selectedDate);
+        _date = _formattedDate;
+
+        setState(() {});
+      }
+    }
   }
 
   _showFilter(dw, dh) {
@@ -77,21 +119,33 @@ class _NdlPageState extends State<NdlPage> {
                                 SizedBox(height: 13),
                                 SizedBox(
                                   width: dw * 0.5,
-                                  child: Expanded(
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: darkText,
+                                          width: 1,
+                                          style: BorderStyle.solid),
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(9),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          TextView(
+                                            val: _date,
                                             color: darkText,
-                                            width: 1,
-                                            style: BorderStyle.solid),
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      child: const Align(
-                                        alignment: Alignment.centerRight,
-                                        child: Padding(
-                                          padding: EdgeInsets.all(9),
-                                          child: Icon(Icons.calendar_month),
-                                        ),
+                                            size: 15,
+                                            weight: FontWeight.w600,
+                                          ),
+                                          GestureDetector(
+                                              onTap: () {
+                                                selectFilterDate(context);
+                                              },
+                                              child:
+                                                  Icon(Icons.calendar_month)),
+                                        ],
                                       ),
                                     ),
                                   ),
@@ -292,7 +346,7 @@ class _NdlPageState extends State<NdlPage> {
                               //datCol("Aksi"),
                             ],
                             rows: List.generate(
-                              1,
+                              50,
                               (index) {
                                 return DataRow(
                                   cells: [
@@ -365,27 +419,54 @@ class _NdlPageState extends State<NdlPage> {
                           ),
                         )),
                         DataTable(
-                            border: TableBorder(top: BorderSide(color: Colors.black.withOpacity(0.5)), bottom: BorderSide(color: Colors.black.withOpacity(0.5)), horizontalInside: BorderSide(color: Colors.black.withOpacity(0.5), style: BorderStyle.solid)),
-                            headingRowHeight: 50,
-                            dataRowHeight: 50,
-                            columns: [
-                              datCol("Aksi"),
-                            ],
-                            rows: List.generate(
-                              1,
-                              (index) {
-                                return DataRow(
-                                  cells: [
-                                    datRow3(2, context)
-                                    //datRow3(2, context)
-                                  ],
-                                );
-                              },
-                            ),
+                          border: TableBorder(
+                              top: BorderSide(
+                                  color: Colors.black.withOpacity(0.5)),
+                              bottom: BorderSide(
+                                  color: Colors.black.withOpacity(0.5)),
+                              horizontalInside: BorderSide(
+                                  color: Colors.black.withOpacity(0.5),
+                                  style: BorderStyle.solid)),
+                          headingRowHeight: 50,
+                          dataRowHeight: 50,
+                          columns: [
+                            datCol("Aksi"),
+                          ],
+                          rows: List.generate(
+                            50,
+                            (index) {
+                              return DataRow(
+                                cells: [
+                                  datRow3(2, context)
+                                  //datRow3(2, context)
+                                ],
+                              );
+                            },
                           ),
+                        ),
                       ],
                     ),
                   ),
+                  Container(
+                    width: deviceWidth / 2,
+                    child: Padding(
+                      padding: EdgeInsets.all(30),
+                      child: NumberPaginator(
+                        initialPage: 0,
+                        config: const NumberPaginatorUIConfig(
+                          buttonSelectedForegroundColor: lightText,
+                          buttonUnselectedForegroundColor: darkText,
+                          buttonSelectedBackgroundColor: Color(0xff13293D),
+                        ),
+                        numberPages: numberOfPage,
+                        onPageChange: (index) {
+                          setState(() {
+                            currentPage = index;
+                          });
+                        },
+                      ),
+                    ),
+                  )
                 ],
               ),
             )

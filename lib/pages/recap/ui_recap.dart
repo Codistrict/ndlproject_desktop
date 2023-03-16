@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ndlproject_desktop/pages/widgets/textview.dart';
 import 'package:ndlproject_desktop/themes/colors.dart';
+import 'package:number_paginator/number_paginator.dart';
 
 class AdminControllerRecapPage extends StatefulWidget {
   const AdminControllerRecapPage({Key? key}) : super(key: key);
@@ -53,13 +54,187 @@ class RecapPage extends StatefulWidget {
 }
 
 class _RecapPageState extends State<RecapPage> {
+  int numberOfPage = 100;
+  int currentPage = 0;
+
   @override
   void initState() {
     super.initState();
   }
 
+  _showEdit(dw, dh) {
+    showDialog(
+      barrierDismissible: false,
+      useRootNavigator: true,
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return Dialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: ScrollConfiguration(
+                behavior: ScrollConfiguration.of(context).copyWith(
+                  dragDevices: {
+                    PointerDeviceKind.touch,
+                    PointerDeviceKind.mouse,
+                  },
+                ),
+                child: SingleChildScrollView(
+                  physics: const ClampingScrollPhysics(),
+                  controller: ScrollController(),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(8),
+                            child: TextView(
+                              val: "Update Rekap",
+                              color: darkText,
+                              size: 25,
+                              weight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                        const Divider(
+                          thickness: 1,
+                          height: 20,
+                          color: darkText,
+                        ),
+                        Container(
+                            padding: const EdgeInsets.fromLTRB(20, 20, 20, 15),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const TextView(
+                                  val: "Update Status",
+                                  color: darkText,
+                                  size: 16,
+                                  weight: FontWeight.w600,
+                                ),
+                                SizedBox(height: 13),
+                                SizedBox(
+                                  width: dw * 0.5,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: darkText,
+                                          width: 1,
+                                          style: BorderStyle.solid),
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(9),
+                                      child: Row(),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 25),
+                                const TextView(
+                                  val: "Update Delivery Period",
+                                  color: darkText,
+                                  size: 16,
+                                  weight: FontWeight.w600,
+                                ),
+                                SizedBox(height: 13),
+                                SizedBox(
+                                  width: dw * 0.5,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: darkText,
+                                          width: 1,
+                                          style: BorderStyle.solid),
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(9),
+                                      child: Row(),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 40,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ElevatedButton(
+                                      style: TextButton.styleFrom(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 55, vertical: 22),
+                                        primary: Colors.white,
+                                        backgroundColor: navButtonThird,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const TextView(
+                                        val: "Submit",
+                                        color: lightText,
+                                        size: 15,
+                                        weight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 20),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 55, vertical: 22),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          side: const BorderSide(
+                                              width: 2, // the thickness
+                                              color:
+                                                  ColorThird // the color of the border
+                                              )),
+                                      child: const TextView(
+                                        val: "Batal",
+                                        color: ColorThird,
+                                        size: 15,
+                                        weight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            )),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
+    ).whenComplete(() {
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final deviceWidth = MediaQuery.of(context).size.width;
+    final deviceHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
         body: ScrollConfiguration(
       behavior: ScrollConfiguration.of(context).copyWith(
@@ -121,7 +296,7 @@ class _RecapPageState extends State<RecapPage> {
                         rows: [
                           DataRow(
                             cells: [
-                              datRow1("02-Jan-23", 1, context),
+                              datRowrRecap("02-Jan-23"),
                               // DataCell(
                               //   TextField(
                               //     autofocus: false,
@@ -139,33 +314,33 @@ class _RecapPageState extends State<RecapPage> {
                               //     onChanged: (text) {},
                               //   ),
                               // ),
-                              datRow1("001", 1, context),
-                              datRow1("Reyner", 1, context),
-                              datRow1("Ikan Salmon Laut 7g", 1, context),
-                              datRow1("66.000", 1, context),
-                              datRow1("15.180", 1, context),
-                              datRow1("BBK", 1, context),
-                              datRow1("BBK", 1, context),
-                              datRow1("Completed", 1, context),
-                              datRow1("100", 1, context),
-                              datRow1("9000", 1, context),
-                              datRow1("8500", 1, context),
-                              datRow1("6300", 1, context),
-                              datRow1("6450", 1, context),
-                              datRow1("24000", 1, context),
-                              datRow1("3100", 1, context),
-                              datRow1("2364", 1, context),
-                              datRow1("2164", 1, context),
-                              datRow1("6640", 1, context),
-                              datRow1("6200", 1, context),
-                              datRow1("6000", 1, context),
-                              datRow1("700", 1, context),
-                              datRow1("500", 1, context),
-                              datRow1("5000", 1, context),
-                              datRow1("2000", 1, context),
-                              datRow1("1000", 1, context),
-                              datRow1("6000", 1, context),
-                              datRow1("", 1, context),
+                              datRowrRecap("001"),
+                              datRowrRecap("Reyner"),
+                              datRowrRecap("Ikan Salmon Laut 7g"),
+                              datRowrRecap("66.000"),
+                              datRowrRecap("15.180"),
+                              datRowrRecap("BBK"),
+                              datRowrRecap("BBK"),
+                              datRowrRecap("Completed"),
+                              datRowrRecap("100"),
+                              datRowrRecap("9000"),
+                              datRowrRecap("8500"),
+                              datRowrRecap("6300"),
+                              datRowrRecap("6450"),
+                              datRowrRecap("24000"),
+                              datRowrRecap("3100"),
+                              datRowrRecap("2364"),
+                              datRowrRecap("2164"),
+                              datRowrRecap("6640"),
+                              datRowrRecap("6200"),
+                              datRowrRecap("6000"),
+                              datRowrRecap("700"),
+                              datRowrRecap("500"),
+                              datRowrRecap("5000"),
+                              datRowrRecap("2000"),
+                              datRowrRecap("1000"),
+                              datRowrRecap("6000"),
+                              datRowrRecap(""),
                             ],
                             onLongPress: () {
                               widget.controllerPageRecap.animateToPage(1,
@@ -201,6 +376,28 @@ class _RecapPageState extends State<RecapPage> {
                     ),
                   ),
                 ],
+              ),
+            ),
+            Center(
+              child: Container(
+                width: deviceWidth / 2,
+                child: Padding(
+                  padding: EdgeInsets.all(30),
+                  child: NumberPaginator(
+                    initialPage: 0,
+                    config: const NumberPaginatorUIConfig(
+                      buttonSelectedForegroundColor: lightText,
+                      buttonUnselectedForegroundColor: darkText,
+                      buttonSelectedBackgroundColor: Color(0xff13293D),
+                    ),
+                    numberPages: numberOfPage,
+                    onPageChange: (index) {
+                      setState(() {
+                        currentPage = index;
+                      });
+                    },
+                  ),
+                ),
               ),
             )
           ],
@@ -371,7 +568,7 @@ class _DetailRecapPageState extends State<DetailRecapPage> {
                 height: 30,
               ),
               SizedBox(
-                height: 800,
+                height: deviceHeight,
                 child: ListView.builder(
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
@@ -380,117 +577,208 @@ class _DetailRecapPageState extends State<DetailRecapPage> {
                   itemCount: 8,
                   itemBuilder: (context, index) {
                     return Padding(
-                      padding: const EdgeInsets.only(right: 15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Tabel 1",
-                                  style: GoogleFonts.inter(
-                                      fontSize: 20,
-                                      color: darkText,
-                                      fontWeight: FontWeight.w800),
-                                ),
-                                SizedBox(height: 10),
-                                Container(
-                                  padding: EdgeInsets.all(15),
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
+                      padding: const EdgeInsets.only(right: 25),
+                      child: SingleChildScrollView(
+                        physics: const ClampingScrollPhysics(),
+                        controller: ScrollController(),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Tabel 1",
+                                    style: GoogleFonts.inter(
+                                        fontSize: 20,
+                                        color: darkText,
+                                        fontWeight: FontWeight.w800),
+                                  ),
+                                  SizedBox(height: 15),
+                                  SingleChildScrollView(
+                                    physics: const ClampingScrollPhysics(),
+                                    controller: ScrollController(),
+                                    scrollDirection: Axis.horizontal,
+                                    child: DataTable(
+                                      border: TableBorder.all(
+                                        color: Colors.black.withOpacity(0.5),
+                                        style: BorderStyle.solid,
+                                      ),
+                                      headingRowHeight: 30,
+                                      dataRowHeight: 30,
+                                      columnSpacing: 30,
+                                      columns: [
+                                        datColBold2("NY"),
+                                        datColBold2("mtr"),
+                                        datColBold2("kg"),
+                                        datColBold2("price/kg"),
+                                        //datCol("Aksi"),
+                                      ],
+                                      rows: [
+                                        DataRow(
+                                          cells: [
+                                            datRowBold3("(W)760", 0, context),
+                                            datRowBold3("15.180", 0, context),
+                                            datRowBold3("201", 0, context),
+                                            datRowBold3("60.000", 0, context),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 25,
+                                  ),
+                                  SingleChildScrollView(
+                                    physics: const ClampingScrollPhysics(),
+                                    controller: ScrollController(),
+                                    scrollDirection: Axis.horizontal,
+                                    child: DataTable(
+                                      border: TableBorder.all(
+                                        color: Colors.black.withOpacity(0.5),
+                                        style: BorderStyle.solid,
+                                      ),
+                                      columnSpacing: 30,
+                                      headingRowHeight: 30,
+                                      dataRowHeight: 30,
+                                      columns: [
+                                        datColBold("PO Supplier"),
+                                        datColBold("mtr"),
+                                        datColBold("kg"),
+                                        datColBold("price/kg"),
+                                        //datCol("Aksi"),
+                                      ],
+                                      rows: List.generate(
+                                        20,
+                                        (index) {
+                                          return DataRow(
+                                            cells: [
+                                              datRowBold2("(W)760",
+                                                  "05/09/2022", context),
+                                              datRowBold1("24.000", 0, context),
+                                              datRowBold1("326", 0, context),
+                                              datRowBold1("59.000", 0, context),
+                                            ],
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  SingleChildScrollView(
+                                    physics: const ClampingScrollPhysics(),
+                                    controller: ScrollController(),
+                                    scrollDirection: Axis.horizontal,
+                                    child: DataTable(
+                                      border: TableBorder(
+                                        bottom: BorderSide(
                                           color: Colors.black.withOpacity(0.5),
                                           style: BorderStyle.solid,
-                                          width: 1)),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      SingleChildScrollView(
-                                        physics: const ClampingScrollPhysics(),
-                                        controller: ScrollController(),
-                                        scrollDirection: Axis.horizontal,
-                                        child: DataTable(
-                                          border: TableBorder.all(
-                                            color:
-                                                Colors.black.withOpacity(0.5),
-                                            style: BorderStyle.solid,
-                                          ),
-                                          headingRowHeight: 30,
-                                          dataRowHeight: 30,
-                                          columns: [
-                                            datCol("NY"),
-                                            datCol("mtr"),
-                                            datCol("kg"),
-                                            datCol("pice/kg"),
-                                            //datCol("Aksi"),
-                                          ],
-                                          rows: List.generate(
-                                            1,
-                                            (index) {
-                                              return DataRow(
-                                                cells: [
-                                                  datRow1(
-                                                      "w (760)", 1, context),
-                                                  datRow1("15.180", 1, context),
-                                                  datRow1("201", 1, context),
-                                                  datRow1("60.000", 1, context),
-                                                  //datRow3(2, context)
-                                                ],
-                                              );
-                                            },
-                                          ),
+                                        ),
+                                        left: BorderSide(
+                                          color: Colors.black.withOpacity(0.5),
+                                          style: BorderStyle.solid,
+                                        ),
+                                        right: BorderSide(
+                                          color: Colors.black.withOpacity(0.5),
+                                          style: BorderStyle.solid,
+                                        ),
+                                        verticalInside: BorderSide(
+                                          color: Colors.black.withOpacity(0.5),
+                                          style: BorderStyle.solid,
+                                        ),
+                                        horizontalInside: BorderSide(
+                                          color: Colors.black.withOpacity(0.5),
+                                          style: BorderStyle.solid,
                                         ),
                                       ),
-                                      SizedBox(height: 20),
-                                      SingleChildScrollView(
-                                        physics: const ClampingScrollPhysics(),
-                                        controller: ScrollController(),
-                                        scrollDirection: Axis.horizontal,
-                                        child: DataTable(
-                                          border: TableBorder.all(
-                                            color:
-                                                Colors.black.withOpacity(0.5),
-                                            style: BorderStyle.solid,
-                                          ),
-                                          headingRowHeight: 30,
-                                          dataRowHeight: 30,
-                                          columns: [
-                                            datCol("PO Supplier"),
-                                            datCol("mtr"),
-                                            datCol("kg"),
-                                            datCol("pice/kg"),
-                                            //datCol("Aksi"),
+                                      headingRowHeight: 30,
+                                      dataRowHeight: 30,
+                                      columnSpacing: 30,
+                                      columns: [
+                                        datColBoldSamping2("Total"),
+                                        datColBoldSamping("24.000"),
+                                        datColBoldSamping("326"),
+                                        datColBoldSamping("59.000"),
+                                      ],
+                                      rows: [
+                                        DataRow(
+                                          cells: [
+                                            datRowBold1Samping(
+                                                "OUTSTANDING", 0, context),
+                                            datRowBold1("8.820", 0, context),
+                                            datRowBold1("125", 0, context),
+                                            datRowBold1("1.000", 0, context),
                                           ],
-                                          rows: List.generate(
-                                            1,
-                                            (index) {
-                                              return DataRow(
-                                                cells: [
-                                                  datRow1(
-                                                      "w (760)", 1, context),
-                                                  datRow1("15.180", 1, context),
-                                                  datRow1("201", 1, context),
-                                                  datRow1("60.000", 1, context),
-                                                  //datRow3(2, context)
-                                                ],
-                                              );
-                                            },
-                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     );
                   },
                 ),
+              ),
+              SizedBox(height: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      // widget.controllerPageRecapDetail.animateToPage(0,
+                      //         duration: const Duration(milliseconds: 250),
+                      //         curve: Curves.ease);
+                    },
+                    style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 55, vertical: 22),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        side: const BorderSide(
+                            width: 2, // the thickness
+                            color: ColorThird // the color of the border
+                            )),
+                    child: Row(
+                      children: const [
+                        Icon(Icons.arrow_back_outlined, color: ColorThird),
+                        SizedBox(width: 5),
+                        TextView(
+                          val: "Back",
+                          color: ColorThird,
+                          size: 15,
+                          weight: FontWeight.w600,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 20),
+                  ElevatedButton(
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 55, vertical: 22),
+                      primary: Colors.white,
+                      backgroundColor: navButtonThird,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const TextView(
+                      val: "Insert Data",
+                      color: lightText,
+                      size: 15,
+                      weight: FontWeight.w600,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
