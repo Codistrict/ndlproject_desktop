@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:ndlproject_desktop/pages/widgets/textview.dart';
 import 'package:ndlproject_desktop/themes/colors.dart';
 import 'package:number_paginator/number_paginator.dart';
@@ -770,9 +771,292 @@ class DetailRecapPage extends StatefulWidget {
 }
 
 class _DetailRecapPageState extends State<DetailRecapPage> {
+  DateTime _selectedDateInsert = DateTime.now();
+  String _formattedDateInsert = "";
+  String _dateInsert = "";
+
+  Future<void> selectFilterDateInsert(context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDateInsert,
+      firstDate: DateTime(DateTime.now().year - 10, 1, 1),
+      lastDate: DateTime(DateTime.now().year + 10, 12, 31),
+      builder: (context, child) {
+        return Theme(
+            data: Theme.of(context).copyWith(
+              colorScheme: ColorScheme.light(
+                primary: Color(0xff13293D),
+                onPrimary: lightText,
+                onSurface: darkText,
+              ),
+              textButtonTheme: TextButtonThemeData(
+                style: TextButton.styleFrom(
+                  foregroundColor: Color(0xff13293D), // button text color
+                ),
+              ),
+            ),
+            child: child!);
+      },
+    );
+    if (picked != null && picked != _selectedDateInsert) {
+      if (mounted) {
+        _selectedDateInsert = picked;
+        _formattedDateInsert =
+            DateFormat('dd-MM-yyyy').format(_selectedDateInsert);
+        _dateInsert = _formattedDateInsert;
+
+        setState(() {});
+      }
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+  }
+
+  _showInsertData(context) {
+    showDialog(
+      barrierDismissible: false,
+      useRootNavigator: true,
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return Dialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: ScrollConfiguration(
+                behavior: ScrollConfiguration.of(context).copyWith(
+                  dragDevices: {
+                    PointerDeviceKind.touch,
+                    PointerDeviceKind.mouse,
+                  },
+                ),
+                child: SingleChildScrollView(
+                  physics: const ClampingScrollPhysics(),
+                  controller: ScrollController(),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(8),
+                            child: TextView(
+                              val: "Insert Data",
+                              color: darkText,
+                              size: 25,
+                              weight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                        const Divider(
+                          thickness: 1,
+                          height: 20,
+                          color: darkText,
+                        ),
+                        Container(
+                            padding: EdgeInsets.fromLTRB(20, 20, 20, 15),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const TextView(
+                                            val: "Nama PO Supplier",
+                                            size: 15,
+                                            color: darkText,
+                                            weight: FontWeight.w500,
+                                          ),
+                                          SizedBox(height: 5),
+                                          TextFieldYa(),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const TextView(
+                                            val: "Tanggal PO Supplier",
+                                            size: 15,
+                                            color: darkText,
+                                            weight: FontWeight.w500,
+                                          ),
+                                          SizedBox(height: 5),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: darkText,
+                                                  width: 1,
+                                                  style: BorderStyle.solid),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                            child: Padding(
+                                              padding: EdgeInsets.all(9),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  TextView(
+                                                    val: _dateInsert,
+                                                    color: darkText,
+                                                    size: 13,
+                                                    weight: FontWeight.w500,
+                                                  ),
+                                                  GestureDetector(
+                                                      onTap: () {
+                                                        selectFilterDateInsert(
+                                                                context)
+                                                            .whenComplete(() =>
+                                                                setState(
+                                                                    () {}));
+                                                      },
+                                                      child: const Icon(Icons
+                                                          .calendar_month)),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 10,),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const TextView(
+                                            val: "Masukkan Mtr",
+                                            size: 15,
+                                            color: darkText,
+                                            weight: FontWeight.w500,
+                                          ),
+                                          SizedBox(height: 5),
+                                          TextFieldYa(),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const TextView(
+                                            val: "Masukkan Kg",
+                                            size: 15,
+                                            color: darkText,
+                                            weight: FontWeight.w500,
+                                          ),
+                                          SizedBox(height: 5),
+                                          TextFieldYa(),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const TextView(
+                                            val: "Masukkan Price/Kg",
+                                            size: 15,
+                                            color: darkText,
+                                            weight: FontWeight.w500,
+                                          ),
+                                          SizedBox(height: 5),
+                                          TextFieldYa(),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 40),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ElevatedButton(
+                                      style: TextButton.styleFrom(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 55, vertical: 22),
+                                        primary: Colors.white,
+                                        backgroundColor: navButtonThird,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const TextView(
+                                        val: "Submit",
+                                        color: lightText,
+                                        size: 15,
+                                        weight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 20),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 55, vertical: 22),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          side: const BorderSide(
+                                              width: 2, // the thickness
+                                              color:
+                                                  ColorThird // the color of the border
+                                              )),
+                                      child: const TextView(
+                                        val: "Batal",
+                                        color: ColorThird,
+                                        size: 15,
+                                        weight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            )),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 
   @override
@@ -1126,7 +1410,8 @@ class _DetailRecapPageState extends State<DetailRecapPage> {
                       ),
                     ),
                     onPressed: () {
-                      Navigator.pop(context);
+                      _showInsertData(context);
+                      //Navigator.pop(context);
                     },
                     child: const TextView(
                       val: "Insert Data",
