@@ -151,7 +151,7 @@ class NavSideBarX extends StatelessWidget {
       theme: SidebarXTheme(
         decoration: const BoxDecoration(
           //diisi warna nek wes sesuai
-          color: secondaryColor,
+          color: Color(0xff13293D),
         ),
         padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 14),
         hoverColor: scaffoldBackgroundColor.withOpacity(0.2),
