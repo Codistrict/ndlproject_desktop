@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 const Color primaryColor = Color(0xfffafafa);
 const Color primaryColorVariant = Color(0xfffafafa);
-const Color ColorThird = Color(0xff787878);
+const Color colorThird = Color(0xff787878);
 
 const Color secondaryColor = Color(0xff13293D);
-const Color secondaryColorVariant = Color(0xff212121);
+const Color secondaryColorVariant = Color(0xff13293D);
 
 const Color navButtonPrimary = Color(0xfffafafa);
 const Color navButtonSecondary = Color(0xff212121);

@@ -1,14 +1,18 @@
+// ignore_for_file: todo
 import 'dart:ui';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:ndlproject_desktop/pages/ndl/service_ndl.dart';
 import 'package:ndlproject_desktop/pages/widgets/textview.dart';
 import 'package:ndlproject_desktop/themes/colors.dart';
-import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:number_paginator/number_paginator.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+
+ServicesNDL _servicesNDL = ServicesNDL();
 
 class AdminControllerNdlPage extends StatefulWidget {
   const AdminControllerNdlPage({Key? key}) : super(key: key);
@@ -64,9 +68,12 @@ class _NdlPageState extends State<NdlPage> {
   String _formattedDate = "";
   String _date = "Date";
 
+  late Future ndlList;
+
   @override
   void initState() {
     super.initState();
+    ndlList = _servicesNDL.readNDL(1);
   }
 
   Future<void> selectFilterDate(context) async {
@@ -85,7 +92,7 @@ class _NdlPageState extends State<NdlPage> {
               ),
               textButtonTheme: TextButtonThemeData(
                 style: TextButton.styleFrom(
-                  foregroundColor: Color(0xff13293D), // button text color
+                  foregroundColor: const Color(0xff13293D), // button text color
                 ),
               ),
             ),
@@ -148,105 +155,105 @@ class _NdlPageState extends State<NdlPage> {
                           color: darkText,
                         ),
                         Container(
-                            padding: const EdgeInsets.fromLTRB(20, 20, 20, 15),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const TextView(
-                                  val: "Masukkan Tanggal",
-                                  color: darkText,
-                                  size: 16,
-                                  weight: FontWeight.w600,
-                                ),
-                                SizedBox(height: 13),
-                                SizedBox(
-                                  width: dw * 0.5,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
+                          padding: const EdgeInsets.fromLTRB(20, 20, 20, 15),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const TextView(
+                                val: "Masukkan Tanggal",
+                                color: darkText,
+                                size: 16,
+                                weight: FontWeight.w600,
+                              ),
+                              const SizedBox(height: 13),
+                              SizedBox(
+                                width: dw * 0.5,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: darkText,
+                                        width: 1,
+                                        style: BorderStyle.solid),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(9),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        TextView(
+                                          val: _date,
                                           color: darkText,
-                                          width: 1,
-                                          style: BorderStyle.solid),
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.all(9),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          TextView(
-                                            val: _date,
-                                            color: darkText,
-                                            size: 15,
-                                            weight: FontWeight.w600,
-                                          ),
-                                          GestureDetector(
-                                              onTap: () {
-                                                selectFilterDate(context);
-                                              },
-                                              child:
-                                                  Icon(Icons.calendar_month)),
-                                        ],
-                                      ),
+                                          size: 15,
+                                          weight: FontWeight.w600,
+                                        ),
+                                        GestureDetector(
+                                            onTap: () {
+                                              selectFilterDate(context);
+                                            },
+                                            child: const Icon(
+                                                Icons.calendar_month)),
+                                      ],
                                     ),
                                   ),
                                 ),
-                                const SizedBox(
-                                  height: 40,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    ElevatedButton(
-                                      style: TextButton.styleFrom(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 55, vertical: 22),
-                                        primary: Colors.white,
-                                        backgroundColor: navButtonThird,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: const TextView(
-                                        val: "Submit",
-                                        color: lightText,
-                                        size: 15,
-                                        weight: FontWeight.w600,
+                              ),
+                              const SizedBox(
+                                height: 40,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ElevatedButton(
+                                    style: TextButton.styleFrom(
+                                      foregroundColor: Colors.white,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 55, vertical: 22),
+                                      backgroundColor: navButtonThird,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5),
                                       ),
                                     ),
-                                    const SizedBox(width: 20),
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 55, vertical: 22),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const TextView(
+                                      val: "Submit",
+                                      color: lightText,
+                                      size: 15,
+                                      weight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 20),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 55, vertical: 22),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      side: const BorderSide(
+                                          width: 2, // the thickness
+                                          color:
+                                              colorThird // the color of the border
                                           ),
-                                          side: const BorderSide(
-                                              width: 2, // the thickness
-                                              color:
-                                                  ColorThird // the color of the border
-                                              )),
-                                      child: const TextView(
-                                        val: "Batal",
-                                        color: ColorThird,
-                                        size: 15,
-                                        weight: FontWeight.w600,
-                                      ),
                                     ),
-                                  ],
-                                ),
-                              ],
-                            )),
+                                    child: const TextView(
+                                      val: "Batal",
+                                      color: colorThird,
+                                      size: 15,
+                                      weight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
                         const SizedBox(
                           height: 30,
                         ),
@@ -307,418 +314,692 @@ class _NdlPageState extends State<NdlPage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                              child: SingleChildScrollView(
-                            physics: const ClampingScrollPhysics(),
-                            controller: ScrollController(),
-                            scrollDirection: Axis.horizontal,
-                            child: DataTable(
-                              border: TableBorder.all(
-                                color: Colors.black.withOpacity(0.5),
-                                style: BorderStyle.solid,
-                              ),
-                              headingRowHeight: 50,
-                              dataRowHeight: 50,
-                              columns: [
-                                datCol("Tambahkan Data Tgl"),
-                                datCol("Customer Delivery Date"),
-                                datCol("Job Done"),
-                                datCol("Durasi"),
-                                datCol("Analyzer Version"),
-                                datCol("Order Status (New/Repeat)"),
-                                datCol("Cylinder Status"),
-                                datCol("Gol"),
-                                datCol("WS No"),
-                                datCol("Customer"),
-                                datCol("Item Nama"),
-                                datCol("Model"),
-                                datCol("Up"),
-                                datCol("Repeat"),
-                                datCol("Toleransi"),
-                                datCol("Order"),
-                                datCol("W/S Order (m)"),
-                                datCol("Width"),
-                                datCol("Length"),
-                                datCol("Gusset"),
-                                datCol("prod.size"),
-                                datCol("W"),
-                                datCol("C"),
-                                datCol("Color"),
-                                datCol("1st Layer"),
-                                datCol("Width1"),
-                                datCol("RM"),
-                                datCol("Diff"),
-                                datCol("2nd Layer"),
-                                datCol("Width1"),
-                                datCol("RM"),
-                                datCol("Diff"),
-                                datCol("3nd Layer"),
-                                datCol("Width1"),
-                                datCol("RM"),
-                                datCol("Diff"),
-                                datCol("4nd Layer"),
-                                datCol("Width1"),
-                                datCol("RM"),
-                                datCol("Diff"),
-                                datCol("5nd Layer"),
-                                datCol("Width1"),
-                                datCol("RM"),
-                                datCol("Diff"),
-                                datCol("6nd Layer"),
-                                datCol("Width1"),
-                                datCol("RM"),
-                                datCol("Diff"),
-                                datCol("1st Layer"),
-                                datCol("Ink"),
-                                datCol("adh1"),
-                                datCol("2nd Layer"),
-                                datCol("adh2"),
-                                datCol("3nd Layer"),
-                                datCol("adh3"),
-                                datCol("4nd Layer"),
-                                datCol("adh4"),
-                                datCol("5nd Layer"),
-                                datCol("adh5"),
-                                datCol("6nd Layer"),
-                                datCol("Total"),
-                                //datCol("Aksi"),
-                              ],
-                              rows: List.generate(
-                                2,
-                                (index) {
-                                  return DataRow(
-                                    cells: [
-                                      datRow1("02-Jan-23", 2, context),
-                                      datRow1("17-Jan-23", 2, context),
-                                      datRow1("16-Jan-23", 2, context),
-                                      datRow1("14", 2, context),
-                                      datRow1("V.161", 2, context),
-                                      datRow1("Repeat", 2, context),
-                                      datRow1("Tidak Ada", 2, context),
-                                      datRow1("S", 2, context),
-                                      datRow1("0001", 2, context),
-                                      datRow1("Reyner", 2, context),
-                                      datRow1(
-                                          "Ikan Laut sALMON 70g", 2, context),
-                                      datRow1("3SS + Sealed", 2, context),
-                                      datRow1("1", 2, context),
-                                      datRow1("", 2, context),
-                                      datRow1("0", 2, context),
-                                      datRow2("66.000", "60.000", context),
-                                      datRow1("15.180", 2, context),
-                                      datRow1("0.370", 2, context),
-                                      datRow1("0.280", 2, context),
-                                      datRow1("0.070", 2, context),
-                                      datRow1("0.740", 2, context),
-                                      datRow1("", 2, context),
-                                      datRow1("", 2, context),
-                                      datRow1("8", 2, context),
-                                      datRow4(
-                                          "PET", "15", "u", "1.16", context),
-                                      datRow1("0.760", 2, context),
-                                      datRow1("", 2, context),
-                                      datRow1("-0.760", 2, context),
-                                      datRow4(
-                                          "PE1", "80", "u", "0.92", context),
-                                      datRow1("0.760", 2, context),
-                                      datRow1("", 2, context),
-                                      datRow1("-0.760", 2, context),
-                                      datRow4("", "", "u", "", context),
-                                      datRow1("0.760", 2, context),
-                                      datRow1("", 2, context),
-                                      datRow1("-0.760", 2, context),
-                                      datRow4("", "", "u", "", context),
-                                      datRow1("0.760", 2, context),
-                                      datRow1("", 2, context),
-                                      datRow1("-0.760", 2, context),
-                                      datRow4("", "", "u", "", context),
-                                      datRow1("0.760", 2, context),
-                                      datRow1("", 2, context),
-                                      datRow1("-0.760", 2, context),
-                                      datRow4("", "", "u", "", context),
-                                      datRow1("0.760", 2, context),
-                                      datRow1("", 2, context),
-                                      datRow1("-0.760", 2, context),
-                                      datRow1("200.074", 2, context),
-                                      datRow1("46.16", 2, context),
-                                      datRow1("46.16", 2, context),
-                                      datRow1("849.11", 2, context),
-                                      datRow1("-", 2, context),
-                                      datRow1("-", 2, context),
-                                      datRow1("-", 2, context),
-                                      datRow1("849.11", 2, context),
-                                      datRow1("-", 2, context),
-                                      datRow1("849.11", 2, context),
-                                      datRow1("-", 2, context),
-                                      datRow1("-", 2, context),
-                                      datRow1("-", 2, context),
-                                      //datRow3(2, context)
-                                    ],
-                                  );
-                                },
-                              ),
-                            ),
-                          )),
-                          DataTable(
-                            border: TableBorder(
-                                top: BorderSide(
-                                    color: Colors.black.withOpacity(0.5)),
-                                bottom: BorderSide(
-                                    color: Colors.black.withOpacity(0.5)),
-                                horizontalInside: BorderSide(
-                                    color: Colors.black.withOpacity(0.5),
-                                    style: BorderStyle.solid)),
-                            headingRowHeight: 50,
-                            dataRowHeight: 50,
-                            columns: [
-                              datCol("Aksi"),
-                            ],
-                            rows: List.generate(
-                              2,
-                              (index) {
-                                return DataRow(
-                                  cells: [
-                                    DataCell(
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          GestureDetector(
-                                            onTap: () {
-                                              widget.controllerPageNdl
-                                                  .animateToPage(1,
-                                                      duration: const Duration(
-                                                          milliseconds: 250),
-                                                      curve: Curves.ease);
-                                            },
-                                            child: Container(
-                                              width: 40,
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: darkText,
-                                                    width: 0.4,
-                                                    style: BorderStyle.solid),
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                              ),
-                                              height: 40,
-                                              child: const Center(
-                                                  child: Icon(
-                                                Icons.edit,
-                                                size: 20,
-                                              )),
-                                            ),
-                                          ),
-                                          SizedBox(width: 5),
-                                          GestureDetector(
-                                            onTap: () {
-                                              showDialog(
-                                                barrierDismissible: false,
-                                                useRootNavigator: true,
-                                                context: context,
-                                                builder: (context) {
-                                                  return StatefulBuilder(
-                                                    builder:
-                                                        (context, setState) {
-                                                      return Dialog(
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(10),
-                                                        ),
-                                                        child:
-                                                            ScrollConfiguration(
-                                                          behavior:
-                                                              ScrollConfiguration
-                                                                      .of(context)
-                                                                  .copyWith(
-                                                            dragDevices: {
-                                                              PointerDeviceKind
-                                                                  .touch,
-                                                              PointerDeviceKind
-                                                                  .mouse,
-                                                            },
-                                                          ),
-                                                          child:
-                                                              SingleChildScrollView(
-                                                            physics:
-                                                                const ClampingScrollPhysics(),
-                                                            controller:
-                                                                ScrollController(),
-                                                            child: Container(
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width *
-                                                                  0.5,
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .fromLTRB(
-                                                                      0,
-                                                                      25,
-                                                                      0,
-                                                                      25),
-                                                              child: Column(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  const Center(
-                                                                    child: Icon(
-                                                                      Icons
-                                                                          .warning,
-                                                                      size: 100,
-                                                                    ),
-                                                                  ),
-                                                                  SizedBox(
-                                                                      height:
-                                                                          25),
-                                                                  const Center(
-                                                                    child:
-                                                                        TextView(
-                                                                      val:
-                                                                          "Apakah Anda Yakin Ingin Mendelete Row Ini?",
-                                                                      color:
-                                                                          darkText,
-                                                                      size: 18,
-                                                                      weight: FontWeight
-                                                                          .w700,
-                                                                    ),
-                                                                  ),
-                                                                  const SizedBox(
-                                                                    height: 40,
-                                                                  ),
-                                                                  Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
-                                                                    children: [
-                                                                      ElevatedButton(
-                                                                        style: TextButton
-                                                                            .styleFrom(
-                                                                          padding: const EdgeInsets.symmetric(
-                                                                              horizontal: 55,
-                                                                              vertical: 22),
-                                                                          primary:
-                                                                              Colors.white,
-                                                                          backgroundColor:
-                                                                              navButtonThird,
-                                                                          shape:
-                                                                              RoundedRectangleBorder(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(5),
-                                                                          ),
-                                                                        ),
-                                                                        onPressed:
-                                                                            () {
-                                                                          Navigator.pop(
-                                                                              context);
-                                                                        },
-                                                                        child:
-                                                                            const TextView(
-                                                                          val:
-                                                                              "Ya, Delete Row Ini",
-                                                                          color:
-                                                                              lightText,
-                                                                          size:
-                                                                              15,
-                                                                          weight:
-                                                                              FontWeight.w600,
-                                                                        ),
-                                                                      ),
-                                                                      const SizedBox(
-                                                                          width:
-                                                                              20),
-                                                                      ElevatedButton(
-                                                                        onPressed:
-                                                                            () {
-                                                                          Navigator.pop(
-                                                                              context);
-                                                                        },
-                                                                        style: ElevatedButton.styleFrom(
-                                                                            padding: const EdgeInsets.symmetric(horizontal: 55, vertical: 22),
-                                                                            shape: RoundedRectangleBorder(
-                                                                              borderRadius: BorderRadius.circular(5),
-                                                                            ),
-                                                                            side: const BorderSide(
-                                                                                width: 2, // the thickness
-                                                                                color: ColorThird // the color of the border
-                                                                                )),
-                                                                        child:
-                                                                            const TextView(
-                                                                          val:
-                                                                              "Ya, Delete Row Ini",
-                                                                          color:
-                                                                              ColorThird,
-                                                                          size:
-                                                                              15,
-                                                                          weight:
-                                                                              FontWeight.w600,
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      );
-                                                    },
-                                                  );
-                                                },
-                                              );
-                                            },
-                                            child: Container(
-                                              width: 40,
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: darkText,
-                                                    width: 0.4,
-                                                    style: BorderStyle.solid),
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                              ),
-                                              height: 40,
-                                              child: const Center(
-                                                  child: Icon(
-                                                Icons.delete,
-                                                size: 20,
-                                              )),
-                                            ),
-                                          ),
+                      child: FutureBuilder(
+                        future: ndlList,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            List snapData = snapshot.data! as List;
+                            if (snapData[0] != 404) {
+                              return Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    child: SingleChildScrollView(
+                                      physics: const ClampingScrollPhysics(),
+                                      controller: ScrollController(),
+                                      scrollDirection: Axis.horizontal,
+                                      child: DataTable(
+                                        border: TableBorder.all(
+                                          color: Colors.black.withOpacity(0.5),
+                                          style: BorderStyle.solid,
+                                        ),
+                                        headingRowHeight: 50,
+                                        dataRowHeight: 50,
+                                        columns: [
+                                          datCol("Tambahkan Data Tgl"),
+                                          datCol("Customer Delivery Date"),
+                                          datCol("Job Done"),
+                                          datCol("Durasi"),
+                                          datCol("Analyzer Version"),
+                                          datCol("Order Status (New/Repeat)"),
+                                          datCol("Cylinder Status"),
+                                          datCol("Gol"),
+                                          datCol("WS No"),
+                                          datCol("Customer"),
+                                          datCol("Item Nama"),
+                                          datCol("Model"),
+                                          datCol("Up"),
+                                          datCol("Repeat"),
+                                          datCol("Toleransi"),
+                                          datCol("Order"),
+                                          datCol("W/S Order (m)"),
+                                          datCol("Width"),
+                                          datCol("Length"),
+                                          datCol("Gusset"),
+                                          datCol("prod.size"),
+                                          datCol("W"),
+                                          datCol("C"),
+                                          datCol("Color"),
+                                          datCol("1st Layer"),
+                                          datCol("Width1"),
+                                          datCol("RM"),
+                                          datCol("Diff"),
+                                          datCol("2nd Layer"),
+                                          datCol("Width1"),
+                                          datCol("RM"),
+                                          datCol("Diff"),
+                                          datCol("3nd Layer"),
+                                          datCol("Width1"),
+                                          datCol("RM"),
+                                          datCol("Diff"),
+                                          datCol("4nd Layer"),
+                                          datCol("Width1"),
+                                          datCol("RM"),
+                                          datCol("Diff"),
+                                          datCol("5nd Layer"),
+                                          datCol("Width1"),
+                                          datCol("RM"),
+                                          datCol("Diff"),
+                                          datCol("6nd Layer"),
+                                          datCol("Width1"),
+                                          datCol("RM"),
+                                          datCol("Diff"),
+                                          datCol("1st Layer"),
+                                          datCol("Ink"),
+                                          datCol("adh1"),
+                                          datCol("2nd Layer"),
+                                          datCol("adh2"),
+                                          datCol("3nd Layer"),
+                                          datCol("adh3"),
+                                          datCol("4nd Layer"),
+                                          datCol("adh4"),
+                                          datCol("5nd Layer"),
+                                          datCol("adh5"),
+                                          datCol("6nd Layer"),
+                                          datCol("Total"),
+                                          //datCol("Aksi"),
                                         ],
+                                        rows: List.generate(
+                                          snapData[2].length,
+                                          (index) {
+                                            return DataRow(
+                                              cells: [
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['tambah_data_tanggal'],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index][
+                                                        'customer_delivery_date'],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['job_done'],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['durasi'],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['analyzer_version'],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['order_status'],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['cylider_status'],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]['gol'],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]['ws_no'],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]['cust'],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['item_name'],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]['model'],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]['up'],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['repeat_ndl'],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['toleransi'],
+                                                    2,
+                                                    context),
+                                                datRow2(
+                                                    snapData[2][index]
+                                                        ['order_ndl'][0],
+                                                    snapData[2][index]
+                                                        ['order_ndl'][1],
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['w_s_order'],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]['width'],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['lenght'],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['gusset'],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['prod_size'],
+                                                    2,
+                                                    context),
+                                                datRow1(snapData[2][index]['w'],
+                                                    2, context),
+                                                datRow1(snapData[2][index]['c'],
+                                                    2, context),
+                                                datRow1(
+                                                    snapData[2][index]['color'],
+                                                    2,
+                                                    context),
+                                                // Layer 1
+                                                datRow4(
+                                                    snapData[2][index]
+                                                        ['layer_datail1'][0],
+                                                    snapData[2][index]
+                                                        ['layer_datail2'][0],
+                                                    snapData[2][index]
+                                                        ['layer_datail3'][0],
+                                                    snapData[2][index]
+                                                        ['layer_datai4'][0],
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['width_layer'][0],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['rm_layer'][0],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['diff_layer'][0],
+                                                    2,
+                                                    context),
+
+                                                // Layer 2
+                                                datRow4(
+                                                    snapData[2][index]
+                                                        ['layer_datail1'][1],
+                                                    snapData[2][index]
+                                                        ['layer_datail2'][1],
+                                                    snapData[2][index]
+                                                        ['layer_datail3'][1],
+                                                    snapData[2][index]
+                                                        ['layer_datai4'][1],
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['width_layer'][1],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['rm_layer'][1],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['diff_layer'][1],
+                                                    2,
+                                                    context),
+
+                                                // Layer 3
+                                                datRow4(
+                                                    snapData[2][index]
+                                                        ['layer_datail1'][2],
+                                                    snapData[2][index]
+                                                        ['layer_datail2'][2],
+                                                    snapData[2][index]
+                                                        ['layer_datail3'][2],
+                                                    snapData[2][index]
+                                                        ['layer_datai4'][2],
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['width_layer'][2],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['rm_layer'][2],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['diff_layer'][2],
+                                                    2,
+                                                    context),
+
+                                                // Layer 4
+                                                datRow4(
+                                                    snapData[2][index]
+                                                        ['layer_datail1'][3],
+                                                    snapData[2][index]
+                                                        ['layer_datail2'][3],
+                                                    snapData[2][index]
+                                                        ['layer_datail3'][3],
+                                                    snapData[2][index]
+                                                        ['layer_datai4'][3],
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['width_layer'][3],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['rm_layer'][3],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['diff_layer'][3],
+                                                    2,
+                                                    context),
+                                                // Layer 5
+                                                datRow4(
+                                                    snapData[2][index]
+                                                        ['layer_datail1'][4],
+                                                    snapData[2][index]
+                                                        ['layer_datail2'][4],
+                                                    snapData[2][index]
+                                                        ['layer_datail3'][4],
+                                                    snapData[2][index]
+                                                        ['layer_datai4'][4],
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['width_layer'][4],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['rm_layer'][4],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['diff_layer'][4],
+                                                    2,
+                                                    context),
+                                                // Layer 6
+                                                datRow4(
+                                                    snapData[2][index]
+                                                        ['layer_datail1'][5],
+                                                    snapData[2][index]
+                                                        ['layer_datail2'][5],
+                                                    snapData[2][index]
+                                                        ['layer_datail3'][5],
+                                                    snapData[2][index]
+                                                        ['layer_datai4'][5],
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['width_layer'][5],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['rm_layer'][5],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['diff_layer'][5],
+                                                    2,
+                                                    context),
+
+                                                // After Layer
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['lyr_layer'][0],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['ink_layer'],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['adh_layer'][0],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['lyr_layer'][1],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['adh_layer'][1],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['lyr_layer'][2],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['adh_layer'][2],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['lyr_layer'][3],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['adh_layer'][3],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['lyr_layer'][4],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['adh_layer'][4],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['lyr_layer'][5],
+                                                    2,
+                                                    context),
+                                                datRow1(
+                                                    snapData[2][index]
+                                                        ['total_layer'],
+                                                    2,
+                                                    context),
+                                                //datRow3(2, context)
+                                              ],
+                                            );
+                                          },
+                                        ),
                                       ),
                                     ),
-                                    //datRow3(2, context)
-                                  ],
-                                );
-                              },
-                            ),
-                          ),
-                        ],
+                                  ),
+                                  DataTable(
+                                    border: TableBorder(
+                                        top: BorderSide(
+                                            color:
+                                                Colors.black.withOpacity(0.5)),
+                                        bottom: BorderSide(
+                                            color:
+                                                Colors.black.withOpacity(0.5)),
+                                        horizontalInside: BorderSide(
+                                            color:
+                                                Colors.black.withOpacity(0.5),
+                                            style: BorderStyle.solid)),
+                                    headingRowHeight: 50,
+                                    dataRowHeight: 50,
+                                    columns: [
+                                      datCol("Aksi"),
+                                    ],
+                                    rows: List.generate(
+                                      snapData[2].length,
+                                      (index) {
+                                        return DataRow(
+                                          cells: [
+                                            DataCell(
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      widget.controllerPageNdl
+                                                          .animateToPage(1,
+                                                              duration:
+                                                                  const Duration(
+                                                                      milliseconds:
+                                                                          250),
+                                                              curve:
+                                                                  Curves.ease);
+                                                    },
+                                                    child: Container(
+                                                      width: 40,
+                                                      decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                            color: darkText,
+                                                            width: 0.4,
+                                                            style: BorderStyle
+                                                                .solid),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5),
+                                                      ),
+                                                      height: 40,
+                                                      child: const Center(
+                                                        child: Icon(
+                                                          Icons.edit,
+                                                          size: 20,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 5),
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      showDialog(
+                                                        barrierDismissible:
+                                                            false,
+                                                        useRootNavigator: true,
+                                                        context: context,
+                                                        builder: (context) {
+                                                          return StatefulBuilder(
+                                                            builder: (context,
+                                                                setState) {
+                                                              return Dialog(
+                                                                shape:
+                                                                    RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10),
+                                                                ),
+                                                                child:
+                                                                    ScrollConfiguration(
+                                                                  behavior: ScrollConfiguration.of(
+                                                                          context)
+                                                                      .copyWith(
+                                                                    dragDevices: {
+                                                                      PointerDeviceKind
+                                                                          .touch,
+                                                                      PointerDeviceKind
+                                                                          .mouse,
+                                                                    },
+                                                                  ),
+                                                                  child:
+                                                                      SingleChildScrollView(
+                                                                    physics:
+                                                                        const ClampingScrollPhysics(),
+                                                                    controller:
+                                                                        ScrollController(),
+                                                                    child:
+                                                                        Container(
+                                                                      width: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width *
+                                                                          0.5,
+                                                                      padding:
+                                                                          const EdgeInsets.fromLTRB(
+                                                                              0,
+                                                                              25,
+                                                                              0,
+                                                                              25),
+                                                                      child:
+                                                                          Column(
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.start,
+                                                                        children: [
+                                                                          const Center(
+                                                                            child:
+                                                                                Icon(
+                                                                              Icons.warning,
+                                                                              size: 100,
+                                                                            ),
+                                                                          ),
+                                                                          const SizedBox(
+                                                                              height: 25),
+                                                                          const Center(
+                                                                            child:
+                                                                                TextView(
+                                                                              val: "Apakah Anda Yakin Ingin Mendelete Row Ini?",
+                                                                              color: darkText,
+                                                                              size: 18,
+                                                                              weight: FontWeight.w700,
+                                                                            ),
+                                                                          ),
+                                                                          const SizedBox(
+                                                                            height:
+                                                                                40,
+                                                                          ),
+                                                                          Row(
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.center,
+                                                                            children: [
+                                                                              ElevatedButton(
+                                                                                style: TextButton.styleFrom(
+                                                                                  foregroundColor: Colors.white,
+                                                                                  padding: const EdgeInsets.symmetric(horizontal: 55, vertical: 22),
+                                                                                  backgroundColor: navButtonThird,
+                                                                                  shape: RoundedRectangleBorder(
+                                                                                    borderRadius: BorderRadius.circular(5),
+                                                                                  ),
+                                                                                ),
+                                                                                onPressed: () {
+                                                                                  Navigator.pop(context);
+                                                                                },
+                                                                                child: const TextView(
+                                                                                  val: "Ya, Delete Row Ini",
+                                                                                  color: lightText,
+                                                                                  size: 15,
+                                                                                  weight: FontWeight.w600,
+                                                                                ),
+                                                                              ),
+                                                                              const SizedBox(width: 20),
+                                                                              ElevatedButton(
+                                                                                onPressed: () {
+                                                                                  Navigator.pop(context);
+                                                                                },
+                                                                                style: ElevatedButton.styleFrom(
+                                                                                    padding: const EdgeInsets.symmetric(horizontal: 55, vertical: 22),
+                                                                                    shape: RoundedRectangleBorder(
+                                                                                      borderRadius: BorderRadius.circular(5),
+                                                                                    ),
+                                                                                    side: const BorderSide(
+                                                                                        width: 2, // the thickness
+                                                                                        color: colorThird // the color of the border
+                                                                                        )),
+                                                                                child: const TextView(
+                                                                                  val: "Ya, Delete Row Ini",
+                                                                                  color: colorThird,
+                                                                                  size: 15,
+                                                                                  weight: FontWeight.w600,
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                          );
+                                                        },
+                                                      );
+                                                    },
+                                                    child: Container(
+                                                      width: 40,
+                                                      decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                            color: darkText,
+                                                            width: 0.4,
+                                                            style: BorderStyle
+                                                                .solid),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5),
+                                                      ),
+                                                      height: 40,
+                                                      child: const Center(
+                                                        child: Icon(
+                                                          Icons.delete,
+                                                          size: 20,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            //datRow3(2, context)
+                                          ],
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              );
+                            } else if (snapData[0] == 404) {
+                              return Container();
+                            }
+                          }
+                          return Container();
+                        },
                       ),
                     ),
                     Container(
+                      padding: const EdgeInsets.all(0),
                       width: deviceWidth / 2,
                       child: Padding(
-                        padding: EdgeInsets.all(30),
+                        padding: const EdgeInsets.all(30),
                         child: NumberPaginator(
                           initialPage: 0,
                           config: const NumberPaginatorUIConfig(
                             buttonSelectedForegroundColor: lightText,
                             buttonUnselectedForegroundColor: darkText,
-                            buttonSelectedBackgroundColor: Color(0xff13293D),
+                            buttonSelectedBackgroundColor: secondaryColor,
                           ),
                           numberPages: numberOfPage,
                           onPageChange: (index) {
                             setState(() {
                               currentPage = index;
+                              ndlList = _servicesNDL.readNDL(currentPage+1);
+                              debugPrint(currentPage.toString());
                             });
                           },
                         ),
@@ -731,11 +1012,11 @@ class _NdlPageState extends State<NdlPage> {
           ),
         ),
       ),
-      floatingActionButton: customFAB(),
+      floatingActionButton: customFAB(context),
     );
   }
 
-  customFAB() {
+  customFAB(context) {
     return SpeedDial(
       animatedIcon: AnimatedIcons.menu_close,
       animatedIconTheme: const IconThemeData(size: 22, color: primaryColor),
@@ -765,7 +1046,27 @@ class _NdlPageState extends State<NdlPage> {
               color: primaryColor,
             ),
             backgroundColor: secondaryColor,
-            onTap: () {},
+            onTap: () async {
+              FilePickerResult? result = await FilePicker.platform.pickFiles();
+              String file;
+              if (result != null) {
+                file = result.files.single.path.toString();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ConfirmNDL(
+                      file: file,
+                    ),
+                  ),
+                );
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: TextView(val: "Gagal Mengambil File"),
+                  ),
+                );
+              }
+            },
             label: 'Upload',
             labelStyle: GoogleFonts.inter(
               fontSize: 16,
@@ -787,12 +1088,110 @@ class EditNdlPage extends StatefulWidget {
 }
 
 class _EditNdlPageState extends State<EditNdlPage> {
+  DateTime _selectedDate1 = DateTime.now();
+  String _formattedDate1 = "";
+  String _date1 = "";
+
+  DateTime _selectedDate2 = DateTime.now();
+  String _formattedDate2 = "";
+  String _date2 = "";
+
+  Future<void> selectFilterDate1(context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate1,
+      firstDate: DateTime(DateTime.now().year - 10, 1, 1),
+      lastDate: DateTime(DateTime.now().year + 10, 12, 31),
+      builder: (context, child) {
+        return Theme(
+            data: Theme.of(context).copyWith(
+              colorScheme: ColorScheme.light(
+                primary: Color(0xff13293D),
+                onPrimary: lightText,
+                onSurface: darkText,
+              ),
+              textButtonTheme: TextButtonThemeData(
+                style: TextButton.styleFrom(
+                  foregroundColor: Color(0xff13293D), // button text color
+                ),
+              ),
+            ),
+            child: child!);
+      },
+    );
+    if (picked != null && picked != _selectedDate1) {
+      if (mounted) {
+        _selectedDate1 = picked;
+        _formattedDate1 = DateFormat('dd-MM-yyyy').format(_selectedDate1);
+        _date1 = _formattedDate1;
+
+        setState(() {});
+      }
+    }
+  }
+
+  Future<void> selectFilterDate2(context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate2,
+      firstDate: DateTime(DateTime.now().year - 10, 1, 1),
+      lastDate: DateTime(DateTime.now().year + 10, 12, 31),
+      builder: (context, child) {
+        return Theme(
+            data: Theme.of(context).copyWith(
+              colorScheme: ColorScheme.light(
+                primary: Color(0xff13293D),
+                onPrimary: lightText,
+                onSurface: darkText,
+              ),
+              textButtonTheme: TextButtonThemeData(
+                style: TextButton.styleFrom(
+                  foregroundColor: Color(0xff13293D), // button text color
+                ),
+              ),
+            ),
+            child: child!);
+      },
+    );
+    if (picked != null && picked != _selectedDate2) {
+      if (mounted) {
+        _selectedDate2 = picked;
+        _formattedDate2 = DateFormat('dd-MM-yyyy').format(_selectedDate2);
+        _date2 = _formattedDate2;
+
+        setState(() {});
+      }
+    }
+  }
+
   final _controllerNamaBarangTambahPenjualan = TextEditingController();
   final List<String> _namaStockArray = [
-    "Tambahkan Data Tgl",
+    "Tambahkan Data Tanggal",
     "Customer Delivery Date",
     "Job Done",
-    "Durasi"
+    "Analyzer Version",
+    "Order Status",
+    "Cylinder Status",
+    "Gol",
+    "Nama Customer",
+    "Nama Item",
+    "Model",
+    "Up",
+    "Repeat",
+    "Toleransi",
+    "Order Masuk",
+    "Width",
+    "Length",
+    "Gusset",
+    "W",
+    "C",
+    "Color",
+    "Layer 1",
+    "Layer 2",
+    "Layer 3",
+    "Layer 4",
+    "Layer 5",
+    "Layer 6"
   ];
 
   int indexTambah = 1;
@@ -837,277 +1236,1739 @@ class _EditNdlPageState extends State<EditNdlPage> {
                   size: 18,
                   weight: FontWeight.w700,
                 ),
-                SizedBox(height: 35),
-                ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    controller: ScrollController(),
-                    physics: const ClampingScrollPhysics(),
-                    itemCount: indexTambah,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Expanded(
-                                flex: 5,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const TextView(
-                                      val: "Pilih Kolom Yang Ingin Di Edit",
-                                      color: darkText,
-                                      size: 15,
-                                      weight: FontWeight.w600,
-                                    ),
-                                    SizedBox(height: 10),
-                                    SizedBox(
-                                      width: deviceWidth / 2,
-                                      child: TypeAheadField<String>(
-                                        textFieldConfiguration:
-                                            TextFieldConfiguration(
-                                          controller:
-                                              _controllerNamaBarangTambahPenjualan,
-                                          autofocus: false,
-                                          style: GoogleFonts.inter(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 13,
-                                          ),
-                                          decoration: InputDecoration(
-                                            filled: true,
-                                            fillColor: lightText,
-                                            hintText: 'Pilih Nama Barang',
-                                            hintStyle: GoogleFonts.inter(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 13,
-                                            ),
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    vertical: 0,
-                                                    horizontal: 10),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              borderSide: const BorderSide(
-                                                color: darkText,
-                                              ),
-                                            ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              borderSide: const BorderSide(
-                                                color: darkText,
-                                              ),
-                                            ),
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              borderSide: const BorderSide(
-                                                color: darkText,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        suggestionsCallback: (pattern) async {
-                                          return await searchData(pattern);
-                                        },
-                                        itemBuilder: (context, suggestion) {
-                                          return ListTile(
-                                            title: Text(suggestion),
-                                          );
-                                        },
-                                        onSuggestionSelected:
-                                            (String suggestion) {
-                                          _controllerNamaBarangTambahPenjualan
-                                              .text = suggestion;
-                                          print(suggestion);
-                                        },
-                                        getImmediateSuggestions: true,
-                                        hideSuggestionsOnKeyboardHide: false,
-                                        hideOnEmpty: false,
-                                        noItemsFoundBuilder: (context) =>
-                                            const Padding(
-                                          padding: EdgeInsets.all(8),
-                                          child: Text("Tidak ada model"),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(width: 20),
-                              Expanded(
-                                flex: 5,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const TextView(
-                                      val: "Model",
-                                      color: darkText,
-                                      size: 15,
-                                      weight: FontWeight.w600,
-                                    ),
-                                    SizedBox(height: 10),
-                                    SizedBox(
-                                      width: deviceWidth / 2,
-                                      child: TextField(
-                                        readOnly: false,
-                                        // controller:
-                                        //     _controllerJumlahBarangTambahPenjualan,
-                                        showCursor: false,
-                                        keyboardType: TextInputType.number,
-                                        style: GoogleFonts.inter(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 13,
-                                        ),
-                                        onChanged: (value) {},
-                                        decoration: InputDecoration(
-                                          filled: true,
-                                          fillColor: lightText,
-                                          hintStyle: GoogleFonts.inter(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 13,
-                                          ),
-                                          contentPadding:
-                                              const EdgeInsets.symmetric(
-                                                  vertical: 0, horizontal: 10),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            borderSide: const BorderSide(
-                                              color: darkText,
-                                            ),
-                                          ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            borderSide: const BorderSide(
-                                              color: darkText,
-                                            ),
-                                          ),
-                                          border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            borderSide: const BorderSide(
-                                              color: darkText,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(width: 15),
-                              Row(
-                                children: [
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        backgroundColor: Color(0xff13293D),
-                                        shape: const CircleBorder(),
-                                        padding: EdgeInsets.all(20)),
-                                    onPressed: () {
-                                      setState(() {
-                                        indexTambah = indexTambah + 1;
-                                      });
-                                    },
-                                    child: const Icon(
-                                      Icons.add,
-                                      color: lightText,
-                                      size: 30,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 5),
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        backgroundColor: Color(0xff13293D),
-                                        shape: const CircleBorder(),
-                                        padding: EdgeInsets.all(20)),
-                                    onPressed: () {
-                                      if (indexTambah > 1) {
-                                        setState(() {
-                                          indexTambah = indexTambah - 1;
-                                        });
-                                      }
-                                    },
-                                    child: const Icon(
-                                      Icons.remove,
-                                      color: lightText,
-                                      size: 30,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20,
-                          )
-                        ],
-                      );
-                    }),
                 SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.only(right: 155),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          widget.controllerPageNdlEdit.animateToPage(0,
-                              duration: const Duration(milliseconds: 250),
-                              curve: Curves.ease);
-                        },
-                        style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 55, vertical: 22),
-                            shape: RoundedRectangleBorder(
+                const TextView(
+                  val: "Pilih Kolom Yang Ingin Di Edit",
+                  color: darkText,
+                  size: 15,
+                  weight: FontWeight.w600,
+                ),
+                SizedBox(height: 5),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TypeAheadField<String>(
+                        textFieldConfiguration: TextFieldConfiguration(
+                          controller: _controllerNamaBarangTambahPenjualan,
+                          autofocus: false,
+                          style: GoogleFonts.inter(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 13,
+                          ),
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: lightText,
+                            hintText: 'Pilih Nama Barang',
+                            hintStyle: GoogleFonts.inter(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 13,
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 0, horizontal: 10),
+                            focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5),
+                              borderSide: const BorderSide(
+                                color: darkText,
+                              ),
                             ),
-                            side: const BorderSide(
-                                width: 2, // the thickness
-                                color: ColorThird // the color of the border
-                                )),
-                        child: Row(
-                          children: const [
-                            Icon(Icons.arrow_back_outlined, color: ColorThird),
-                            SizedBox(width: 5),
-                            TextView(
-                              val: "Back",
-                              color: ColorThird,
-                              size: 15,
-                              weight: FontWeight.w600,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                              borderSide: const BorderSide(
+                                color: darkText,
+                              ),
                             ),
-                          ],
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                              borderSide: const BorderSide(
+                                color: darkText,
+                              ),
+                            ),
+                          ),
+                        ),
+                        suggestionsCallback: (pattern) async {
+                          return await searchData(pattern);
+                        },
+                        itemBuilder: (context, suggestion) {
+                          return ListTile(
+                            title: Text(suggestion),
+                          );
+                        },
+                        onSuggestionSelected: (String suggestion) {
+                          _controllerNamaBarangTambahPenjualan.text =
+                              suggestion;
+                          print(suggestion);
+                        },
+                        getImmediateSuggestions: true,
+                        hideSuggestionsOnKeyboardHide: false,
+                        hideOnEmpty: false,
+                        noItemsFoundBuilder: (context) => const Padding(
+                          padding: EdgeInsets.all(8),
+                          child: Text("Tidak ada model"),
                         ),
                       ),
-                      const SizedBox(width: 20),
-                      ElevatedButton(
-                        style: TextButton.styleFrom(
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: TextField(
+                        readOnly: true,
+                        // controller:
+                        //     _controllerJumlahBarangTambahPenjualan,
+                        showCursor: false,
+                        style: GoogleFonts.inter(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 13,
+                        ),
+                        onChanged: (value) {},
+                        decoration: InputDecoration(
+                          filled: false,
+                          fillColor: Colors.transparent,
+                          hintStyle: GoogleFonts.inter(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 13,
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 0, horizontal: 10),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5),
+                            borderSide: const BorderSide(
+                              color: Colors.transparent,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5),
+                            borderSide: const BorderSide(
+                              color: Colors.transparent,
+                            ),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5),
+                            borderSide: const BorderSide(
+                              color: Colors.transparent,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan Tambah Data Tanggal",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: darkText,
+                                  width: 1,
+                                  style: BorderStyle.solid),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(9),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  TextView(
+                                    val: _date1,
+                                    color: darkText,
+                                    size: 13,
+                                    weight: FontWeight.w500,
+                                  ),
+                                  GestureDetector(
+                                      onTap: () {
+                                        selectFilterDate1(context).whenComplete(
+                                            () => setState(() {}));
+                                      },
+                                      child: const Icon(Icons.calendar_month)),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan Customer Delivery Date",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: darkText,
+                                  width: 1,
+                                  style: BorderStyle.solid),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(9),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  TextView(
+                                    val: _date2,
+                                    color: darkText,
+                                    size: 13,
+                                    weight: FontWeight.w500,
+                                  ),
+                                  GestureDetector(
+                                      onTap: () {
+                                        selectFilterDate2(context).whenComplete(
+                                            () => setState(() {}));
+                                      },
+                                      child: const Icon(Icons.calendar_month)),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan Job Done",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan Analyzer Version",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan Order Status (New/Repeat)",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan Cylinder Status",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan Gol",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan Nama Customer",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan Nama Item",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan Model",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan Up",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan Repeat",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan Toleransi",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan Order Masuk",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan Width",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan Length",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan Gusset",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan W",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan C",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan Color",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 30),
+                const TextView(
+                  val: "Layer 1",
+                  color: darkText,
+                  size: 22,
+                  weight: FontWeight.w700,
+                ),
+                SizedBox(height: 30),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan Gusset",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan W",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan C",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan Color",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 30),
+                const TextView(
+                  val: "Layer 2",
+                  color: darkText,
+                  size: 22,
+                  weight: FontWeight.w700,
+                ),
+                SizedBox(height: 30),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan Gusset",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan W",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan C",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan Color",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 30),
+                const TextView(
+                  val: "Layer 3",
+                  color: darkText,
+                  size: 22,
+                  weight: FontWeight.w700,
+                ),
+                SizedBox(height: 30),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan Gusset",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan W",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan C",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan Color",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 30),
+                const TextView(
+                  val: "Layer 4",
+                  color: darkText,
+                  size: 22,
+                  weight: FontWeight.w700,
+                ),
+                SizedBox(height: 30),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan Gusset",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan W",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan C",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan Color",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 30),
+                const TextView(
+                  val: "Layer 5",
+                  color: darkText,
+                  size: 22,
+                  weight: FontWeight.w700,
+                ),
+                SizedBox(height: 30),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan Gusset",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan W",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan C",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan Color",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 30),
+                const TextView(
+                  val: "Layer 6",
+                  color: darkText,
+                  size: 22,
+                  weight: FontWeight.w700,
+                ),
+                SizedBox(height: 30),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan Gusset",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan W",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan C",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan Color",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa(lightText),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        widget.controllerPageNdlEdit.animateToPage(0,
+                            duration: const Duration(milliseconds: 250),
+                            curve: Curves.ease);
+                      },
+                      style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 55, vertical: 22),
-                          primary: Colors.white,
-                          backgroundColor: navButtonThird,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: const TextView(
-                          val: "Simpan",
-                          color: lightText,
-                          size: 15,
-                          weight: FontWeight.w600,
+                          side:  BorderSide(
+                              width: 2, // the thickness
+                              color: colorThird // the color of the border
+                              )),
+                      child: Row(
+                        children: const [
+                          Icon(Icons.arrow_back_outlined, color: colorThird),
+                          SizedBox(width: 5),
+                          TextView(
+                            val: "Back",
+                            color: colorThird,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 20),
+                    ElevatedButton(
+                      style: TextButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 55, vertical: 22),
+                        primary: Colors.white,
+                        backgroundColor: navButtonThird,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
                         ),
                       ),
-                    ],
-                  ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const TextView(
+                        val: "Simpan",
+                        color: lightText,
+                        size: 15,
+                        weight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+// Page isi dari upload Excel
+class ConfirmNDL extends StatefulWidget {
+  final String file;
+  const ConfirmNDL({
+    super.key,
+    required this.file,
+  });
+
+  @override
+  State<ConfirmNDL> createState() => _ConfirmNDLState();
+}
+
+class _ConfirmNDLState extends State<ConfirmNDL> {
+  late Future ndlList;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    ndlList = _servicesNDL.readExcel(widget.file);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 56,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.arrow_back_ios),
+        ),
+        iconTheme: const IconThemeData(color: primaryColor),
+      ),
+      body: ScrollConfiguration(
+        behavior: ScrollConfiguration.of(context).copyWith(
+            dragDevices: {PointerDeviceKind.touch, PointerDeviceKind.mouse}),
+        child: SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
+          controller: ScrollController(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(30, 5, 0, 5),
+                child: FutureBuilder(
+                  future: ndlList,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      List snapData = snapshot.data! as List;
+                      if (snapData[0] != 404) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: SingleChildScrollView(
+                                physics: const ClampingScrollPhysics(),
+                                controller: ScrollController(),
+                                scrollDirection: Axis.horizontal,
+                                child: DataTable(
+                                  border: TableBorder.all(
+                                    color: Colors.black.withOpacity(0.5),
+                                    style: BorderStyle.solid,
+                                  ),
+                                  headingRowHeight: 50,
+                                  dataRowHeight: 50,
+                                  columns: [
+                                    datCol("Tambahkan Data Tgl"),
+                                    datCol("Customer Delivery Date"),
+                                    datCol("Job Done"),
+                                    datCol("Durasi"),
+                                    datCol("Analyzer Version"),
+                                    datCol("Order Status (New/Repeat)"),
+                                    datCol("Cylinder Status"),
+                                    datCol("Gol"),
+                                    datCol("WS No"),
+                                    datCol("Customer"),
+                                    datCol("Item Nama"),
+                                    datCol("Model"),
+                                    datCol("Up"),
+                                    datCol("Repeat"),
+                                    datCol("Toleransi"),
+                                    datCol("Order"),
+                                    datCol("W/S Order (m)"),
+                                    datCol("Width"),
+                                    datCol("Length"),
+                                    datCol("Gusset"),
+                                    datCol("prod.size"),
+                                    datCol("W"),
+                                    datCol("C"),
+                                    datCol("Color"),
+                                    datCol("1st Layer"),
+                                    datCol("Width1"),
+                                    datCol("RM"),
+                                    datCol("Diff"),
+                                    datCol("2nd Layer"),
+                                    datCol("Width1"),
+                                    datCol("RM"),
+                                    datCol("Diff"),
+                                    datCol("3nd Layer"),
+                                    datCol("Width1"),
+                                    datCol("RM"),
+                                    datCol("Diff"),
+                                    datCol("4nd Layer"),
+                                    datCol("Width1"),
+                                    datCol("RM"),
+                                    datCol("Diff"),
+                                    datCol("5nd Layer"),
+                                    datCol("Width1"),
+                                    datCol("RM"),
+                                    datCol("Diff"),
+                                    datCol("6nd Layer"),
+                                    datCol("Width1"),
+                                    datCol("RM"),
+                                    datCol("Diff"),
+                                    datCol("1st Layer"),
+                                    datCol("Ink"),
+                                    datCol("adh1"),
+                                    datCol("2nd Layer"),
+                                    datCol("adh2"),
+                                    datCol("3nd Layer"),
+                                    datCol("adh3"),
+                                    datCol("4nd Layer"),
+                                    datCol("adh4"),
+                                    datCol("5nd Layer"),
+                                    datCol("adh5"),
+                                    datCol("6nd Layer"),
+                                    datCol("Total"),
+                                    //datCol("Aksi"),
+                                  ],
+                                  rows: List.generate(
+                                    snapData[2].length,
+                                    (index) {
+                                      return DataRow(
+                                        cells: [
+                                          datRow1(
+                                              snapData[2][index]
+                                                  ['tambah_data_tanggal'],
+                                              2,
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]
+                                                  ['customer_delivery_date'],
+                                              2,
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['job_done'],
+                                              2,
+                                              context),
+                                          datRow1(snapData[2][index]['durasi'],
+                                              2, context),
+                                          datRow1(
+                                              snapData[2][index]
+                                                  ['analyzer_version'],
+                                              2,
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]
+                                                  ['order_status'],
+                                              2,
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]
+                                                  ['cylider_status'],
+                                              2,
+                                              context),
+                                          datRow1(snapData[2][index]['gol'], 2,
+                                              context),
+                                          datRow1(snapData[2][index]['ws_no'],
+                                              2, context),
+                                          datRow1(snapData[2][index]['cust'], 2,
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['item_name'],
+                                              2,
+                                              context),
+                                          datRow1(snapData[2][index]['model'],
+                                              2, context),
+                                          datRow1(snapData[2][index]['up'], 2,
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['repeat_ndl'],
+                                              2,
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['toleransi'],
+                                              2,
+                                              context),
+                                          datRow2(
+                                              snapData[2][index]['order_ndl']
+                                                  [0],
+                                              snapData[2][index]['order_ndl']
+                                                  [1],
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['w_s_order'],
+                                              2,
+                                              context),
+                                          datRow1(snapData[2][index]['width'],
+                                              2, context),
+                                          datRow1(snapData[2][index]['lenght'],
+                                              2, context),
+                                          datRow1(snapData[2][index]['gusset'],
+                                              2, context),
+                                          datRow1(
+                                              snapData[2][index]['prod_size'],
+                                              2,
+                                              context),
+                                          datRow1(snapData[2][index]['w'], 2,
+                                              context),
+                                          datRow1(snapData[2][index]['c'], 2,
+                                              context),
+                                          datRow1(snapData[2][index]['color'],
+                                              2, context),
+
+                                          // Layer 1
+                                          datRow4(
+                                              snapData[2][index]['layer_datail1'].length > 0
+                                                  ? snapData[2][index]
+                                                      ['layer_datail1'][0]
+                                                  : " ",
+                                              snapData[2][index]['layer_datail2'].length > 0
+                                                  ? snapData[2][index]
+                                                      ['layer_datail2'][0]
+                                                  : " ",
+                                              snapData[2][index]
+                                                              ['layer_datail3']
+                                                          .length >
+                                                      0
+                                                  ? snapData[2][index]
+                                                      ['layer_datail3'][0]
+                                                  : " ",
+                                              snapData[2][index]['layer_datai4']
+                                                          .length >
+                                                      0
+                                                  ? snapData[2][index]
+                                                      ['layer_datai4'][0]
+                                                  : " ",
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['width_layer']
+                                                          .length >
+                                                      0
+                                                  ? snapData[2][index]
+                                                      ['width_layer'][0]
+                                                  : " ",
+                                              2,
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['rm_layer']
+                                                          .length >
+                                                      0
+                                                  ? snapData[2][index]
+                                                      ['rm_layer'][0]
+                                                  : " ",
+                                              2,
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['diff_layer']
+                                                              
+                                                          .length >
+                                                      0
+                                                  ? snapData[2][index]
+                                                      ['diff_layer'][0]
+                                                  : " ",
+                                              2,
+                                              context),
+
+                                          // Layer 2
+                                          datRow4(
+                                              snapData[2][index]['layer_datail1'].length > 1
+                                                  ? snapData[2][index]
+                                                      ['layer_datail1'][1]
+                                                  : " ",
+                                              snapData[2][index]['layer_datail2'].length >
+                                                      1
+                                                  ? snapData[2][index]
+                                                      ['layer_datail2'][1]
+                                                  : " ",
+                                              snapData[2][index]['layer_datail3']
+                                                          .length >
+                                                      1
+                                                  ? snapData[2][index]
+                                                      ['layer_datail3'][1]
+                                                  : " ",
+                                              snapData[2][index]['layer_datai4']
+                                                          .length >
+                                                      1
+                                                  ? snapData[2][index]
+                                                      ['layer_datai4'][1]
+                                                  : " ",
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['width_layer']
+                                                          .length >
+                                                      1
+                                                  ? snapData[2][index]
+                                                      ['width_layer'][1]
+                                                  : " ",
+                                              2,
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['rm_layer']
+                                                          .length >
+                                                      1
+                                                  ? snapData[2][index]
+                                                      ['rm_layer'][1]
+                                                  : " ",
+                                              2,
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['diff_layer']
+                                                          .length >
+                                                      1
+                                                  ? snapData[2][index]
+                                                      ['diff_layer'][1]
+                                                  : " ",
+                                              2,
+                                              context),
+
+                                          // Layer 3
+                                          datRow4(
+                                              snapData[2][index]['layer_datail1'].length > 2
+                                                  ? snapData[2][index]
+                                                      ['layer_datail1'][2]
+                                                  : " ",
+                                              snapData[2][index]['layer_datail2'].length >
+                                                      2
+                                                  ? snapData[2][index]
+                                                      ['layer_datail2'][2]
+                                                  : " ",
+                                              snapData[2][index]['layer_datail3']
+                                                          .length >
+                                                      2
+                                                  ? snapData[2][index]
+                                                      ['layer_datail3'][2]
+                                                  : " ",
+                                              snapData[2][index]['layer_datai4']
+                                                          .length >
+                                                      2
+                                                  ? snapData[2][index]
+                                                      ['layer_datai4'][2]
+                                                  : " ",
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['width_layer']
+                                                          .length >
+                                                      2
+                                                  ? snapData[2][index]
+                                                      ['width_layer'][2]
+                                                  : " ",
+                                              2,
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['rm_layer']
+                                                          .length >
+                                                      2
+                                                  ? snapData[2][index]
+                                                      ['rm_layer'][2]
+                                                  : " ",
+                                              2,
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['diff_layer']
+                                                          .length >
+                                                      2
+                                                  ? snapData[2][index]
+                                                      ['diff_layer'][2]
+                                                  : " ",
+                                              2,
+                                              context),
+
+                                          // Layer 4
+                                          datRow4(
+                                              snapData[2][index]['layer_datail1'].length > 3
+                                                  ? snapData[2][index]
+                                                      ['layer_datail1'][3]
+                                                  : " ",
+                                              snapData[2][index]['layer_datail2'].length >
+                                                      3
+                                                  ? snapData[2][index]
+                                                      ['layer_datail2'][3]
+                                                  : " ",
+                                              snapData[2][index]['layer_datail3']
+                                                          .length >
+                                                      3
+                                                  ? snapData[2][index]
+                                                      ['layer_datail3'][3]
+                                                  : " ",
+                                              snapData[2][index]['layer_datai4']
+                                                          .length >
+                                                      3
+                                                  ? snapData[2][index]
+                                                      ['layer_datai4'][3]
+                                                  : " ",
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['width_layer']
+                                                          .length >
+                                                      3
+                                                  ? snapData[2][index]
+                                                      ['width_layer'][3]
+                                                  : " ",
+                                              2,
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['rm_layer']
+                                                          .length >
+                                                      3
+                                                  ? snapData[2][index]
+                                                      ['rm_layer'][3]
+                                                  : " ",
+                                              2,
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['diff_layer']
+                                                          .length >
+                                                      3
+                                                  ? snapData[2][index]
+                                                      ['diff_layer'][3]
+                                                  : " ",
+                                              2,
+                                              context),
+
+                                          // Layer 5
+                                          datRow4(
+                                              snapData[2][index]['layer_datail1'].length > 4
+                                                  ? snapData[2][index]
+                                                      ['layer_datail1'][4]
+                                                  : " ",
+                                              snapData[2][index]['layer_datail2'].length >
+                                                      4
+                                                  ? snapData[2][index]
+                                                      ['layer_datail2'][4]
+                                                  : " ",
+                                              snapData[2][index]['layer_datail3']
+                                                          .length >
+                                                      4
+                                                  ? snapData[2][index]
+                                                      ['layer_datail3'][4]
+                                                  : " ",
+                                              snapData[2][index]['layer_datai4']
+                                                          .length >
+                                                      4
+                                                  ? snapData[2][index]
+                                                      ['layer_datai4'][4]
+                                                  : " ",
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['width_layer']
+                                                          .length >
+                                                      4
+                                                  ? snapData[2][index]
+                                                      ['width_layer'][4]
+                                                  : " ",
+                                              2,
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['rm_layer']
+                                                          .length >
+                                                      4
+                                                  ? snapData[2][index]
+                                                      ['rm_layer'][4]
+                                                  : " ",
+                                              2,
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['diff_layer']
+                                                          .length >
+                                                      4
+                                                  ? snapData[2][index]
+                                                      ['diff_layer'][4]
+                                                  : " ",
+                                              2,
+                                              context),
+
+                                          // Layer 6
+                                          datRow4(
+                                              snapData[2][index]['layer_datail1'].length > 5
+                                                  ? snapData[2][index]
+                                                      ['layer_datail1'][5]
+                                                  : " ",
+                                              snapData[2][index]['layer_datail2'].length >
+                                                      5
+                                                  ? snapData[2][index]
+                                                      ['layer_datail2'][5]
+                                                  : " ",
+                                              snapData[2][index]['layer_datail3']
+                                                          .length >
+                                                      5
+                                                  ? snapData[2][index]
+                                                      ['layer_datail3'][5]
+                                                  : " ",
+                                              snapData[2][index]['layer_datai4']
+                                                          .length >
+                                                      5
+                                                  ? snapData[2][index]
+                                                      ['layer_datai4'][5]
+                                                  : " ",
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['width_layer']
+                                                          .length >
+                                                      5
+                                                  ? snapData[2][index]
+                                                      ['width_layer'][5]
+                                                  : " ",
+                                              2,
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['rm_layer']
+                                                          .length >
+                                                      5
+                                                  ? snapData[2][index]
+                                                      ['rm_layer'][5]
+                                                  : " ",
+                                              2,
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['diff_layer']
+                                                          .length >
+                                                      5
+                                                  ? snapData[2][index]
+                                                      ['diff_layer'][5]
+                                                  : " ",
+                                              2,
+                                              context),
+
+                                          // After Layer
+                                          datRow1(
+                                              snapData[2][index]['lyr_layer']
+                                                          .length >
+                                                      0
+                                                  ? snapData[2][index]
+                                                      ['lyr_layer'][0]
+                                                  : " ",
+                                              2,
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['ink_layer'],
+                                              2,
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['adh_layer']
+                                                          .length >
+                                                      0
+                                                  ? snapData[2][index]
+                                                      ['adh_layer'][0]
+                                                  : " ",
+                                              2,
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['lyr_layer']
+                                                          .length >
+                                                      1
+                                                  ? snapData[2][index]
+                                                      ['lyr_layer'][1]
+                                                  : " ",
+                                              2,
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['adh_layer']
+                                                          .length >
+                                                      1
+                                                  ? snapData[2][index]
+                                                      ['adh_layer'][1]
+                                                  : " ",
+                                              2,
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['lyr_layer']
+                                                          .length >
+                                                      2
+                                                  ? snapData[2][index]
+                                                      ['lyr_layer'][2]
+                                                  : " ",
+                                              2,
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['adh_layer']
+                                                          .length >
+                                                      2
+                                                  ? snapData[2][index]
+                                                      ['adh_layer'][2]
+                                                  : " ",
+                                              2,
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['lyr_layer']
+                                                          .length >
+                                                      3
+                                                  ? snapData[2][index]
+                                                      ['lyr_layer'][3]
+                                                  : " ",
+                                              2,
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['adh_layer']
+                                                          .length >
+                                                      3
+                                                  ? snapData[2][index]
+                                                      ['adh_layer'][3]
+                                                  : " ",
+                                              2,
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['lyr_layer']
+                                                          .length >
+                                                      4
+                                                  ? snapData[2][index]
+                                                      ['lyr_layer'][4]
+                                                  : " ",
+                                              2,
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['adh_layer']
+                                                          .length >
+                                                      4
+                                                  ? snapData[2][index]
+                                                      ['adh_layer'][4]
+                                                  : " ",
+                                              2,
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['lyr_layer']
+                                                          .length >
+                                                      5
+                                                  ? snapData[2][index]
+                                                      ['lyr_layer'][5]
+                                                  : " ",
+                                              2,
+                                              context),
+                                          datRow1(
+                                              snapData[2][index]['total_layer'],
+                                              2,
+                                              context),
+                                          //datRow3(2, context)
+                                        ],
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      } else if (snapData[0] == 404) {
+                        return Container();
+                      }
+                    }
+                    return Container();
+                  },
+                ),
+              )
+            ],
           ),
         ),
       ),

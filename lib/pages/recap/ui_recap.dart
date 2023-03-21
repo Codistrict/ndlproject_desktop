@@ -1,3 +1,4 @@
+// ignore_for_file: todo
 import 'dart:ui';
 
 import 'package:dropdown_search/dropdown_search.dart';
@@ -65,7 +66,7 @@ class _RecapPageState extends State<RecapPage> {
     super.initState();
   }
 
-  _showEdit(dw, dh) {
+  showEdit(dw, dh) {
     showDialog(
       barrierDismissible: false,
       useRootNavigator: true,
@@ -120,7 +121,7 @@ class _RecapPageState extends State<RecapPage> {
                                   size: 16,
                                   weight: FontWeight.w600,
                                 ),
-                                SizedBox(height: 13),
+                                const SizedBox(height: 13),
                                 SizedBox(
                                   width: dw * 0.5,
                                   child: Container(
@@ -132,19 +133,19 @@ class _RecapPageState extends State<RecapPage> {
                                       borderRadius: BorderRadius.circular(5),
                                     ),
                                     child: Padding(
-                                      padding: EdgeInsets.all(9),
+                                      padding: const EdgeInsets.all(9),
                                       child: Row(),
                                     ),
                                   ),
                                 ),
-                                SizedBox(height: 25),
+                                const SizedBox(height: 25),
                                 const TextView(
                                   val: "Update Delivery Period",
                                   color: darkText,
                                   size: 16,
                                   weight: FontWeight.w600,
                                 ),
-                                SizedBox(height: 13),
+                                const SizedBox(height: 13),
                                 SizedBox(
                                   width: dw * 0.5,
                                   child: Container(
@@ -156,7 +157,7 @@ class _RecapPageState extends State<RecapPage> {
                                       borderRadius: BorderRadius.circular(5),
                                     ),
                                     child: Padding(
-                                      padding: EdgeInsets.all(9),
+                                      padding: const EdgeInsets.all(9),
                                       child: Row(),
                                     ),
                                   ),
@@ -169,9 +170,9 @@ class _RecapPageState extends State<RecapPage> {
                                   children: [
                                     ElevatedButton(
                                       style: TextButton.styleFrom(
+                                        foregroundColor: Colors.white,
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 55, vertical: 22),
-                                        primary: Colors.white,
                                         backgroundColor: navButtonThird,
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
@@ -203,11 +204,11 @@ class _RecapPageState extends State<RecapPage> {
                                           side: const BorderSide(
                                               width: 2, // the thickness
                                               color:
-                                                  ColorThird // the color of the border
+                                                  colorThird // the color of the border
                                               )),
                                       child: const TextView(
                                         val: "Batal",
-                                        color: ColorThird,
+                                        color: colorThird,
                                         size: 15,
                                         weight: FontWeight.w600,
                                       ),
@@ -463,7 +464,7 @@ class _RecapPageState extends State<RecapPage> {
                                                                         FontWeight
                                                                             .w600,
                                                                   ),
-                                                                  SizedBox(
+                                                                  const SizedBox(
                                                                       height:
                                                                           13),
                                                                   SizedBox(
@@ -487,21 +488,21 @@ class _RecapPageState extends State<RecapPage> {
                                                                             focusedBorder:
                                                                                 OutlineInputBorder(
                                                                               borderRadius: BorderRadius.circular(10),
-                                                                              borderSide: BorderSide(
+                                                                              borderSide: const BorderSide(
                                                                                 color: darkText,
                                                                               ),
                                                                             ),
                                                                             enabledBorder:
                                                                                 OutlineInputBorder(
                                                                               borderRadius: BorderRadius.circular(10),
-                                                                              borderSide: BorderSide(
+                                                                              borderSide: const BorderSide(
                                                                                 color: darkText,
                                                                               ),
                                                                             ),
                                                                             border:
                                                                                 OutlineInputBorder(
                                                                               borderRadius: BorderRadius.circular(10),
-                                                                              borderSide: BorderSide(
+                                                                              borderSide: const BorderSide(
                                                                                 color: darkText,
                                                                               ),
                                                                             ),
@@ -530,7 +531,7 @@ class _RecapPageState extends State<RecapPage> {
                                                                           "",
                                                                     ),
                                                                   ),
-                                                                  SizedBox(
+                                                                  const SizedBox(
                                                                       height:
                                                                           25),
                                                                   const TextView(
@@ -543,7 +544,7 @@ class _RecapPageState extends State<RecapPage> {
                                                                         FontWeight
                                                                             .w600,
                                                                   ),
-                                                                  SizedBox(
+                                                                  const SizedBox(
                                                                       height:
                                                                           13),
                                                                   SizedBox(
@@ -567,21 +568,21 @@ class _RecapPageState extends State<RecapPage> {
                                                                             focusedBorder:
                                                                                 OutlineInputBorder(
                                                                               borderRadius: BorderRadius.circular(10),
-                                                                              borderSide: BorderSide(
+                                                                              borderSide: const BorderSide(
                                                                                 color: darkText,
                                                                               ),
                                                                             ),
                                                                             enabledBorder:
                                                                                 OutlineInputBorder(
                                                                               borderRadius: BorderRadius.circular(10),
-                                                                              borderSide: BorderSide(
+                                                                              borderSide: const BorderSide(
                                                                                 color: darkText,
                                                                               ),
                                                                             ),
                                                                             border:
                                                                                 OutlineInputBorder(
                                                                               borderRadius: BorderRadius.circular(10),
-                                                                              borderSide: BorderSide(
+                                                                              borderSide: const BorderSide(
                                                                                 color: darkText,
                                                                               ),
                                                                             ),
@@ -621,11 +622,11 @@ class _RecapPageState extends State<RecapPage> {
                                                                       ElevatedButton(
                                                                         style: TextButton
                                                                             .styleFrom(
+                                                                          foregroundColor:
+                                                                              Colors.white,
                                                                           padding: const EdgeInsets.symmetric(
                                                                               horizontal: 55,
                                                                               vertical: 22),
-                                                                          primary:
-                                                                              Colors.white,
                                                                           backgroundColor:
                                                                               navButtonThird,
                                                                           shape:
@@ -667,14 +668,14 @@ class _RecapPageState extends State<RecapPage> {
                                                                             ),
                                                                             side: const BorderSide(
                                                                                 width: 2, // the thickness
-                                                                                color: ColorThird // the color of the border
+                                                                                color: colorThird // the color of the border
                                                                                 )),
                                                                         child:
                                                                             const TextView(
                                                                           val:
                                                                               "Batal",
                                                                           color:
-                                                                              ColorThird,
+                                                                              colorThird,
                                                                           size:
                                                                               15,
                                                                           weight:
@@ -730,9 +731,10 @@ class _RecapPageState extends State<RecapPage> {
             ),
             Center(
               child: Container(
+                padding: const EdgeInsets.all(0),
                 width: deviceWidth / 2,
                 child: Padding(
-                  padding: EdgeInsets.all(30),
+                  padding: const EdgeInsets.all(30),
                   child: NumberPaginator(
                     initialPage: 0,
                     config: const NumberPaginatorUIConfig(
@@ -824,7 +826,7 @@ class _DetailRecapPageState extends State<DetailRecapPage> {
                           ),
                         ],
                       ),
-                      SizedBox(width: 55),
+                      const SizedBox(width: 55),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: const [
@@ -885,7 +887,7 @@ class _DetailRecapPageState extends State<DetailRecapPage> {
                           ),
                         ],
                       ),
-                      SizedBox(width: 55),
+                      const SizedBox(width: 55),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: const [
@@ -918,7 +920,7 @@ class _DetailRecapPageState extends State<DetailRecapPage> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               SizedBox(
@@ -939,6 +941,7 @@ class _DetailRecapPageState extends State<DetailRecapPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
+                              padding: const EdgeInsets.all(0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -949,7 +952,7 @@ class _DetailRecapPageState extends State<DetailRecapPage> {
                                         color: darkText,
                                         fontWeight: FontWeight.w800),
                                   ),
-                                  SizedBox(height: 15),
+                                  const SizedBox(height: 15),
                                   SingleChildScrollView(
                                     physics: const ClampingScrollPhysics(),
                                     controller: ScrollController(),
@@ -981,7 +984,7 @@ class _DetailRecapPageState extends State<DetailRecapPage> {
                                       ],
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 25,
                                   ),
                                   SingleChildScrollView(
@@ -1078,7 +1081,7 @@ class _DetailRecapPageState extends State<DetailRecapPage> {
                   },
                 ),
               ),
-              SizedBox(height: 15),
+              const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -1099,15 +1102,15 @@ class _DetailRecapPageState extends State<DetailRecapPage> {
                         ),
                         side: const BorderSide(
                             width: 2, // the thickness
-                            color: ColorThird // the color of the border
+                            color: colorThird // the color of the border
                             )),
                     child: Row(
                       children: const [
-                        Icon(Icons.arrow_back_outlined, color: ColorThird),
+                        Icon(Icons.arrow_back_outlined, color: colorThird),
                         SizedBox(width: 5),
                         TextView(
                           val: "Back",
-                          color: ColorThird,
+                          color: colorThird,
                           size: 15,
                           weight: FontWeight.w600,
                         ),
@@ -1117,9 +1120,8 @@ class _DetailRecapPageState extends State<DetailRecapPage> {
                   const SizedBox(width: 20),
                   ElevatedButton(
                     style: TextButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
+                      foregroundColor: Colors.white, padding: const EdgeInsets.symmetric(
                           horizontal: 55, vertical: 22),
-                      primary: Colors.white,
                       backgroundColor: navButtonThird,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),

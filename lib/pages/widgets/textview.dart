@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ndlproject_desktop/themes/colors.dart';
 import 'package:intl/intl.dart';
-import 'package:dropdown_search/dropdown_search.dart';
 
 class TextView extends StatelessWidget {
   final String val;
@@ -45,14 +44,14 @@ Future<void> selectFilterDate(context) async {
     builder: (context, child) {
       return Theme(
           data: Theme.of(context).copyWith(
-            colorScheme: ColorScheme.light(
+            colorScheme: const ColorScheme.light(
               primary: Color(0xff13293D),
               onPrimary: lightText,
               onSurface: darkText,
             ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                foregroundColor: Color(0xff13293D), // button text color
+                foregroundColor: const Color(0xff13293D), // button text color
               ),
             ),
           ),
@@ -111,103 +110,104 @@ _showEdit(context) {
                         color: darkText,
                       ),
                       Container(
-                          padding: EdgeInsets.fromLTRB(20, 20, 20, 15),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const TextView(
-                                val: "Masukkan Tanggal",
-                                color: darkText,
-                                size: 16,
-                                weight: FontWeight.w600,
-                              ),
-                              SizedBox(height: 13),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.5,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
+                        padding: const EdgeInsets.fromLTRB(20, 20, 20, 15),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const TextView(
+                              val: "Masukkan Tanggal",
+                              color: darkText,
+                              size: 16,
+                              weight: FontWeight.w600,
+                            ),
+                            const SizedBox(height: 13),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.5,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: darkText,
+                                      width: 1,
+                                      style: BorderStyle.solid),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(9),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      TextView(
+                                        val: _date,
                                         color: darkText,
-                                        width: 1,
-                                        style: BorderStyle.solid),
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(9),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        TextView(
-                                          val: _date,
-                                          color: darkText,
-                                          size: 15,
-                                          weight: FontWeight.w600,
-                                        ),
-                                        GestureDetector(
-                                            onTap: () {
-                                              selectFilterDate(context);
-                                            },
-                                            child: Icon(Icons.calendar_month)),
-                                      ],
-                                    ),
+                                        size: 15,
+                                        weight: FontWeight.w600,
+                                      ),
+                                      GestureDetector(
+                                          onTap: () {
+                                            selectFilterDate(context);
+                                          },
+                                          child:
+                                              const Icon(Icons.calendar_month)),
+                                    ],
                                   ),
                                 ),
                               ),
-                              const SizedBox(
-                                height: 40,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  ElevatedButton(
-                                    style: TextButton.styleFrom(
+                            ),
+                            const SizedBox(
+                              height: 40,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                ElevatedButton(
+                                  style: TextButton.styleFrom(
+                                    foregroundColor: Colors.white,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 55, vertical: 22),
+                                    backgroundColor: navButtonThird,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const TextView(
+                                    val: "Submit",
+                                    color: lightText,
+                                    size: 15,
+                                    weight: FontWeight.w600,
+                                  ),
+                                ),
+                                const SizedBox(width: 20),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  style: ElevatedButton.styleFrom(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 55, vertical: 22),
-                                      primary: Colors.white,
-                                      backgroundColor: navButtonThird,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(5),
                                       ),
-                                    ),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: const TextView(
-                                      val: "Submit",
-                                      color: lightText,
-                                      size: 15,
-                                      weight: FontWeight.w600,
-                                    ),
+                                      side: const BorderSide(
+                                          width: 2, // the thickness
+                                          color:
+                                              colorThird // the color of the border
+                                          )),
+                                  child: const TextView(
+                                    val: "Batal",
+                                    color: colorThird,
+                                    size: 15,
+                                    weight: FontWeight.w600,
                                   ),
-                                  const SizedBox(width: 20),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 55, vertical: 22),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                        side: const BorderSide(
-                                            width: 2, // the thickness
-                                            color:
-                                                ColorThird // the color of the border
-                                            )),
-                                    child: const TextView(
-                                      val: "Batal",
-                                      color: ColorThird,
-                                      size: 15,
-                                      weight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          )),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                       const SizedBox(
                         height: 30,
                       ),
@@ -257,7 +257,7 @@ peringatanDialog(context) {
                           size: 100,
                         ),
                       ),
-                      SizedBox(height: 25),
+                      const SizedBox(height: 25),
                       const Center(
                         child: TextView(
                           val: "Apakah Anda Yakin Ingin Update Data Ini?",
@@ -274,9 +274,9 @@ peringatanDialog(context) {
                         children: [
                           ElevatedButton(
                             style: TextButton.styleFrom(
+                              foregroundColor: Colors.white,
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 55, vertical: 22),
-                              primary: Colors.white,
                               backgroundColor: navButtonThird,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5),
@@ -298,18 +298,19 @@ peringatanDialog(context) {
                               Navigator.pop(context);
                             },
                             style: ElevatedButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 55, vertical: 22),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                side: const BorderSide(
-                                    width: 2, // the thickness
-                                    color: ColorThird // the color of the border
-                                    )),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 55, vertical: 22),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              side: const BorderSide(
+                                  width: 2, // the thickness
+                                  color: colorThird // the color of the border
+                                  ),
+                            ),
                             child: const TextView(
                               val: "Tidak",
-                              color: ColorThird,
+                              color: colorThird,
                               size: 15,
                               weight: FontWeight.w600,
                             ),
@@ -335,7 +336,7 @@ datCol(value) {
         Expanded(
           child: Center(
             child: TextView(
-              val: value,
+              val: value.toString(),
               color: darkText,
               size: 14,
               weight: FontWeight.w700,
@@ -353,7 +354,7 @@ datColBold(value) {
       width: 180,
       child: Center(
         child: TextView(
-          val: value,
+          val: value.toString(),
           color: darkText,
           size: 14,
           weight: FontWeight.w700,
@@ -369,7 +370,7 @@ datColBold2(value) {
       width: 100,
       child: Center(
         child: TextView(
-          val: value,
+          val: value.toString(),
           color: darkText,
           size: 13,
           weight: FontWeight.w700,
@@ -385,7 +386,7 @@ datColBoldSamping(value) {
       width: 180,
       child: Center(
         child: TextView(
-          val: value,
+          val: value.toString(),
           color: darkText,
           size: 13,
           weight: FontWeight.w500,
@@ -401,7 +402,7 @@ datColBoldSamping3(value) {
       width: 180,
       child: Center(
         child: TextView(
-          val: value,
+          val: value.toString(),
           color: darkText,
           size: 13,
           weight: FontWeight.w700,
@@ -416,7 +417,7 @@ datColBoldSamping2(value) {
     label: SizedBox(
       width: 180,
       child: TextView(
-        val: value,
+        val: value.toString(),
         color: darkText,
         size: 13,
         weight: FontWeight.w700,
@@ -432,14 +433,14 @@ datRowBold1(value1, pw, context) {
         if (pw == 1) {
           peringatanDialog(context);
         } else {
-          print("Tidak Dapat Ditekan");
+          debugPrint("Tidak Dapat Ditekan");
         }
       },
       child: SizedBox(
         width: 180,
         child: Center(
           child: TextView(
-            val: value1,
+            val: value1.toString(),
             size: 13,
             color: darkText,
             weight: FontWeight.w500,
@@ -457,14 +458,14 @@ datRowBold4(value1, pw, context) {
         if (pw == 1) {
           peringatanDialog(context);
         } else {
-          print("Tidak Dapat Ditekan");
+          debugPrint("Tidak Dapat Ditekan");
         }
       },
       child: SizedBox(
         width: 180,
         child: Center(
           child: TextView(
-            val: value1,
+            val: value1.toString(),
             size: 13,
             color: darkText,
             weight: FontWeight.w700,
@@ -482,14 +483,14 @@ datRowBold3(value1, pw, context) {
         if (pw == 1) {
           peringatanDialog(context);
         } else {
-          print("Tidak Dapat Ditekan");
+          debugPrint("Tidak Dapat Ditekan");
         }
       },
       child: SizedBox(
         width: 100,
         child: Center(
           child: TextView(
-            val: value1,
+            val: value1.toString(),
             size: 13,
             color: darkText,
             weight: FontWeight.w500,
@@ -507,13 +508,13 @@ datRowBold1Samping(value1, pw, context) {
         if (pw == 1) {
           peringatanDialog(context);
         } else {
-          print("Tidak Dapat Ditekan");
+          debugPrint("Tidak Dapat Ditekan");
         }
       },
       child: SizedBox(
         width: 180,
         child: TextView(
-          val: value1,
+          val: value1.toString(),
           size: 13,
           color: darkText,
           weight: FontWeight.w700,
@@ -532,7 +533,7 @@ datRowBold2(value1, value2, context) {
           width: 65,
           child: Center(
             child: TextView(
-              val: value1,
+              val: value1.toString(),
               color: darkText,
               size: 13,
               weight: FontWeight.w500,
@@ -552,7 +553,7 @@ datRowBold2(value1, value2, context) {
           width: 85,
           child: Center(
             child: TextView(
-              val: value2,
+              val: value2.toString(),
               color: darkText,
               size: 13,
               weight: FontWeight.w500,
@@ -571,12 +572,12 @@ datRow1(value1, pw, context) {
         if (pw == 1) {
           peringatanDialog(context);
         } else {
-          print("Tidak Dapat Ditekan");
+          debugPrint("Tidak Dapat Ditekan");
         }
       },
       child: Center(
         child: TextView(
-          val: value1,
+          val: value1.toString(),
           size: 13,
           color: darkText,
           weight: FontWeight.w500,
@@ -590,7 +591,7 @@ datRowrRecap(value1) {
   return DataCell(
     Center(
       child: TextView(
-        val: value1,
+        val: value1.toString(),
         size: 13,
         color: darkText,
         weight: FontWeight.w500,
@@ -607,7 +608,7 @@ datRow2(value1, value2, context) {
         Expanded(
           child: Center(
             child: TextView(
-              val: value1,
+              val: value1.toString(),
               color: darkText,
               weight: FontWeight.w500,
             ),
@@ -625,7 +626,7 @@ datRow2(value1, value2, context) {
         Expanded(
           child: Center(
             child: TextView(
-              val: value2,
+              val: value2.toString(),
               color: darkText,
               weight: FontWeight.w500,
             ),
@@ -636,7 +637,6 @@ datRow2(value1, value2, context) {
   );
 }
 
-
 datRow4(value1, value2, value3, value4, context) {
   return DataCell(
     Row(
@@ -645,7 +645,7 @@ datRow4(value1, value2, value3, value4, context) {
         Expanded(
           child: Center(
             child: TextView(
-              val: value1,
+              val: value1.toString(),
               color: darkText,
               weight: FontWeight.w500,
             ),
@@ -663,7 +663,7 @@ datRow4(value1, value2, value3, value4, context) {
         Expanded(
           child: Center(
             child: TextView(
-              val: value2,
+              val: value2.toString(),
               color: darkText,
               weight: FontWeight.w500,
             ),
@@ -681,7 +681,7 @@ datRow4(value1, value2, value3, value4, context) {
         Expanded(
           child: Center(
             child: TextView(
-              val: value3,
+              val: value3.toString(),
               color: darkText,
               weight: FontWeight.w500,
             ),
@@ -699,13 +699,54 @@ datRow4(value1, value2, value3, value4, context) {
         Expanded(
           child: Center(
             child: TextView(
-              val: value4,
+              val: value4.toString(),
               color: darkText,
               weight: FontWeight.w500,
             ),
           ),
         ),
       ],
+    ),
+  );
+}
+
+TextFieldYa(color) {
+  return TextField(
+    readOnly: false,
+    // controller:
+    //     _controllerJumlahBarangTambahPenjualan,
+    showCursor: false,
+    style: GoogleFonts.inter(
+      fontWeight: FontWeight.w500,
+      fontSize: 13,
+    ),
+    onChanged: (value) {},
+    decoration: InputDecoration(
+      filled: true,
+      fillColor: color,
+      hintStyle: GoogleFonts.inter(
+        fontWeight: FontWeight.w500,
+        fontSize: 13,
+      ),
+      contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5),
+        borderSide: const BorderSide(
+          color: darkText,
+        ),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5),
+        borderSide: const BorderSide(
+          color: darkText,
+        ),
+      ),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5),
+        borderSide: const BorderSide(
+          color: darkText,
+        ),
+      ),
     ),
   );
 }

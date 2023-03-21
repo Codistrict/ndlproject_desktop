@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
     final deviceWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff13293D),
+        backgroundColor: secondaryColor,
         //diisi warna nek wes sesuai
         automaticallyImplyLeading: false,
         title: Container(
@@ -218,6 +218,7 @@ class NavScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
+      
       animation: controller,
       builder: (context, child) {
         switch (controller.selectedIndex) {
