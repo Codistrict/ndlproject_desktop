@@ -12,6 +12,8 @@ import 'package:ndlproject_desktop/themes/colors.dart';
 import 'package:number_paginator/number_paginator.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
+import '../widgets/floatingactionwidget.dart';
+
 ServicesNDL _servicesNDL = ServicesNDL();
 
 class AdminControllerNdlPage extends StatefulWidget {
@@ -998,7 +1000,7 @@ class _NdlPageState extends State<NdlPage> {
                           onPageChange: (index) {
                             setState(() {
                               currentPage = index;
-                              ndlList = _servicesNDL.readNDL(currentPage+1);
+                              ndlList = _servicesNDL.readNDL(currentPage + 1);
                               debugPrint(currentPage.toString());
                             });
                           },
@@ -1012,69 +1014,61 @@ class _NdlPageState extends State<NdlPage> {
           ),
         ),
       ),
-      floatingActionButton: customFAB(context),
-    );
-  }
-
-  customFAB(context) {
-    return SpeedDial(
-      animatedIcon: AnimatedIcons.menu_close,
-      animatedIconTheme: const IconThemeData(size: 22, color: primaryColor),
-      backgroundColor: secondaryColor,
-      visible: true,
-      curve: Curves.bounceIn,
-      children: [
-        // FAB 1
-        SpeedDialChild(
-            child: const Icon(
-              Icons.download,
-              color: primaryColor,
-            ),
-            backgroundColor: secondaryColor,
-            onTap: () {},
-            label: 'Download',
-            labelStyle: GoogleFonts.inter(
-              fontSize: 16,
-              color: lightText,
-              fontWeight: FontWeight.w500,
-            ),
-            labelBackgroundColor: secondaryColor),
-        // FAB 2
-        SpeedDialChild(
-            child: const Icon(
-              Icons.upload,
-              color: primaryColor,
-            ),
-            backgroundColor: secondaryColor,
-            onTap: () async {
-              FilePickerResult? result = await FilePicker.platform.pickFiles();
-              String file;
-              if (result != null) {
-                file = result.files.single.path.toString();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ConfirmNDL(
-                      file: file,
+      floatingActionButton: CustomFAB(
+        icon: AnimatedIcons.menu_close,
+        children: [
+          SpeedDialChild(
+              child: const Icon(
+                Icons.download,
+                color: primaryColor,
+              ),
+              backgroundColor: secondaryColor,
+              onTap: () {},
+              label: 'Download',
+              labelStyle: GoogleFonts.inter(
+                fontSize: 16,
+                color: lightText,
+                fontWeight: FontWeight.w500,
+              ),
+              labelBackgroundColor: secondaryColor),
+          // FAB 2
+          SpeedDialChild(
+              child: const Icon(
+                Icons.upload,
+                color: primaryColor,
+              ),
+              backgroundColor: secondaryColor,
+              onTap: () async {
+                FilePickerResult? result;
+                result = await FilePicker.platform.pickFiles();
+                String file;
+                if (result != null) {
+                  file = result.files.single.path.toString();
+                  Navigator.push(
+                    this.context,
+                    MaterialPageRoute(
+                      builder: (context) => ConfirmNDL(
+                        file: file,
+                      ),
                     ),
-                  ),
-                );
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: TextView(val: "Gagal Mengambil File"),
-                  ),
-                );
-              }
-            },
-            label: 'Upload',
-            labelStyle: GoogleFonts.inter(
-              fontSize: 16,
-              color: lightText,
-              fontWeight: FontWeight.w500,
-            ),
-            labelBackgroundColor: secondaryColor)
-      ],
+                  );
+                } else {
+                  ScaffoldMessenger.of(this.context).showSnackBar(
+                    const SnackBar(
+                      content: TextView(val: "Gagal Mengambil File"),
+                    ),
+                  );
+                }
+              },
+              label: 'Upload',
+              labelStyle: GoogleFonts.inter(
+                fontSize: 16,
+                color: lightText,
+                fontWeight: FontWeight.w500,
+              ),
+              labelBackgroundColor: secondaryColor),
+        ],
+      ),
     );
   }
 }
@@ -1105,14 +1099,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
       builder: (context, child) {
         return Theme(
             data: Theme.of(context).copyWith(
-              colorScheme: ColorScheme.light(
+              colorScheme: const ColorScheme.light(
                 primary: Color(0xff13293D),
                 onPrimary: lightText,
                 onSurface: darkText,
               ),
               textButtonTheme: TextButtonThemeData(
                 style: TextButton.styleFrom(
-                  foregroundColor: Color(0xff13293D), // button text color
+                  foregroundColor: const Color(0xff13293D), // button text color
                 ),
               ),
             ),
@@ -1139,14 +1133,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
       builder: (context, child) {
         return Theme(
             data: Theme.of(context).copyWith(
-              colorScheme: ColorScheme.light(
+              colorScheme: const ColorScheme.light(
                 primary: Color(0xff13293D),
                 onPrimary: lightText,
                 onSurface: darkText,
               ),
               textButtonTheme: TextButtonThemeData(
                 style: TextButton.styleFrom(
-                  foregroundColor: Color(0xff13293D), // button text color
+                  foregroundColor: const Color(0xff13293D), // button text color
                 ),
               ),
             ),
@@ -1236,14 +1230,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                   size: 18,
                   weight: FontWeight.w700,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 const TextView(
                   val: "Pilih Kolom Yang Ingin Di Edit",
                   color: darkText,
                   size: 15,
                   weight: FontWeight.w600,
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 Row(
                   children: [
                     Expanded(
@@ -1296,7 +1290,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         onSuggestionSelected: (String suggestion) {
                           _controllerNamaBarangTambahPenjualan.text =
                               suggestion;
-                          print(suggestion);
+                          debugPrint(suggestion);
                         },
                         getImmediateSuggestions: true,
                         hideSuggestionsOnKeyboardHide: false,
@@ -1307,7 +1301,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: TextField(
                         readOnly: true,
@@ -1351,7 +1345,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1364,7 +1358,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           Container(
                             decoration: BoxDecoration(
                               border: Border.all(
@@ -1374,7 +1368,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                               borderRadius: BorderRadius.circular(5),
                             ),
                             child: Padding(
-                              padding: EdgeInsets.all(9),
+                              padding: const EdgeInsets.all(9),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -1398,7 +1392,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1409,7 +1403,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           Container(
                             decoration: BoxDecoration(
                               border: Border.all(
@@ -1419,7 +1413,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                               borderRadius: BorderRadius.circular(5),
                             ),
                             child: Padding(
-                              padding: EdgeInsets.all(9),
+                              padding: const EdgeInsets.all(9),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -1445,7 +1439,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1458,12 +1452,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1474,14 +1468,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1494,12 +1488,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1510,14 +1504,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1530,12 +1524,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1546,14 +1540,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1566,12 +1560,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1582,14 +1576,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1602,12 +1596,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1618,14 +1612,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1638,12 +1632,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1654,14 +1648,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1674,12 +1668,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1690,14 +1684,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1710,12 +1704,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1726,14 +1720,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1746,12 +1740,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1762,21 +1756,21 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 const TextView(
                   val: "Layer 1",
                   color: darkText,
                   size: 22,
                   weight: FontWeight.w700,
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Row(
                   children: [
                     Expanded(
@@ -1789,12 +1783,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1805,14 +1799,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1825,12 +1819,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1841,21 +1835,21 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 const TextView(
                   val: "Layer 2",
                   color: darkText,
                   size: 22,
                   weight: FontWeight.w700,
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Row(
                   children: [
                     Expanded(
@@ -1868,12 +1862,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1884,14 +1878,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1904,12 +1898,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1920,21 +1914,21 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 const TextView(
                   val: "Layer 3",
                   color: darkText,
                   size: 22,
                   weight: FontWeight.w700,
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Row(
                   children: [
                     Expanded(
@@ -1947,12 +1941,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1963,14 +1957,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1983,12 +1977,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1999,21 +1993,21 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 const TextView(
                   val: "Layer 4",
                   color: darkText,
                   size: 22,
                   weight: FontWeight.w700,
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Row(
                   children: [
                     Expanded(
@@ -2026,12 +2020,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -2042,14 +2036,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -2062,12 +2056,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -2078,21 +2072,21 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 const TextView(
                   val: "Layer 5",
                   color: darkText,
                   size: 22,
                   weight: FontWeight.w700,
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Row(
                   children: [
                     Expanded(
@@ -2105,12 +2099,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -2121,14 +2115,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -2141,12 +2135,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -2157,21 +2151,21 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 const TextView(
                   val: "Layer 6",
                   color: darkText,
                   size: 22,
                   weight: FontWeight.w700,
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Row(
                   children: [
                     Expanded(
@@ -2184,12 +2178,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -2200,14 +2194,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -2220,12 +2214,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -2236,14 +2230,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa(lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -2259,7 +2253,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          side:  BorderSide(
+                          side: const BorderSide(
                               width: 2, // the thickness
                               color: colorThird // the color of the border
                               )),
@@ -2279,9 +2273,9 @@ class _EditNdlPageState extends State<EditNdlPage> {
                     const SizedBox(width: 20),
                     ElevatedButton(
                       style: TextButton.styleFrom(
+                        foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(
                             horizontal: 55, vertical: 22),
-                        primary: Colors.white,
                         backgroundColor: navButtonThird,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5),
@@ -2307,6 +2301,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
     );
   }
 }
+
 // Page isi dari upload Excel
 class ConfirmNDL extends StatefulWidget {
   final String file;
@@ -2339,12 +2334,7 @@ class _ConfirmNDLState extends State<ConfirmNDL> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 56,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.arrow_back_ios),
-        ),
+        automaticallyImplyLeading: false,
         iconTheme: const IconThemeData(color: primaryColor),
       ),
       body: ScrollConfiguration(
@@ -2357,7 +2347,7 @@ class _ConfirmNDLState extends State<ConfirmNDL> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(30, 5, 0, 5),
+                padding: const EdgeInsets.fromLTRB(24, 24, 24, 80),
                 child: FutureBuilder(
                   future: ndlList,
                   builder: (context, snapshot) {
@@ -2535,12 +2525,12 @@ class _ConfirmNDLState extends State<ConfirmNDL> {
                                                   ? snapData[2][index]
                                                       ['layer_datail1'][0]
                                                   : " ",
-                                              snapData[2][index]['layer_datail2'].length > 0
+                                              snapData[2][index]['layer_datail2'].length >
+                                                      0
                                                   ? snapData[2][index]
                                                       ['layer_datail2'][0]
                                                   : " ",
-                                              snapData[2][index]
-                                                              ['layer_datail3']
+                                              snapData[2][index]['layer_datail3']
                                                           .length >
                                                       0
                                                   ? snapData[2][index]
@@ -2573,7 +2563,6 @@ class _ConfirmNDLState extends State<ConfirmNDL> {
                                               context),
                                           datRow1(
                                               snapData[2][index]['diff_layer']
-                                                              
                                                           .length >
                                                       0
                                                   ? snapData[2][index]
@@ -2971,6 +2960,39 @@ class _ConfirmNDLState extends State<ConfirmNDL> {
             ],
           ),
         ),
+      ),
+      floatingActionButton: CustomFAB(
+        icon: AnimatedIcons.menu_close,
+        children: [
+          
+          SpeedDialChild(
+              child: const Icon(
+                Icons.close,
+                color: primaryColor,
+              ),
+              backgroundColor: secondaryColor,
+              onTap: () {},
+              label: 'Cancel',
+              labelStyle: GoogleFonts.inter(
+                fontSize: 16,
+                color: lightText,
+                fontWeight: FontWeight.w500,
+              ),
+              labelBackgroundColor: secondaryColor),SpeedDialChild(
+              child: const Icon(
+                Icons.check,
+                color: primaryColor,
+              ),
+              backgroundColor: secondaryColor,
+              onTap: () {},
+              label: 'Confirm',
+              labelStyle: GoogleFonts.inter(
+                fontSize: 16,
+                color: lightText,
+                fontWeight: FontWeight.w500,
+              ),
+              labelBackgroundColor: secondaryColor),
+        ],
       ),
     );
   }

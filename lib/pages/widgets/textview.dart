@@ -675,7 +675,7 @@ datRow4(value1, value2, value3, value4, context) {
   );
 }
 
-TextFieldYa(color) {
+textFieldYa(color) {
   return TextField(
     readOnly: false,
     // controller:

@@ -786,14 +786,14 @@ class _DetailRecapPageState extends State<DetailRecapPage> {
       builder: (context, child) {
         return Theme(
             data: Theme.of(context).copyWith(
-              colorScheme: ColorScheme.light(
+              colorScheme: const ColorScheme.light(
                 primary: Color(0xff13293D),
                 onPrimary: lightText,
                 onSurface: darkText,
               ),
               textButtonTheme: TextButtonThemeData(
                 style: TextButton.styleFrom(
-                  foregroundColor: Color(0xff13293D), // button text color
+                  foregroundColor: const Color(0xff13293D), // button text color
                 ),
               ),
             ),
@@ -862,7 +862,7 @@ class _DetailRecapPageState extends State<DetailRecapPage> {
                           color: darkText,
                         ),
                         Container(
-                            padding: EdgeInsets.fromLTRB(20, 20, 20, 15),
+                            padding: const EdgeInsets.fromLTRB(20, 20, 20, 15),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -879,8 +879,8 @@ class _DetailRecapPageState extends State<DetailRecapPage> {
                                             color: darkText,
                                             weight: FontWeight.w500,
                                           ),
-                                          SizedBox(height: 5),
-                                          TextFieldYa(),
+                                          const SizedBox(height: 5),
+                                          textFieldYa(lightText),
                                         ],
                                       ),
                                     ),
@@ -896,7 +896,7 @@ class _DetailRecapPageState extends State<DetailRecapPage> {
                                             color: darkText,
                                             weight: FontWeight.w500,
                                           ),
-                                          SizedBox(height: 5),
+                                          const SizedBox(height: 5),
                                           Container(
                                             decoration: BoxDecoration(
                                               border: Border.all(
@@ -907,7 +907,7 @@ class _DetailRecapPageState extends State<DetailRecapPage> {
                                                   BorderRadius.circular(5),
                                             ),
                                             child: Padding(
-                                              padding: EdgeInsets.all(9),
+                                              padding: const EdgeInsets.all(9),
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
@@ -938,7 +938,9 @@ class _DetailRecapPageState extends State<DetailRecapPage> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 10,),
+                                const SizedBox(
+                                  height: 10,
+                                ),
                                 Row(
                                   children: [
                                     Expanded(
@@ -952,8 +954,8 @@ class _DetailRecapPageState extends State<DetailRecapPage> {
                                             color: darkText,
                                             weight: FontWeight.w500,
                                           ),
-                                          SizedBox(height: 5),
-                                          TextFieldYa(),
+                                          const SizedBox(height: 5),
+                                          textFieldYa(lightText),
                                         ],
                                       ),
                                     ),
@@ -969,8 +971,8 @@ class _DetailRecapPageState extends State<DetailRecapPage> {
                                             color: darkText,
                                             weight: FontWeight.w500,
                                           ),
-                                          SizedBox(height: 5),
-                                          TextFieldYa(),
+                                          const SizedBox(height: 5),
+                                          textFieldYa(lightText),
                                         ],
                                       ),
                                     ),
@@ -986,22 +988,22 @@ class _DetailRecapPageState extends State<DetailRecapPage> {
                                             color: darkText,
                                             weight: FontWeight.w500,
                                           ),
-                                          SizedBox(height: 5),
-                                          TextFieldYa(),
+                                          const SizedBox(height: 5),
+                                          textFieldYa(lightText),
                                         ],
                                       ),
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 40),
+                                const SizedBox(height: 40),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     ElevatedButton(
                                       style: TextButton.styleFrom(
+                                        foregroundColor: Colors.white,
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 55, vertical: 22),
-                                        primary: Colors.white,
                                         backgroundColor: navButtonThird,
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
@@ -1033,11 +1035,11 @@ class _DetailRecapPageState extends State<DetailRecapPage> {
                                           side: const BorderSide(
                                               width: 2, // the thickness
                                               color:
-                                                  ColorThird // the color of the border
+                                                  colorThird // the color of the border
                                               )),
                                       child: const TextView(
                                         val: "Batal",
-                                        color: ColorThird,
+                                        color: colorThird,
                                         size: 15,
                                         weight: FontWeight.w600,
                                       ),
@@ -1066,368 +1068,377 @@ class _DetailRecapPageState extends State<DetailRecapPage> {
     final deviceWidth = MediaQuery.of(context).size.width;
     final deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-        body: ScrollConfiguration(
-      behavior: ScrollConfiguration.of(context).copyWith(
-          dragDevices: {PointerDeviceKind.touch, PointerDeviceKind.mouse}),
-      child: SingleChildScrollView(
-        physics: const ClampingScrollPhysics(),
-        controller: ScrollController(),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(25, 50, 25, 25),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          TextView(
-                            val: "SO No",
-                            color: darkText,
-                            weight: FontWeight.w500,
-                          ),
-                          SizedBox(height: 5),
-                          TextView(
-                            val: "Item Name",
-                            color: darkText,
-                            weight: FontWeight.w500,
-                          ),
-                          SizedBox(height: 5),
-                          TextView(
-                            val: "Material",
-                            color: darkText,
-                            weight: FontWeight.w500,
-                          ),
-                          SizedBox(height: 5),
-                          TextView(
-                            val: "QTY",
-                            color: darkText,
-                            weight: FontWeight.w500,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(width: 55),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          TextView(
-                            val: ": 0001",
-                            color: darkText,
-                            weight: FontWeight.w500,
-                          ),
-                          SizedBox(height: 5),
-                          TextView(
-                            val: ": Ikan Laut Salmon 70g",
-                            color: darkText,
-                            weight: FontWeight.w500,
-                          ),
-                          SizedBox(height: 5),
-                          TextView(
-                            val: ": NY/PE1",
-                            color: darkText,
-                            weight: FontWeight.w500,
-                          ),
-                          SizedBox(height: 5),
-                          TextView(
-                            val: ": 66.000 Roll",
-                            color: darkText,
-                            weight: FontWeight.w500,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          TextView(
-                            val: "Date",
-                            color: darkText,
-                            weight: FontWeight.w500,
-                          ),
-                          SizedBox(height: 5),
-                          TextView(
-                            val: "Internal Instruction No",
-                            color: darkText,
-                            weight: FontWeight.w500,
-                          ),
-                          SizedBox(height: 5),
-                          TextView(
-                            val: "Customer",
-                            color: darkText,
-                            weight: FontWeight.w500,
-                          ),
-                          SizedBox(height: 5),
-                          TextView(
-                            val: "Delivery Period",
-                            color: darkText,
-                            weight: FontWeight.w500,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(width: 55),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          TextView(
-                            val: ": Monday, 02 Januari 2022",
-                            color: darkText,
-                            weight: FontWeight.w500,
-                          ),
-                          SizedBox(height: 5),
-                          TextView(
-                            val: ": 12345",
-                            color: darkText,
-                            weight: FontWeight.w500,
-                          ),
-                          SizedBox(height: 5),
-                          TextView(
-                            val: ": Reyner",
-                            color: darkText,
-                            weight: FontWeight.w500,
-                          ),
-                          SizedBox(height: 5),
-                          TextView(
-                            val: ": 22 Januari 2022",
-                            color: darkText,
-                            weight: FontWeight.w500,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              SizedBox(
-                height: deviceHeight,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  // controller: ScrollController(),
-                  // physics: const ClampingScrollPhysics(),
-                  itemCount: 8,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 25),
-                      child: SingleChildScrollView(
-                        physics: const ClampingScrollPhysics(),
-                        controller: ScrollController(),
-                        child: Column(
+      body: ScrollConfiguration(
+        behavior: ScrollConfiguration.of(context).copyWith(
+            dragDevices: {PointerDeviceKind.touch, PointerDeviceKind.mouse}),
+        child: SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
+          controller: ScrollController(),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(25, 50, 25, 25),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Tabel 1",
-                                    style: GoogleFonts.inter(
-                                        fontSize: 20,
-                                        color: darkText,
-                                        fontWeight: FontWeight.w800),
-                                  ),
-                                  const SizedBox(height: 15),
-                                  SingleChildScrollView(
-                                    physics: const ClampingScrollPhysics(),
-                                    controller: ScrollController(),
-                                    scrollDirection: Axis.horizontal,
-                                    child: DataTable(
-                                      border: TableBorder.all(
-                                        color: Colors.black.withOpacity(0.5),
-                                        style: BorderStyle.solid,
-                                      ),
-                                      headingRowHeight: 30,
-                                      dataRowHeight: 30,
-                                      columnSpacing: 30,
-                                      columns: [
-                                        datColBold2("NY"),
-                                        datColBold2("mtr"),
-                                        datColBold2("kg"),
-                                        datColBold2("price/kg"),
-                                        //datCol("Aksi"),
-                                      ],
-                                      rows: [
-                                        DataRow(
-                                          cells: [
-                                            datRowBold3("(W)760", 0, context),
-                                            datRowBold3("15.180", 0, context),
-                                            datRowBold3("201", 0, context),
-                                            datRowBold3("60.000", 0, context),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 25,
-                                  ),
-                                  SingleChildScrollView(
-                                    physics: const ClampingScrollPhysics(),
-                                    controller: ScrollController(),
-                                    scrollDirection: Axis.horizontal,
-                                    child: DataTable(
-                                      border: TableBorder.all(
-                                        color: Colors.black.withOpacity(0.5),
-                                        style: BorderStyle.solid,
-                                      ),
-                                      columnSpacing: 30,
-                                      headingRowHeight: 30,
-                                      dataRowHeight: 30,
-                                      columns: [
-                                        datColBold("PO Supplier"),
-                                        datColBold("mtr"),
-                                        datColBold("kg"),
-                                        datColBold("price/kg"),
-                                        //datCol("Aksi"),
-                                      ],
-                                      rows: List.generate(
-                                        20,
-                                        (index) {
-                                          return DataRow(
-                                            cells: [
-                                              datRowBold2("(W)760",
-                                                  "05/09/2022", context),
-                                              datRowBold1("24.000", 0, context),
-                                              datRowBold1("326", 0, context),
-                                              datRowBold1("59.000", 0, context),
-                                            ],
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                  SingleChildScrollView(
-                                    physics: const ClampingScrollPhysics(),
-                                    controller: ScrollController(),
-                                    scrollDirection: Axis.horizontal,
-                                    child: DataTable(
-                                      border: TableBorder(
-                                        bottom: BorderSide(
-                                          color: Colors.black.withOpacity(0.5),
-                                          style: BorderStyle.solid,
-                                        ),
-                                        left: BorderSide(
-                                          color: Colors.black.withOpacity(0.5),
-                                          style: BorderStyle.solid,
-                                        ),
-                                        right: BorderSide(
-                                          color: Colors.black.withOpacity(0.5),
-                                          style: BorderStyle.solid,
-                                        ),
-                                        verticalInside: BorderSide(
-                                          color: Colors.black.withOpacity(0.5),
-                                          style: BorderStyle.solid,
-                                        ),
-                                        horizontalInside: BorderSide(
-                                          color: Colors.black.withOpacity(0.5),
-                                          style: BorderStyle.solid,
-                                        ),
-                                      ),
-                                      headingRowHeight: 30,
-                                      dataRowHeight: 30,
-                                      columnSpacing: 30,
-                                      columns: [
-                                        datColBoldSamping2("Total"),
-                                        datColBoldSamping3("24.000"),
-                                        datColBoldSamping3("326"),
-                                        datColBoldSamping3("59.000"),
-                                      ],
-                                      rows: [
-                                        DataRow(
-                                          cells: [
-                                            datRowBold1Samping(
-                                                "OUTSTANDING", 0, context),
-                                            datRowBold4("8.820", 0, context),
-                                            datRowBold4("125", 0, context),
-                                            datRowBold4("1.000", 0, context),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
+                          children: const [
+                            TextView(
+                              val: "SO No",
+                              color: darkText,
+                              weight: FontWeight.w500,
+                            ),
+                            SizedBox(height: 5),
+                            TextView(
+                              val: "Item Name",
+                              color: darkText,
+                              weight: FontWeight.w500,
+                            ),
+                            SizedBox(height: 5),
+                            TextView(
+                              val: "Material",
+                              color: darkText,
+                              weight: FontWeight.w500,
+                            ),
+                            SizedBox(height: 5),
+                            TextView(
+                              val: "QTY",
+                              color: darkText,
+                              weight: FontWeight.w500,
                             ),
                           ],
                         ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(height: 15),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      // widget.controllerPageRecapDetail.animateToPage(0,
-                      //         duration: const Duration(milliseconds: 250),
-                      //         curve: Curves.ease);
-                      widget.controllerPageRecap.animateToPage(0,
-                          duration: const Duration(milliseconds: 250),
-                          curve: Curves.ease);
-                    },
-                    style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 55, vertical: 22),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        side: const BorderSide(
-                            width: 2, // the thickness
-                            color: colorThird // the color of the border
-                            )),
-                    child: Row(
-                      children: const [
-                        Icon(Icons.arrow_back_outlined, color: colorThird),
-                        SizedBox(width: 5),
-                        TextView(
-                          val: "Back",
-                          color: colorThird,
-                          size: 15,
-                          weight: FontWeight.w600,
+                        const SizedBox(width: 55),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            TextView(
+                              val: ": 0001",
+                              color: darkText,
+                              weight: FontWeight.w500,
+                            ),
+                            SizedBox(height: 5),
+                            TextView(
+                              val: ": Ikan Laut Salmon 70g",
+                              color: darkText,
+                              weight: FontWeight.w500,
+                            ),
+                            SizedBox(height: 5),
+                            TextView(
+                              val: ": NY/PE1",
+                              color: darkText,
+                              weight: FontWeight.w500,
+                            ),
+                            SizedBox(height: 5),
+                            TextView(
+                              val: ": 66.000 Roll",
+                              color: darkText,
+                              weight: FontWeight.w500,
+                            ),
+                          ],
                         ),
                       ],
                     ),
+                    Row(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            TextView(
+                              val: "Date",
+                              color: darkText,
+                              weight: FontWeight.w500,
+                            ),
+                            SizedBox(height: 5),
+                            TextView(
+                              val: "Internal Instruction No",
+                              color: darkText,
+                              weight: FontWeight.w500,
+                            ),
+                            SizedBox(height: 5),
+                            TextView(
+                              val: "Customer",
+                              color: darkText,
+                              weight: FontWeight.w500,
+                            ),
+                            SizedBox(height: 5),
+                            TextView(
+                              val: "Delivery Period",
+                              color: darkText,
+                              weight: FontWeight.w500,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(width: 55),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            TextView(
+                              val: ": Monday, 02 Januari 2022",
+                              color: darkText,
+                              weight: FontWeight.w500,
+                            ),
+                            SizedBox(height: 5),
+                            TextView(
+                              val: ": 12345",
+                              color: darkText,
+                              weight: FontWeight.w500,
+                            ),
+                            SizedBox(height: 5),
+                            TextView(
+                              val: ": Reyner",
+                              color: darkText,
+                              weight: FontWeight.w500,
+                            ),
+                            SizedBox(height: 5),
+                            TextView(
+                              val: ": 22 Januari 2022",
+                              color: darkText,
+                              weight: FontWeight.w500,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                SizedBox(
+                  height: deviceHeight,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    // controller: ScrollController(),
+                    // physics: const ClampingScrollPhysics(),
+                    itemCount: 8,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 25),
+                        child: SingleChildScrollView(
+                          physics: const ClampingScrollPhysics(),
+                          controller: ScrollController(),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Tabel 1",
+                                      style: GoogleFonts.inter(
+                                          fontSize: 20,
+                                          color: darkText,
+                                          fontWeight: FontWeight.w800),
+                                    ),
+                                    const SizedBox(height: 15),
+                                    SingleChildScrollView(
+                                      physics: const ClampingScrollPhysics(),
+                                      controller: ScrollController(),
+                                      scrollDirection: Axis.horizontal,
+                                      child: DataTable(
+                                        border: TableBorder.all(
+                                          color: Colors.black.withOpacity(0.5),
+                                          style: BorderStyle.solid,
+                                        ),
+                                        headingRowHeight: 30,
+                                        dataRowHeight: 30,
+                                        columnSpacing: 30,
+                                        columns: [
+                                          datColBold2("NY"),
+                                          datColBold2("mtr"),
+                                          datColBold2("kg"),
+                                          datColBold2("price/kg"),
+                                          //datCol("Aksi"),
+                                        ],
+                                        rows: [
+                                          DataRow(
+                                            cells: [
+                                              datRowBold3("(W)760", 0, context),
+                                              datRowBold3("15.180", 0, context),
+                                              datRowBold3("201", 0, context),
+                                              datRowBold3("60.000", 0, context),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 25,
+                                    ),
+                                    SingleChildScrollView(
+                                      physics: const ClampingScrollPhysics(),
+                                      controller: ScrollController(),
+                                      scrollDirection: Axis.horizontal,
+                                      child: DataTable(
+                                        border: TableBorder.all(
+                                          color: Colors.black.withOpacity(0.5),
+                                          style: BorderStyle.solid,
+                                        ),
+                                        columnSpacing: 30,
+                                        headingRowHeight: 30,
+                                        dataRowHeight: 30,
+                                        columns: [
+                                          datColBold("PO Supplier"),
+                                          datColBold("mtr"),
+                                          datColBold("kg"),
+                                          datColBold("price/kg"),
+                                          //datCol("Aksi"),
+                                        ],
+                                        rows: List.generate(
+                                          20,
+                                          (index) {
+                                            return DataRow(
+                                              cells: [
+                                                datRowBold2("(W)760",
+                                                    "05/09/2022", context),
+                                                datRowBold1(
+                                                    "24.000", 0, context),
+                                                datRowBold1("326", 0, context),
+                                                datRowBold1(
+                                                    "59.000", 0, context),
+                                              ],
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                    SingleChildScrollView(
+                                      physics: const ClampingScrollPhysics(),
+                                      controller: ScrollController(),
+                                      scrollDirection: Axis.horizontal,
+                                      child: DataTable(
+                                        border: TableBorder(
+                                          bottom: BorderSide(
+                                            color:
+                                                Colors.black.withOpacity(0.5),
+                                            style: BorderStyle.solid,
+                                          ),
+                                          left: BorderSide(
+                                            color:
+                                                Colors.black.withOpacity(0.5),
+                                            style: BorderStyle.solid,
+                                          ),
+                                          right: BorderSide(
+                                            color:
+                                                Colors.black.withOpacity(0.5),
+                                            style: BorderStyle.solid,
+                                          ),
+                                          verticalInside: BorderSide(
+                                            color:
+                                                Colors.black.withOpacity(0.5),
+                                            style: BorderStyle.solid,
+                                          ),
+                                          horizontalInside: BorderSide(
+                                            color:
+                                                Colors.black.withOpacity(0.5),
+                                            style: BorderStyle.solid,
+                                          ),
+                                        ),
+                                        headingRowHeight: 30,
+                                        dataRowHeight: 30,
+                                        columnSpacing: 30,
+                                        columns: [
+                                          datColBoldSamping2("Total"),
+                                          datColBoldSamping3("24.000"),
+                                          datColBoldSamping3("326"),
+                                          datColBoldSamping3("59.000"),
+                                        ],
+                                        rows: [
+                                          DataRow(
+                                            cells: [
+                                              datRowBold1Samping(
+                                                  "OUTSTANDING", 0, context),
+                                              datRowBold4("8.820", 0, context),
+                                              datRowBold4("125", 0, context),
+                                              datRowBold4("1.000", 0, context),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
                   ),
-                  const SizedBox(width: 20),
-                  ElevatedButton(
-                    style: TextButton.styleFrom(
-                      foregroundColor: Colors.white, padding: const EdgeInsets.symmetric(
-                          horizontal: 55, vertical: 22),
-                      backgroundColor: navButtonThird,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
+                ),
+                const SizedBox(height: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        // widget.controllerPageRecapDetail.animateToPage(0,
+                        //         duration: const Duration(milliseconds: 250),
+                        //         curve: Curves.ease);
+                        widget.controllerPageRecap.animateToPage(0,
+                            duration: const Duration(milliseconds: 250),
+                            curve: Curves.ease);
+                      },
+                      style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 55, vertical: 22),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          side: const BorderSide(
+                              width: 2, // the thickness
+                              color: colorThird // the color of the border
+                              )),
+                      child: Row(
+                        children: const [
+                          Icon(Icons.arrow_back_outlined, color: colorThird),
+                          SizedBox(width: 5),
+                          TextView(
+                            val: "Back",
+                            color: colorThird,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                        ],
                       ),
                     ),
-                    onPressed: () {
-                      _showInsertData(context);
-                      //Navigator.pop(context);
-                    },
-                    child: const TextView(
-                      val: "Insert Data",
-                      color: lightText,
-                      size: 15,
-                      weight: FontWeight.w600,
+                    const SizedBox(width: 20),
+                    ElevatedButton(
+                      style: TextButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 55, vertical: 22),
+                        backgroundColor: navButtonThird,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      onPressed: () {
+                        _showInsertData(context);
+                        //Navigator.pop(context);
+                      },
+                      child: const TextView(
+                        val: "Insert Data",
+                        color: lightText,
+                        size: 15,
+                        weight: FontWeight.w600,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
-    ));
+    );
   }
 }
