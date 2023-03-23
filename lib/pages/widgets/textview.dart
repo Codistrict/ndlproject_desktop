@@ -429,13 +429,6 @@ datColBoldSamping2(value) {
 datRowBold1(value1, pw, context) {
   return DataCell(
     GestureDetector(
-      onLongPress: () {
-        if (pw == 1) {
-          peringatanDialog(context);
-        } else {
-          debugPrint("Tidak Dapat Ditekan");
-        }
-      },
       child: SizedBox(
         width: 180,
         child: Center(
@@ -454,13 +447,6 @@ datRowBold1(value1, pw, context) {
 datRowBold4(value1, pw, context) {
   return DataCell(
     GestureDetector(
-      onLongPress: () {
-        if (pw == 1) {
-          peringatanDialog(context);
-        } else {
-          debugPrint("Tidak Dapat Ditekan");
-        }
-      },
       child: SizedBox(
         width: 180,
         child: Center(
@@ -479,13 +465,6 @@ datRowBold4(value1, pw, context) {
 datRowBold3(value1, pw, context) {
   return DataCell(
     GestureDetector(
-      onLongPress: () {
-        if (pw == 1) {
-          peringatanDialog(context);
-        } else {
-          debugPrint("Tidak Dapat Ditekan");
-        }
-      },
       child: SizedBox(
         width: 100,
         child: Center(
@@ -504,13 +483,6 @@ datRowBold3(value1, pw, context) {
 datRowBold1Samping(value1, pw, context) {
   return DataCell(
     GestureDetector(
-      onLongPress: () {
-        if (pw == 1) {
-          peringatanDialog(context);
-        } else {
-          debugPrint("Tidak Dapat Ditekan");
-        }
-      },
       child: SizedBox(
         width: 180,
         child: TextView(
@@ -568,13 +540,6 @@ datRowBold2(value1, value2, context) {
 datRow1(value1, pw, context) {
   return DataCell(
     GestureDetector(
-      onLongPress: () {
-        if (pw == 1) {
-          peringatanDialog(context);
-        } else {
-          debugPrint("Tidak Dapat Ditekan");
-        }
-      },
       child: Center(
         child: TextView(
           val: value1.toString(),
