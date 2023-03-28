@@ -715,3 +715,46 @@ textFieldYa(color) {
     ),
   );
 }
+
+TextFieldYa2(FocusNode focus, color) {
+  return TextField(
+    focusNode: focus,
+    readOnly: false,
+    // controller:
+    //     _controllerJumlahBarangTambahPenjualan,
+    showCursor: true,
+    style: GoogleFonts.inter(
+      fontWeight: FontWeight.w500,
+      fontSize: 13,
+    ),
+    onChanged: (value) {},
+    decoration: InputDecoration(
+      filled: true,
+      fillColor: color,
+      hintStyle: GoogleFonts.inter(
+        fontWeight: FontWeight.w500,
+        fontSize: 13,
+      ),
+      contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5),
+        borderSide: const BorderSide(
+          width: 1.5,
+          color: darkText,
+        ),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5),
+        borderSide: const BorderSide(
+          color: darkText,
+        ),
+      ),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5),
+        borderSide: const BorderSide(
+          color: darkText,
+        ),
+      ),
+    ),
+  );
+}

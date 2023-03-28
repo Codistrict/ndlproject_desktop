@@ -1090,6 +1090,42 @@ class _EditNdlPageState extends State<EditNdlPage> {
   String _formattedDate2 = "";
   String _date2 = "";
 
+  final FocusNode myFocusNode0 = FocusNode();
+  final FocusNode myFocusNode = FocusNode();
+  final FocusNode myFocusNode2 = FocusNode();
+  final FocusNode myFocusNode3 = FocusNode();
+  final FocusNode myFocusNode4 = FocusNode();
+  final FocusNode myFocusNode5 = FocusNode();
+  final FocusNode myFocusNode6 = FocusNode();
+  final FocusNode myFocusNode7 = FocusNode();
+  final FocusNode myFocusNode8 = FocusNode();
+  final FocusNode myFocusNode9 = FocusNode();
+  final FocusNode myFocusNode10 = FocusNode();
+  final FocusNode myFocusNode11 = FocusNode();
+  final FocusNode myFocusNode12 = FocusNode();
+  final FocusNode myFocusNode13 = FocusNode();
+  final FocusNode myFocusNode14 = FocusNode();
+  final FocusNode myFocusNode15 = FocusNode();
+  final FocusNode myFocusNode16 = FocusNode();
+  final FocusNode myFocusNode17 = FocusNode();
+  final FocusNode myFocusNode18 = FocusNode();
+  final FocusNode myFocusNode19 = FocusNode();
+  final FocusNode myFocusNode20 = FocusNode();
+  final FocusNode myFocusNode21 = FocusNode();
+  final FocusNode myFocusNode22 = FocusNode();
+  final FocusNode myFocusNode23 = FocusNode();
+  final FocusNode myFocusNode24 = FocusNode();
+  final FocusNode myFocusNodeUp = FocusNode();
+
+  // void dispose() {
+  //   focusNode.dispose();
+  //   super.dispose();
+  // }
+
+  void _jumToWidget(focusKirim) {
+    FocusScope.of(context).requestFocus(focusKirim);
+  }
+
   Future<void> selectFilterDate1(context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -1099,14 +1135,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
       builder: (context, child) {
         return Theme(
             data: Theme.of(context).copyWith(
-              colorScheme: const ColorScheme.light(
+              colorScheme: ColorScheme.light(
                 primary: Color(0xff13293D),
                 onPrimary: lightText,
                 onSurface: darkText,
               ),
               textButtonTheme: TextButtonThemeData(
                 style: TextButton.styleFrom(
-                  foregroundColor: const Color(0xff13293D), // button text color
+                  foregroundColor: Color(0xff13293D), // button text color
                 ),
               ),
             ),
@@ -1133,14 +1169,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
       builder: (context, child) {
         return Theme(
             data: Theme.of(context).copyWith(
-              colorScheme: const ColorScheme.light(
+              colorScheme: ColorScheme.light(
                 primary: Color(0xff13293D),
                 onPrimary: lightText,
                 onSurface: darkText,
               ),
               textButtonTheme: TextButtonThemeData(
                 style: TextButton.styleFrom(
-                  foregroundColor: const Color(0xff13293D), // button text color
+                  foregroundColor: Color(0xff13293D), // button text color
                 ),
               ),
             ),
@@ -1160,8 +1196,6 @@ class _EditNdlPageState extends State<EditNdlPage> {
 
   final _controllerNamaBarangTambahPenjualan = TextEditingController();
   final List<String> _namaStockArray = [
-    "Tambahkan Data Tanggal",
-    "Customer Delivery Date",
     "Job Done",
     "Analyzer Version",
     "Order Status",
@@ -1213,6 +1247,18 @@ class _EditNdlPageState extends State<EditNdlPage> {
     final deviceWidth = MediaQuery.of(context).size.width;
     final deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            _jumToWidget(myFocusNodeUp);
+          });
+        },
+        backgroundColor: secondaryColor,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(50))
+        ),
+        child: const Icon(Icons.arrow_upward_outlined, color: primaryColor,),
+      ),
       body: ScrollConfiguration(
         behavior: ScrollConfiguration.of(context).copyWith(
             dragDevices: {PointerDeviceKind.touch, PointerDeviceKind.mouse}),
@@ -1230,19 +1276,20 @@ class _EditNdlPageState extends State<EditNdlPage> {
                   size: 18,
                   weight: FontWeight.w700,
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20),
                 const TextView(
                   val: "Pilih Kolom Yang Ingin Di Edit",
                   color: darkText,
                   size: 15,
                   weight: FontWeight.w600,
                 ),
-                const SizedBox(height: 5),
+                SizedBox(height: 5),
                 Row(
                   children: [
                     Expanded(
                       child: TypeAheadField<String>(
                         textFieldConfiguration: TextFieldConfiguration(
+                          focusNode: myFocusNodeUp,
                           controller: _controllerNamaBarangTambahPenjualan,
                           autofocus: false,
                           style: GoogleFonts.inter(
@@ -1252,7 +1299,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: lightText,
-                            hintText: 'Pilih Nama Barang',
+                            hintText: 'Pilih Kolom Edit',
                             hintStyle: GoogleFonts.inter(
                               fontWeight: FontWeight.w500,
                               fontSize: 13,
@@ -1290,7 +1337,81 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         onSuggestionSelected: (String suggestion) {
                           _controllerNamaBarangTambahPenjualan.text =
                               suggestion;
-                          debugPrint(suggestion);
+                          setState(() {
+                            if (suggestion == "Job Done") {
+                              _jumToWidget(myFocusNode);
+                            }
+                            if (suggestion == "Analyzer Version") {
+                              _jumToWidget(myFocusNode2);
+                            }
+                            if (suggestion == "Order Status") {
+                              _jumToWidget(myFocusNode3);
+                            }
+                            if (suggestion == "Cylinder Status") {
+                              _jumToWidget(myFocusNode4);
+                            }
+                            if (suggestion == "Gol") {
+                              _jumToWidget(myFocusNode5);
+                            }
+                            if (suggestion == "Nama Customer") {
+                              _jumToWidget(myFocusNode6);
+                            }
+                            if (suggestion == "Nama Item") {
+                              _jumToWidget(myFocusNode7);
+                            }
+                            if (suggestion == "Model") {
+                              _jumToWidget(myFocusNode8);
+                            }
+                            if (suggestion == "Up") {
+                              _jumToWidget(myFocusNode9);
+                            }
+                            if (suggestion == "Repeat") {
+                              _jumToWidget(myFocusNode10);
+                            }
+                            if (suggestion == "Toleransi") {
+                              _jumToWidget(myFocusNode11);
+                            }
+                            if (suggestion == "Order Masuk") {
+                              _jumToWidget(myFocusNode12);
+                            }
+                            if (suggestion == "Width") {
+                              _jumToWidget(myFocusNode13);
+                            }
+                            if (suggestion == "Length") {
+                              _jumToWidget(myFocusNode14);
+                            }
+                            if (suggestion == "Gusset") {
+                              _jumToWidget(myFocusNode15);
+                            }
+                            if (suggestion == "W") {
+                              _jumToWidget(myFocusNode16);
+                            }
+                            if (suggestion == "C") {
+                              _jumToWidget(myFocusNode17);
+                            }
+                            if (suggestion == "Color") {
+                              _jumToWidget(myFocusNode18);
+                            }
+                            if (suggestion == "Layer 1") {
+                              _jumToWidget(myFocusNode19);
+                            }
+                            if (suggestion == "Layer 2") {
+                              _jumToWidget(myFocusNode20);
+                            }
+                            if (suggestion == "Layer 3") {
+                              _jumToWidget(myFocusNode21);
+                            }
+                            if (suggestion == "Layer 4") {
+                              _jumToWidget(myFocusNode22);
+                            }
+                            if (suggestion == "Layer 5") {
+                              _jumToWidget(myFocusNode23);
+                            }
+                            if (suggestion == "Layer 6") {
+                              _jumToWidget(myFocusNode24);
+                            }
+                          });
+                          print(suggestion);
                         },
                         getImmediateSuggestions: true,
                         hideSuggestionsOnKeyboardHide: false,
@@ -1301,7 +1422,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 15),
+                    SizedBox(width: 15),
                     Expanded(
                       child: TextField(
                         readOnly: true,
@@ -1345,20 +1466,22 @@ class _EditNdlPageState extends State<EditNdlPage> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const TextView(
-                            val: "Masukkan Tambah Data Tanggal",
-                            color: darkText,
-                            size: 15,
-                            weight: FontWeight.w600,
+                          GestureDetector(
+                            child: const TextView(
+                              val: "Masukkan Tambah Data Tanggal",
+                              color: darkText,
+                              size: 15,
+                              weight: FontWeight.w600,
+                            ),
                           ),
-                          const SizedBox(height: 5),
+                          SizedBox(height: 5),
                           Container(
                             decoration: BoxDecoration(
                               border: Border.all(
@@ -1368,7 +1491,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                               borderRadius: BorderRadius.circular(5),
                             ),
                             child: Padding(
-                              padding: const EdgeInsets.all(9),
+                              padding: EdgeInsets.all(9),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -1392,7 +1515,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         ],
                       ),
                     ),
-                    const SizedBox(width: 15),
+                    SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1403,7 +1526,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
+                          SizedBox(height: 5),
                           Container(
                             decoration: BoxDecoration(
                               border: Border.all(
@@ -1413,7 +1536,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                               borderRadius: BorderRadius.circular(5),
                             ),
                             child: Padding(
-                              padding: const EdgeInsets.all(9),
+                              padding: EdgeInsets.all(9),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -1439,7 +1562,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1452,12 +1575,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode, lightText),
                         ],
                       ),
                     ),
-                    const SizedBox(width: 15),
+                    SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1468,14 +1591,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode2, lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1488,12 +1611,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode3, lightText),
                         ],
                       ),
                     ),
-                    const SizedBox(width: 15),
+                    SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1504,14 +1627,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode4, lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1524,12 +1647,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode5, lightText),
                         ],
                       ),
                     ),
-                    const SizedBox(width: 15),
+                    SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1540,14 +1663,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode6, lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1560,12 +1683,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode7, lightText),
                         ],
                       ),
                     ),
-                    const SizedBox(width: 15),
+                    SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1576,14 +1699,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode8, lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1596,12 +1719,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode9, lightText),
                         ],
                       ),
                     ),
-                    const SizedBox(width: 15),
+                    SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1612,14 +1735,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode10, lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1632,12 +1755,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode11, lightText),
                         ],
                       ),
                     ),
-                    const SizedBox(width: 15),
+                    SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1648,14 +1771,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode12, lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1668,12 +1791,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode13, lightText),
                         ],
                       ),
                     ),
-                    const SizedBox(width: 15),
+                    SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1684,14 +1807,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode14, lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1704,12 +1827,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode15, lightText),
                         ],
                       ),
                     ),
-                    const SizedBox(width: 15),
+                    SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1720,14 +1843,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode16, lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1740,12 +1863,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode17, lightText),
                         ],
                       ),
                     ),
-                    const SizedBox(width: 15),
+                    SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1756,21 +1879,21 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode18, lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 30),
+                SizedBox(height: 30),
                 const TextView(
                   val: "Layer 1",
                   color: darkText,
                   size: 22,
                   weight: FontWeight.w700,
                 ),
-                const SizedBox(height: 30),
+                SizedBox(height: 30),
                 Row(
                   children: [
                     Expanded(
@@ -1783,12 +1906,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode19, lightText),
                         ],
                       ),
                     ),
-                    const SizedBox(width: 15),
+                    SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1799,14 +1922,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode0, lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1819,12 +1942,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode0, lightText),
                         ],
                       ),
                     ),
-                    const SizedBox(width: 15),
+                    SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1835,21 +1958,21 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode0, lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 30),
+                SizedBox(height: 30),
                 const TextView(
                   val: "Layer 2",
                   color: darkText,
                   size: 22,
                   weight: FontWeight.w700,
                 ),
-                const SizedBox(height: 30),
+                SizedBox(height: 30),
                 Row(
                   children: [
                     Expanded(
@@ -1862,12 +1985,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode20, lightText),
                         ],
                       ),
                     ),
-                    const SizedBox(width: 15),
+                    SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1878,14 +2001,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode0, lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1898,12 +2021,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode0, lightText),
                         ],
                       ),
                     ),
-                    const SizedBox(width: 15),
+                    SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1914,21 +2037,21 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode0, lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 30),
+                SizedBox(height: 30),
                 const TextView(
                   val: "Layer 3",
                   color: darkText,
                   size: 22,
                   weight: FontWeight.w700,
                 ),
-                const SizedBox(height: 30),
+                SizedBox(height: 30),
                 Row(
                   children: [
                     Expanded(
@@ -1941,12 +2064,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode21, lightText),
                         ],
                       ),
                     ),
-                    const SizedBox(width: 15),
+                    SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1957,14 +2080,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode0, lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1977,12 +2100,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode0, lightText),
                         ],
                       ),
                     ),
-                    const SizedBox(width: 15),
+                    SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1993,21 +2116,21 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode0, lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 30),
+                SizedBox(height: 30),
                 const TextView(
                   val: "Layer 4",
                   color: darkText,
                   size: 22,
                   weight: FontWeight.w700,
                 ),
-                const SizedBox(height: 30),
+                SizedBox(height: 30),
                 Row(
                   children: [
                     Expanded(
@@ -2020,12 +2143,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode22, lightText),
                         ],
                       ),
                     ),
-                    const SizedBox(width: 15),
+                    SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -2036,14 +2159,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode0, lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -2056,12 +2179,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode0, lightText),
                         ],
                       ),
                     ),
-                    const SizedBox(width: 15),
+                    SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -2072,21 +2195,21 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode0, lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 30),
+                SizedBox(height: 30),
                 const TextView(
                   val: "Layer 5",
                   color: darkText,
                   size: 22,
                   weight: FontWeight.w700,
                 ),
-                const SizedBox(height: 30),
+                SizedBox(height: 30),
                 Row(
                   children: [
                     Expanded(
@@ -2099,12 +2222,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode23, lightText),
                         ],
                       ),
                     ),
-                    const SizedBox(width: 15),
+                    SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -2115,14 +2238,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode0, lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -2135,12 +2258,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode0, lightText),
                         ],
                       ),
                     ),
-                    const SizedBox(width: 15),
+                    SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -2151,21 +2274,21 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode0, lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 30),
+                SizedBox(height: 30),
                 const TextView(
                   val: "Layer 6",
                   color: darkText,
                   size: 22,
                   weight: FontWeight.w700,
                 ),
-                const SizedBox(height: 30),
+                SizedBox(height: 30),
                 Row(
                   children: [
                     Expanded(
@@ -2178,12 +2301,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode24, lightText),
                         ],
                       ),
                     ),
-                    const SizedBox(width: 15),
+                    SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -2194,14 +2317,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode0, lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -2214,12 +2337,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode0, lightText),
                         ],
                       ),
                     ),
-                    const SizedBox(width: 15),
+                    SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -2230,14 +2353,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 5),
-                          textFieldYa(lightText),
+                          SizedBox(height: 5),
+                          TextFieldYa2(myFocusNode0, lightText),
                         ],
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -2253,7 +2376,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          side: const BorderSide(
+                          side:  BorderSide(
                               width: 2, // the thickness
                               color: colorThird // the color of the border
                               )),
@@ -2273,17 +2396,15 @@ class _EditNdlPageState extends State<EditNdlPage> {
                     const SizedBox(width: 20),
                     ElevatedButton(
                       style: TextButton.styleFrom(
-                        foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(
                             horizontal: 55, vertical: 22),
+                        primary: Colors.white,
                         backgroundColor: navButtonThird,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5),
                         ),
                       ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
+                      onPressed: () {},
                       child: const TextView(
                         val: "Simpan",
                         color: lightText,
@@ -2301,6 +2422,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
     );
   }
 }
+
 
 // Page isi dari upload Excel
 class ConfirmNDL extends StatefulWidget {
