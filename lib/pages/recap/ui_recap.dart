@@ -5,9 +5,12 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:ndlproject_desktop/pages/recap/service_recap.dart';
 import 'package:ndlproject_desktop/pages/widgets/textview.dart';
 import 'package:ndlproject_desktop/themes/colors.dart';
 import 'package:number_paginator/number_paginator.dart';
+
+ServicesRecap _servicesRecap = ServicesRecap();
 
 class AdminControllerRecapPage extends StatefulWidget {
   const AdminControllerRecapPage({Key? key}) : super(key: key);
@@ -62,9 +65,12 @@ class _RecapPageState extends State<RecapPage> {
   int numberOfPage = 100;
   int currentPage = 0;
 
+  late Future recapList;
+
   @override
   void initState() {
     super.initState();
+    recapList = _servicesRecap.readRecap(1);
   }
 
   showEdit(dw, dh) {
@@ -252,482 +258,489 @@ class _RecapPageState extends State<RecapPage> {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(25, 25, 0, 25),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                      child: SingleChildScrollView(
-                    physics: const ClampingScrollPhysics(),
-                    controller: ScrollController(),
-                    scrollDirection: Axis.horizontal,
-                    child: DataTable(
-                        border: TableBorder.all(
-                          color: Colors.black.withOpacity(0.5),
-                          style: BorderStyle.solid,
-                        ),
-                        headingRowHeight: 50,
-                        dataRowHeight: 50,
-                        columns: [
-                          datCol("Date"),
-                          datCol("No WS"),
-                          datCol("Customer"),
-                          datCol("Item Name"),
-                          datCol("Order"),
-                          datCol("WS Meter"),
-                          datCol("Plant"),
-                          datCol("Delivery Periode"),
-                          datCol("Status"),
-                          datCol("Film 1 (M)"),
-                          datCol("Film 1 (M)"),
-                          datCol("Film 2 (M)"),
-                          datCol("Film 2 (M)"),
-                          datCol("Film 3 (M)"),
-                          datCol("Film 3 (M)"),
-                          datCol("Film 4 (M)"),
-                          datCol("Film 4 (M)"),
-                          datCol("Film 5 (M)"),
-                          datCol("Film 5 (M)"),
-                          datCol("Film 6 (M)"),
-                          datCol("Film 6 (M)"),
-                          datCol("Price 1 Diff"),
-                          datCol("Price 2 Diff"),
-                          datCol("Price 3 Diff"),
-                          datCol("Price 4 Diff"),
-                          datCol("Price 5 Diff"),
-                          datCol("Price 6 Diff"),
-                          datCol("Comment/Note"),
-                        ],
-                        rows: [
-                          DataRow(
-                            cells: [
-                              datRowrRecap("02-Jan-23"),
-                              // DataCell(
-                              //   TextField(
-                              //     autofocus: false,
-                              //     textInputAction: TextInputAction.next,
-                              //     onSubmitted: (String s) {
-                              //       FocusScope.of(context).unfocus();
-                              //     },
-                              //     style: GoogleFonts.inter(
-                              //       fontSize: 14,
-                              //       color: darkText,
-                              //       fontWeight: FontWeight.w500,
-                              //     ),
-                              //     textAlign: TextAlign.center,
-                              //     keyboardType: TextInputType.number,
-                              //     onChanged: (text) {},
-                              //   ),
-                              // ),
-                              datRowrRecap("001"),
-                              datRowrRecap("Reyner"),
-                              datRowrRecap("Ikan Salmon Laut 7g"),
-                              datRowrRecap("66.000"),
-                              datRowrRecap("15.180"),
-                              datRowrRecap("BBK"),
-                              datRowrRecap("BBK"),
-                              datRowrRecap("Completed"),
-                              datRowrRecap("100"),
-                              datRowrRecap("9000"),
-                              datRowrRecap("8500"),
-                              datRowrRecap("6300"),
-                              datRowrRecap("6450"),
-                              datRowrRecap("24000"),
-                              datRowrRecap("3100"),
-                              datRowrRecap("2364"),
-                              datRowrRecap("2164"),
-                              datRowrRecap("6640"),
-                              datRowrRecap("6200"),
-                              datRowrRecap("6000"),
-                              datRowrRecap("700"),
-                              datRowrRecap("500"),
-                              datRowrRecap("5000"),
-                              datRowrRecap("2000"),
-                              datRowrRecap("1000"),
-                              datRowrRecap("6000"),
-                              datRowrRecap(""),
-                            ],
-                            onLongPress: () {
-                              widget.controllerPageRecap.animateToPage(1,
-                                  duration: const Duration(milliseconds: 250),
-                                  curve: Curves.ease);
-                            },
+              child: FutureBuilder(
+                future: recapList,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    List snapData = snapshot.data! as List;
+                    if (snapData[0] != 404) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: SingleChildScrollView(
+                              physics: const ClampingScrollPhysics(),
+                              controller: ScrollController(),
+                              scrollDirection: Axis.horizontal,
+                              child: DataTable(
+                                border: TableBorder.all(
+                                  color: Colors.black.withOpacity(0.5),
+                                  style: BorderStyle.solid,
+                                ),
+                                headingRowHeight: 50,
+                                dataRowHeight: 50,
+                                columns: [
+                                  datCol("Date"),
+                                  datCol("No WS"),
+                                  datCol("Customer"),
+                                  datCol("Item Name"),
+                                  datCol("Order"),
+                                  datCol("WS Meter"),
+                                  datCol("Plant"),
+                                  datCol("Delivery Periode"),
+                                  datCol("Status"),
+                                  datCol("Film 1 (M)"),
+                                  datCol("Film 1 (KG)"),
+                                  datCol("Film 2 (M)"),
+                                  datCol("Film 2 (KG)"),
+                                  datCol("Film 3 (M)"),
+                                  datCol("Film 3 (KG)"),
+                                  datCol("Film 4 (M)"),
+                                  datCol("Film 4 (KG)"),
+                                  datCol("Film 5 (M)"),
+                                  datCol("Film 5 (KG)"),
+                                  datCol("Film 6 (M)"),
+                                  datCol("Film 6 (KG)"),
+                                  datCol("Price 1 Diff"),
+                                  datCol("Price 2 Diff"),
+                                  datCol("Price 3 Diff"),
+                                  datCol("Price 4 Diff"),
+                                  datCol("Price 5 Diff"),
+                                  datCol("Price 6 Diff"),
+                                  datCol("Comment/Note"),
+                                ],
+                                rows: List.generate(
+                                  snapData[2].length,
+                                  (index) {
+                                    return DataRow(
+                                      cells: [
+                                        datRowrRecap(
+                                            snapData[2][index]['date_rekap']),
+                                        // DataCell(
+                                        //   TextField(
+                                        //     autofocus: false,
+                                        //     textInputAction: TextInputAction.next,
+                                        //     onSubmitted: (String s) {
+                                        //       FocusScope.of(context).unfocus();
+                                        //     },
+                                        //     style: GoogleFonts.inter(
+                                        //       fontSize: 14,
+                                        //       color: darkText,
+                                        //       fontWeight: FontWeight.w500,
+                                        //     ),
+                                        //     textAlign: TextAlign.center,
+                                        //     keyboardType: TextInputType.number,
+                                        //     onChanged: (text) {},
+                                        //   ),
+                                        // ),
+                                        datRowrRecap(
+                                            snapData[2][index]['ws_no']),
+                                        datRowrRecap(snapData[2][index]
+                                            ['customer_name']),
+                                        datRowrRecap(
+                                            snapData[2][index]['item_name']),
+                                        datRowrRecap(
+                                            snapData[2][index]['order_rekap']),
+                                        datRowrRecap(
+                                            snapData[2][index]['ws_meter']),
+                                        datRowrRecap(
+                                            snapData[2][index]['plant']),
+                                        datRowrRecap(snapData[2][index]
+                                            ['delivery_period']),
+                                        datRowrRecap(
+                                            snapData[2][index]['status_rekap']),
+                                        // Meter & Kg
+                                        datRowrRecap(
+                                            snapData[2][index]['meter'][0]),
+                                        datRowrRecap(
+                                            snapData[2][index]['kg'][0]),
+                                        datRowrRecap(
+                                            snapData[2][index]['meter'][1]),
+                                        datRowrRecap(
+                                            snapData[2][index]['kg'][1]),
+                                        datRowrRecap(
+                                            snapData[2][index]['meter'][2]),
+                                        datRowrRecap(
+                                            snapData[2][index]['kg'][2]),
+                                        datRowrRecap(
+                                            snapData[2][index]['meter'][3]),
+                                        datRowrRecap(
+                                            snapData[2][index]['kg'][3]),
+                                        datRowrRecap(
+                                            snapData[2][index]['meter'][4]),
+                                        datRowrRecap(
+                                            snapData[2][index]['kg'][4]),
+                                        datRowrRecap(
+                                            snapData[2][index]['meter'][5]),
+                                        datRowrRecap(
+                                            snapData[2][index]['kg'][5]),
+                                        // Diff Price
+                                        datRowrRecap(snapData[2][index]
+                                            ['diff_price'][0]),
+                                        datRowrRecap(snapData[2][index]
+                                            ['diff_price'][1]),
+                                        datRowrRecap(snapData[2][index]
+                                            ['diff_price'][2]),
+                                        datRowrRecap(snapData[2][index]
+                                            ['diff_price'][3]),
+                                        datRowrRecap(snapData[2][index]
+                                            ['diff_price'][4]),
+                                        datRowrRecap(snapData[2][index]
+                                            ['diff_price'][5]),
+                                        datRowrRecap(
+                                            snapData[2][index]['comment_note']),
+                                      ],
+                                      onLongPress: () {
+                                        widget.controllerPageRecap
+                                            .animateToPage(1,
+                                                duration: const Duration(
+                                                    milliseconds: 250),
+                                                curve: Curves.ease);
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
                           ),
-                        ]),
-                  )),
-                  DataTable(
-                    border: TableBorder(
-                        top: BorderSide(color: Colors.black.withOpacity(0.5)),
-                        bottom:
-                            BorderSide(color: Colors.black.withOpacity(0.5)),
-                        horizontalInside: BorderSide(
-                            color: Colors.black.withOpacity(0.5),
-                            style: BorderStyle.solid)),
-                    headingRowHeight: 50,
-                    dataRowHeight: 50,
-                    columns: [
-                      datCol("Aksi"),
-                    ],
-                    rows: List.generate(
-                      1,
-                      (index) {
-                        return DataRow(
-                          cells: [
-                            DataCell(
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      showDialog(
-                                        barrierDismissible: false,
-                                        useRootNavigator: true,
-                                        context: context,
-                                        builder: (context) {
-                                          return StatefulBuilder(
-                                            builder: (context, setState) {
-                                              return Dialog(
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                ),
-                                                child: ScrollConfiguration(
-                                                  behavior:
-                                                      ScrollConfiguration.of(
-                                                              context)
-                                                          .copyWith(
-                                                    dragDevices: {
-                                                      PointerDeviceKind.touch,
-                                                      PointerDeviceKind.mouse,
-                                                    },
-                                                  ),
-                                                  child: SingleChildScrollView(
-                                                    physics:
-                                                        const ClampingScrollPhysics(),
-                                                    controller:
-                                                        ScrollController(),
-                                                    child: Container(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.5,
-                                                      padding: const EdgeInsets
-                                                              .fromLTRB(
-                                                          0, 15, 0, 0),
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          const Center(
-                                                            child: Padding(
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .all(8),
-                                                              child: TextView(
-                                                                val:
-                                                                    "Update Rekap",
-                                                                color: darkText,
-                                                                size: 25,
-                                                                weight:
-                                                                    FontWeight
-                                                                        .w700,
-                                                              ),
-                                                            ),
+                          DataTable(
+                            border: TableBorder(
+                                top: BorderSide(
+                                    color: Colors.black.withOpacity(0.5)),
+                                bottom: BorderSide(
+                                    color: Colors.black.withOpacity(0.5)),
+                                horizontalInside: BorderSide(
+                                    color: Colors.black.withOpacity(0.5),
+                                    style: BorderStyle.solid)),
+                            headingRowHeight: 50,
+                            dataRowHeight: 50,
+                            columns: [
+                              datCol("Aksi"),
+                            ],
+                            rows: List.generate(
+                              snapData[2].length,
+                              (index) {
+                                return DataRow(
+                                  cells: [
+                                    DataCell(
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              showDialog(
+                                                barrierDismissible: false,
+                                                useRootNavigator: true,
+                                                context: context,
+                                                builder: (context) {
+                                                  return StatefulBuilder(
+                                                    builder:
+                                                        (context, setState) {
+                                                      return Dialog(
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                        ),
+                                                        child:
+                                                            ScrollConfiguration(
+                                                          behavior:
+                                                              ScrollConfiguration
+                                                                      .of(context)
+                                                                  .copyWith(
+                                                            dragDevices: {
+                                                              PointerDeviceKind
+                                                                  .touch,
+                                                              PointerDeviceKind
+                                                                  .mouse,
+                                                            },
                                                           ),
-                                                          const Divider(
-                                                            thickness: 1,
-                                                            height: 20,
-                                                            color: darkText,
-                                                          ),
-                                                          Container(
+                                                          child:
+                                                              SingleChildScrollView(
+                                                            physics:
+                                                                const ClampingScrollPhysics(),
+                                                            controller:
+                                                                ScrollController(),
+                                                            child: Container(
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.5,
                                                               padding:
                                                                   const EdgeInsets
                                                                           .fromLTRB(
-                                                                      20,
-                                                                      20,
-                                                                      20,
-                                                                      15),
+                                                                      0,
+                                                                      15,
+                                                                      0,
+                                                                      0),
                                                               child: Column(
                                                                 crossAxisAlignment:
                                                                     CrossAxisAlignment
                                                                         .start,
                                                                 children: [
-                                                                  const TextView(
-                                                                    val:
-                                                                        "Update Status",
-                                                                    color:
-                                                                        darkText,
-                                                                    size: 16,
-                                                                    weight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                  ),
-                                                                  const SizedBox(
-                                                                      height:
-                                                                          13),
-                                                                  SizedBox(
-                                                                    width: MediaQuery.of(context)
-                                                                            .size
-                                                                            .width *
-                                                                        0.5,
-                                                                    child: DropdownSearch<
-                                                                        String>(
-                                                                      dropdownDecoratorProps: DropDownDecoratorProps(
-                                                                          textAlign: TextAlign.left,
-                                                                          dropdownSearchDecoration: InputDecoration(
-                                                                            filled:
-                                                                                true,
-                                                                            fillColor:
-                                                                                Colors.transparent,
-                                                                            iconColor:
-                                                                                darkText,
-                                                                            contentPadding:
-                                                                                const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                                                                            focusedBorder:
-                                                                                OutlineInputBorder(
-                                                                              borderRadius: BorderRadius.circular(10),
-                                                                              borderSide: const BorderSide(
-                                                                                color: darkText,
-                                                                              ),
-                                                                            ),
-                                                                            enabledBorder:
-                                                                                OutlineInputBorder(
-                                                                              borderRadius: BorderRadius.circular(10),
-                                                                              borderSide: const BorderSide(
-                                                                                color: darkText,
-                                                                              ),
-                                                                            ),
-                                                                            border:
-                                                                                OutlineInputBorder(
-                                                                              borderRadius: BorderRadius.circular(10),
-                                                                              borderSide: const BorderSide(
-                                                                                color: darkText,
-                                                                              ),
-                                                                            ),
-                                                                          )),
-                                                                      popupProps:
-                                                                          const PopupProps
-                                                                              .menu(
-                                                                        fit: FlexFit
-                                                                            .loose,
-                                                                        showSelectedItems:
-                                                                            false,
-                                                                        menuProps:
-                                                                            MenuProps(backgroundColor: Color(0xffeee8f4)),
+                                                                  const Center(
+                                                                    child:
+                                                                        Padding(
+                                                                      padding:
+                                                                          EdgeInsets.all(
+                                                                              8),
+                                                                      child:
+                                                                          TextView(
+                                                                        val:
+                                                                            "Update Rekap",
+                                                                        color:
+                                                                            darkText,
+                                                                        size:
+                                                                            25,
+                                                                        weight:
+                                                                            FontWeight.w700,
                                                                       ),
-                                                                      items: const [
-                                                                        "Completed 1",
-                                                                        "Completed 2",
-                                                                        "Completed 3",
-                                                                      ],
-                                                                      onChanged:
-                                                                          (val) {
-                                                                        setState(
-                                                                            () {});
-                                                                      },
-                                                                      selectedItem:
-                                                                          "",
                                                                     ),
                                                                   ),
-                                                                  const SizedBox(
-                                                                      height:
-                                                                          25),
-                                                                  const TextView(
-                                                                    val:
-                                                                        "Update Delivery Period",
+                                                                  const Divider(
+                                                                    thickness:
+                                                                        1,
+                                                                    height: 20,
                                                                     color:
                                                                         darkText,
-                                                                    size: 16,
-                                                                    weight:
-                                                                        FontWeight
-                                                                            .w600,
                                                                   ),
-                                                                  const SizedBox(
-                                                                      height:
-                                                                          13),
-                                                                  SizedBox(
-                                                                    width: MediaQuery.of(context)
-                                                                            .size
-                                                                            .width *
-                                                                        0.5,
-                                                                    child: DropdownSearch<
-                                                                        String>(
-                                                                      dropdownDecoratorProps: DropDownDecoratorProps(
-                                                                          textAlign: TextAlign.left,
-                                                                          dropdownSearchDecoration: InputDecoration(
-                                                                            filled:
-                                                                                true,
-                                                                            fillColor:
-                                                                                Colors.transparent,
-                                                                            iconColor:
+                                                                  Container(
+                                                                      padding: const EdgeInsets
+                                                                              .fromLTRB(
+                                                                          20,
+                                                                          20,
+                                                                          20,
+                                                                          15),
+                                                                      child:
+                                                                          Column(
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.start,
+                                                                        children: [
+                                                                          const TextView(
+                                                                            val:
+                                                                                "Update Status",
+                                                                            color:
                                                                                 darkText,
-                                                                            contentPadding:
-                                                                                const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                                                                            focusedBorder:
-                                                                                OutlineInputBorder(
-                                                                              borderRadius: BorderRadius.circular(10),
-                                                                              borderSide: const BorderSide(
-                                                                                color: darkText,
-                                                                              ),
-                                                                            ),
-                                                                            enabledBorder:
-                                                                                OutlineInputBorder(
-                                                                              borderRadius: BorderRadius.circular(10),
-                                                                              borderSide: const BorderSide(
-                                                                                color: darkText,
-                                                                              ),
-                                                                            ),
-                                                                            border:
-                                                                                OutlineInputBorder(
-                                                                              borderRadius: BorderRadius.circular(10),
-                                                                              borderSide: const BorderSide(
-                                                                                color: darkText,
-                                                                              ),
-                                                                            ),
-                                                                          )),
-                                                                      popupProps:
-                                                                          const PopupProps
-                                                                              .menu(
-                                                                        fit: FlexFit
-                                                                            .loose,
-                                                                        showSelectedItems:
-                                                                            false,
-                                                                        menuProps:
-                                                                            MenuProps(backgroundColor: Color(0xffeee8f4)),
-                                                                      ),
-                                                                      items: const [
-                                                                        "Completed 1",
-                                                                        "Completed 2",
-                                                                        "Completed 3",
-                                                                      ],
-                                                                      onChanged:
-                                                                          (val) {
-                                                                        setState(
-                                                                            () {});
-                                                                      },
-                                                                      selectedItem:
-                                                                          "",
-                                                                    ),
-                                                                  ),
-                                                                  const SizedBox(
-                                                                    height: 40,
-                                                                  ),
-                                                                  Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
-                                                                    children: [
-                                                                      ElevatedButton(
-                                                                        style: TextButton
-                                                                            .styleFrom(
-                                                                          foregroundColor:
-                                                                              Colors.white,
-                                                                          padding: const EdgeInsets.symmetric(
-                                                                              horizontal: 55,
-                                                                              vertical: 22),
-                                                                          backgroundColor:
-                                                                              navButtonThird,
-                                                                          shape:
-                                                                              RoundedRectangleBorder(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(5),
+                                                                            size:
+                                                                                16,
+                                                                            weight:
+                                                                                FontWeight.w600,
                                                                           ),
-                                                                        ),
-                                                                        onPressed:
-                                                                            () {
-                                                                          Navigator.pop(
-                                                                              context);
-                                                                        },
-                                                                        child:
-                                                                            const TextView(
-                                                                          val:
-                                                                              "Submit",
-                                                                          color:
-                                                                              lightText,
-                                                                          size:
-                                                                              15,
-                                                                          weight:
-                                                                              FontWeight.w600,
-                                                                        ),
-                                                                      ),
-                                                                      const SizedBox(
-                                                                          width:
-                                                                              20),
-                                                                      ElevatedButton(
-                                                                        onPressed:
-                                                                            () {
-                                                                          Navigator.pop(
-                                                                              context);
-                                                                        },
-                                                                        style: ElevatedButton.styleFrom(
-                                                                            padding: const EdgeInsets.symmetric(horizontal: 55, vertical: 22),
-                                                                            shape: RoundedRectangleBorder(
-                                                                              borderRadius: BorderRadius.circular(5),
+                                                                          const SizedBox(
+                                                                              height: 13),
+                                                                          SizedBox(
+                                                                            width:
+                                                                                MediaQuery.of(context).size.width * 0.5,
+                                                                            child:
+                                                                                DropdownSearch<String>(
+                                                                              dropdownDecoratorProps: DropDownDecoratorProps(
+                                                                                  textAlign: TextAlign.left,
+                                                                                  dropdownSearchDecoration: InputDecoration(
+                                                                                    filled: true,
+                                                                                    fillColor: Colors.transparent,
+                                                                                    iconColor: darkText,
+                                                                                    contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                                                                                    focusedBorder: OutlineInputBorder(
+                                                                                      borderRadius: BorderRadius.circular(10),
+                                                                                      borderSide: const BorderSide(
+                                                                                        color: darkText,
+                                                                                      ),
+                                                                                    ),
+                                                                                    enabledBorder: OutlineInputBorder(
+                                                                                      borderRadius: BorderRadius.circular(10),
+                                                                                      borderSide: const BorderSide(
+                                                                                        color: darkText,
+                                                                                      ),
+                                                                                    ),
+                                                                                    border: OutlineInputBorder(
+                                                                                      borderRadius: BorderRadius.circular(10),
+                                                                                      borderSide: const BorderSide(
+                                                                                        color: darkText,
+                                                                                      ),
+                                                                                    ),
+                                                                                  )),
+                                                                              popupProps: const PopupProps.menu(
+                                                                                fit: FlexFit.loose,
+                                                                                showSelectedItems: false,
+                                                                                menuProps: MenuProps(backgroundColor: Color(0xffeee8f4)),
+                                                                              ),
+                                                                              items: const [
+                                                                                "Completed 1",
+                                                                                "Completed 2",
+                                                                                "Completed 3",
+                                                                              ],
+                                                                              onChanged: (val) {
+                                                                                setState(() {});
+                                                                              },
+                                                                              selectedItem: "",
                                                                             ),
-                                                                            side: const BorderSide(
-                                                                                width: 2, // the thickness
-                                                                                color: colorThird // the color of the border
-                                                                                )),
-                                                                        child:
-                                                                            const TextView(
-                                                                          val:
-                                                                              "Batal",
-                                                                          color:
-                                                                              colorThird,
-                                                                          size:
-                                                                              15,
-                                                                          weight:
-                                                                              FontWeight.w600,
-                                                                        ),
-                                                                      ),
-                                                                    ],
+                                                                          ),
+                                                                          const SizedBox(
+                                                                              height: 25),
+                                                                          const TextView(
+                                                                            val:
+                                                                                "Update Delivery Period",
+                                                                            color:
+                                                                                darkText,
+                                                                            size:
+                                                                                16,
+                                                                            weight:
+                                                                                FontWeight.w600,
+                                                                          ),
+                                                                          const SizedBox(
+                                                                              height: 13),
+                                                                          SizedBox(
+                                                                            width:
+                                                                                MediaQuery.of(context).size.width * 0.5,
+                                                                            child:
+                                                                                DropdownSearch<String>(
+                                                                              dropdownDecoratorProps: DropDownDecoratorProps(
+                                                                                  textAlign: TextAlign.left,
+                                                                                  dropdownSearchDecoration: InputDecoration(
+                                                                                    filled: true,
+                                                                                    fillColor: Colors.transparent,
+                                                                                    iconColor: darkText,
+                                                                                    contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                                                                                    focusedBorder: OutlineInputBorder(
+                                                                                      borderRadius: BorderRadius.circular(10),
+                                                                                      borderSide: const BorderSide(
+                                                                                        color: darkText,
+                                                                                      ),
+                                                                                    ),
+                                                                                    enabledBorder: OutlineInputBorder(
+                                                                                      borderRadius: BorderRadius.circular(10),
+                                                                                      borderSide: const BorderSide(
+                                                                                        color: darkText,
+                                                                                      ),
+                                                                                    ),
+                                                                                    border: OutlineInputBorder(
+                                                                                      borderRadius: BorderRadius.circular(10),
+                                                                                      borderSide: const BorderSide(
+                                                                                        color: darkText,
+                                                                                      ),
+                                                                                    ),
+                                                                                  )),
+                                                                              popupProps: const PopupProps.menu(
+                                                                                fit: FlexFit.loose,
+                                                                                showSelectedItems: false,
+                                                                                menuProps: MenuProps(backgroundColor: Color(0xffeee8f4)),
+                                                                              ),
+                                                                              items: const [
+                                                                                "Completed 1",
+                                                                                "Completed 2",
+                                                                                "Completed 3",
+                                                                              ],
+                                                                              onChanged: (val) {
+                                                                                setState(() {});
+                                                                              },
+                                                                              selectedItem: "",
+                                                                            ),
+                                                                          ),
+                                                                          const SizedBox(
+                                                                            height:
+                                                                                40,
+                                                                          ),
+                                                                          Row(
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.center,
+                                                                            children: [
+                                                                              ElevatedButton(
+                                                                                style: TextButton.styleFrom(
+                                                                                  foregroundColor: Colors.white,
+                                                                                  padding: const EdgeInsets.symmetric(horizontal: 55, vertical: 22),
+                                                                                  backgroundColor: navButtonThird,
+                                                                                  shape: RoundedRectangleBorder(
+                                                                                    borderRadius: BorderRadius.circular(5),
+                                                                                  ),
+                                                                                ),
+                                                                                onPressed: () {
+                                                                                  Navigator.pop(context);
+                                                                                },
+                                                                                child: const TextView(
+                                                                                  val: "Submit",
+                                                                                  color: lightText,
+                                                                                  size: 15,
+                                                                                  weight: FontWeight.w600,
+                                                                                ),
+                                                                              ),
+                                                                              const SizedBox(width: 20),
+                                                                              ElevatedButton(
+                                                                                onPressed: () {
+                                                                                  Navigator.pop(context);
+                                                                                },
+                                                                                style: ElevatedButton.styleFrom(
+                                                                                    padding: const EdgeInsets.symmetric(horizontal: 55, vertical: 22),
+                                                                                    shape: RoundedRectangleBorder(
+                                                                                      borderRadius: BorderRadius.circular(5),
+                                                                                    ),
+                                                                                    side: const BorderSide(
+                                                                                        width: 2, // the thickness
+                                                                                        color: colorThird // the color of the border
+                                                                                        )),
+                                                                                child: const TextView(
+                                                                                  val: "Batal",
+                                                                                  color: colorThird,
+                                                                                  size: 15,
+                                                                                  weight: FontWeight.w600,
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ],
+                                                                      )),
+                                                                  const SizedBox(
+                                                                    height: 30,
                                                                   ),
                                                                 ],
-                                                              )),
-                                                          const SizedBox(
-                                                            height: 30,
+                                                              ),
+                                                            ),
                                                           ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
+                                                        ),
+                                                      );
+                                                    },
+                                                  );
+                                                },
                                               );
                                             },
-                                          );
-                                        },
-                                      );
-                                    },
-                                    child: Container(
-                                      width: 40,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: darkText,
-                                            width: 0.4,
-                                            style: BorderStyle.solid),
-                                        borderRadius: BorderRadius.circular(5),
+                                            child: Container(
+                                              width: 40,
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    color: darkText,
+                                                    width: 0.4,
+                                                    style: BorderStyle.solid),
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                              ),
+                                              height: 40,
+                                              child: const Center(
+                                                  child: Icon(
+                                                Icons.edit,
+                                                size: 20,
+                                              )),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      height: 40,
-                                      child: const Center(
-                                          child: Icon(
-                                        Icons.edit,
-                                        size: 20,
-                                      )),
                                     ),
-                                  ),
-                                ],
-                              ),
+                                    //datRow3(2, context)
+                                  ],
+                                );
+                              },
                             ),
-                            //datRow3(2, context)
-                          ],
-                        );
-                      },
-                    ),
-                  ),
-                ],
+                          ),
+                        ],
+                      );
+                    } else if (snapData[0] == 404) {
+                      return Container();
+                    }
+                  }
+                  return Container();
+                },
               ),
             ),
             Center(
@@ -747,6 +760,8 @@ class _RecapPageState extends State<RecapPage> {
                     onPageChange: (index) {
                       setState(() {
                         currentPage = index;
+                        recapList = _servicesRecap.readRecap(currentPage + 1);
+                        debugPrint(currentPage.toString());
                       });
                     },
                   ),
