@@ -7,6 +7,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:ndlproject_desktop/pages/ndl/service_ndl.dart';
+import 'package:ndlproject_desktop/pages/widgets/confirmdialog.dart';
 import 'package:ndlproject_desktop/pages/widgets/textview.dart';
 import 'package:ndlproject_desktop/themes/colors.dart';
 import 'package:number_paginator/number_paginator.dart';
@@ -813,132 +814,27 @@ class _NdlPageState extends State<NdlPage> {
                                                   const SizedBox(width: 5),
                                                   GestureDetector(
                                                     onTap: () {
+                                                      debugPrint("Tekan");
                                                       showDialog(
                                                         barrierDismissible:
                                                             false,
                                                         useRootNavigator: true,
                                                         context: context,
                                                         builder: (context) {
-                                                          return StatefulBuilder(
-                                                            builder: (context,
-                                                                setState) {
-                                                              return Dialog(
-                                                                shape:
-                                                                    RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              10),
-                                                                ),
-                                                                child:
-                                                                    ScrollConfiguration(
-                                                                  behavior: ScrollConfiguration.of(
-                                                                          context)
-                                                                      .copyWith(
-                                                                    dragDevices: {
-                                                                      PointerDeviceKind
-                                                                          .touch,
-                                                                      PointerDeviceKind
-                                                                          .mouse,
-                                                                    },
-                                                                  ),
-                                                                  child:
-                                                                      SingleChildScrollView(
-                                                                    physics:
-                                                                        const ClampingScrollPhysics(),
-                                                                    controller:
-                                                                        ScrollController(),
-                                                                    child:
-                                                                        Container(
-                                                                      width: MediaQuery.of(context)
-                                                                              .size
-                                                                              .width *
-                                                                          0.5,
-                                                                      padding:
-                                                                          const EdgeInsets.fromLTRB(
-                                                                              0,
-                                                                              25,
-                                                                              0,
-                                                                              25),
-                                                                      child:
-                                                                          Column(
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.start,
-                                                                        children: [
-                                                                          const Center(
-                                                                            child:
-                                                                                Icon(
-                                                                              Icons.warning,
-                                                                              size: 100,
-                                                                            ),
-                                                                          ),
-                                                                          const SizedBox(
-                                                                              height: 25),
-                                                                          const Center(
-                                                                            child:
-                                                                                TextView(
-                                                                              val: "Apakah Anda Yakin Ingin Mendelete Row Ini?",
-                                                                              color: darkText,
-                                                                              size: 18,
-                                                                              weight: FontWeight.w700,
-                                                                            ),
-                                                                          ),
-                                                                          const SizedBox(
-                                                                            height:
-                                                                                40,
-                                                                          ),
-                                                                          Row(
-                                                                            mainAxisAlignment:
-                                                                                MainAxisAlignment.center,
-                                                                            children: [
-                                                                              ElevatedButton(
-                                                                                style: TextButton.styleFrom(
-                                                                                  foregroundColor: Colors.white,
-                                                                                  padding: const EdgeInsets.symmetric(horizontal: 55, vertical: 22),
-                                                                                  backgroundColor: navButtonThird,
-                                                                                  shape: RoundedRectangleBorder(
-                                                                                    borderRadius: BorderRadius.circular(5),
-                                                                                  ),
-                                                                                ),
-                                                                                onPressed: () {
-                                                                                  Navigator.pop(context);
-                                                                                },
-                                                                                child: const TextView(
-                                                                                  val: "Ya, Delete Row Ini",
-                                                                                  color: lightText,
-                                                                                  size: 15,
-                                                                                  weight: FontWeight.w600,
-                                                                                ),
-                                                                              ),
-                                                                              const SizedBox(width: 20),
-                                                                              ElevatedButton(
-                                                                                onPressed: () {
-                                                                                  Navigator.pop(context);
-                                                                                },
-                                                                                style: ElevatedButton.styleFrom(
-                                                                                    padding: const EdgeInsets.symmetric(horizontal: 55, vertical: 22),
-                                                                                    shape: RoundedRectangleBorder(
-                                                                                      borderRadius: BorderRadius.circular(5),
-                                                                                    ),
-                                                                                    side: const BorderSide(
-                                                                                        width: 2, // the thickness
-                                                                                        color: colorThird // the color of the border
-                                                                                        )),
-                                                                                child: const TextView(
-                                                                                  val: "Ya, Delete Row Ini",
-                                                                                  color: colorThird,
-                                                                                  size: 15,
-                                                                                  weight: FontWeight.w600,
-                                                                                ),
-                                                                              ),
-                                                                            ],
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              );
+                                                          return ConfirmDialog(
+                                                            titleText:
+                                                                "Apakah anda yakin ingin menghapus baris ini?",
+                                                            confirmText:
+                                                                "Ya, hapus",
+                                                            declineText:
+                                                                "Tidak, jangan hapus",
+                                                            confirmFunc: () {
+                                                              Navigator.pop(
+                                                                  context);
+                                                            },
+                                                            declineFunc: () {
+                                                              Navigator.pop(
+                                                                  context);
                                                             },
                                                           );
                                                         },
@@ -1255,9 +1151,11 @@ class _EditNdlPageState extends State<EditNdlPage> {
         },
         backgroundColor: secondaryColor,
         shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(50))
+            borderRadius: BorderRadius.all(Radius.circular(50))),
+        child: const Icon(
+          Icons.arrow_upward_outlined,
+          color: primaryColor,
         ),
-        child: const Icon(Icons.arrow_upward_outlined, color: primaryColor,),
       ),
       body: ScrollConfiguration(
         behavior: ScrollConfiguration.of(context).copyWith(
@@ -2376,7 +2274,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          side:  BorderSide(
+                          side: BorderSide(
                               width: 2, // the thickness
                               color: colorThird // the color of the border
                               )),
@@ -2422,7 +2320,6 @@ class _EditNdlPageState extends State<EditNdlPage> {
     );
   }
 }
-
 
 // Page isi dari upload Excel
 class ConfirmNDL extends StatefulWidget {
@@ -3086,27 +2983,54 @@ class _ConfirmNDLState extends State<ConfirmNDL> {
       floatingActionButton: CustomFAB(
         icon: AnimatedIcons.menu_close,
         children: [
-          
           SpeedDialChild(
               child: const Icon(
                 Icons.close,
                 color: primaryColor,
               ),
               backgroundColor: secondaryColor,
-              onTap: () {},
+              onTap: () {
+                _servicesNDL
+                    .inputNDL("")
+                    .whenComplete(() => Navigator.pop(context));
+              },
               label: 'Cancel',
               labelStyle: GoogleFonts.inter(
                 fontSize: 16,
                 color: lightText,
                 fontWeight: FontWeight.w500,
               ),
-              labelBackgroundColor: secondaryColor),SpeedDialChild(
+              labelBackgroundColor: secondaryColor),
+          SpeedDialChild(
               child: const Icon(
                 Icons.check,
                 color: primaryColor,
               ),
               backgroundColor: secondaryColor,
-              onTap: () {},
+              onTap: () {
+                showDialog(
+                  barrierDismissible: false,
+                  useRootNavigator: true,
+                  context: context,
+                  builder: (context) {
+                    return ConfirmDialog(
+                      titleText: "Data yang di upload sudah benar?",
+                      confirmText: "Ya, konfirmasi",
+                      declineText: "Salah, upload ulang",
+                      confirmFunc: () async {
+                        await _servicesNDL
+                            .inputNDL("ok")
+                            .whenComplete(() => Navigator.pop(context));
+                      },
+                      declineFunc: () async {
+                        await _servicesNDL
+                            .inputNDL("")
+                            .whenComplete(() => Navigator.pop(context));
+                      },
+                    );
+                  },
+                ).whenComplete(() => Navigator.pop(context));
+              },
               label: 'Confirm',
               labelStyle: GoogleFonts.inter(
                 fontSize: 16,
