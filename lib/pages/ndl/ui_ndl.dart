@@ -1093,7 +1093,6 @@ class _EditNdlPageState extends State<EditNdlPage> {
   final _controllerNamaBarangTambahPenjualan = TextEditingController();
   final List<String> _namaStockArray = [
     "Job Done",
-    "Analyzer Version",
     "Order Status",
     "Cylinder Status",
     "Gol",
@@ -1104,12 +1103,6 @@ class _EditNdlPageState extends State<EditNdlPage> {
     "Repeat",
     "Toleransi",
     "Order Masuk",
-    "Width",
-    "Length",
-    "Gusset",
-    "W",
-    "C",
-    "Color",
     "Layer 1",
     "Layer 2",
     "Layer 3",
@@ -1484,13 +1477,13 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const TextView(
-                            val: "Masukkan Analyzer Version",
+                            val: "Masukkan Cylinder Status",
                             color: darkText,
                             size: 15,
                             weight: FontWeight.w600,
                           ),
                           SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode2, lightText),
+                          TextFieldYa2(myFocusNode4, lightText),
                         ],
                       ),
                     ),
@@ -1520,13 +1513,13 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const TextView(
-                            val: "Masukkan Cylinder Status",
+                            val: "Masukkan Nama Customer",
                             color: darkText,
                             size: 15,
                             weight: FontWeight.w600,
                           ),
                           SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode4, lightText),
+                          TextFieldYa2(myFocusNode6, lightText),
                         ],
                       ),
                     ),
@@ -1556,13 +1549,13 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const TextView(
-                            val: "Masukkan Nama Customer",
+                            val: "Masukkan Model",
                             color: darkText,
                             size: 15,
                             weight: FontWeight.w600,
                           ),
                           SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode6, lightText),
+                          TextFieldYa2(myFocusNode8, lightText),
                         ],
                       ),
                     ),
@@ -1592,13 +1585,13 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const TextView(
-                            val: "Masukkan Model",
+                            val: "Masukkan Repeat",
                             color: darkText,
                             size: 15,
                             weight: FontWeight.w600,
                           ),
                           SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode8, lightText),
+                          TextFieldYa2(myFocusNode10, lightText),
                         ],
                       ),
                     ),
@@ -1628,13 +1621,13 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const TextView(
-                            val: "Masukkan Repeat",
+                            val: "Masukkan Order Masuk",
                             color: darkText,
                             size: 15,
                             weight: FontWeight.w600,
                           ),
                           SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode10, lightText),
+                          TextFieldYa2(myFocusNode12, lightText),
                         ],
                       ),
                     ),
@@ -1664,121 +1657,49 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const TextView(
-                            val: "Masukkan Order Masuk",
-                            color: darkText,
+                            val: "",
+                            color: lightText,
                             size: 15,
                             weight: FontWeight.w600,
                           ),
                           SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode12, lightText),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const TextView(
-                            val: "Masukkan Width",
-                            color: darkText,
-                            size: 15,
-                            weight: FontWeight.w600,
+                          TextField(
+                            readOnly: true,
+                            showCursor: false,
+                            style: GoogleFonts.inter(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 13,
+                            ),
+                            onChanged: (value) {},
+                            decoration: InputDecoration(
+                              fillColor: lightText,
+                              hintStyle: GoogleFonts.inter(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 13,
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 0, horizontal: 10),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide: const BorderSide(
+                                  width: 1.5,
+                                  color: lightText,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide: const BorderSide(
+                                  color: lightText,
+                                ),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide: const BorderSide(
+                                  color: lightText,
+                                ),
+                              ),
+                            ),
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode13, lightText),
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: 15),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const TextView(
-                            val: "Masukkan Length",
-                            color: darkText,
-                            size: 15,
-                            weight: FontWeight.w600,
-                          ),
-                          SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode14, lightText),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const TextView(
-                            val: "Masukkan Gusset",
-                            color: darkText,
-                            size: 15,
-                            weight: FontWeight.w600,
-                          ),
-                          SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode15, lightText),
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: 15),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const TextView(
-                            val: "Masukkan W",
-                            color: darkText,
-                            size: 15,
-                            weight: FontWeight.w600,
-                          ),
-                          SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode16, lightText),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const TextView(
-                            val: "Masukkan C",
-                            color: darkText,
-                            size: 15,
-                            weight: FontWeight.w600,
-                          ),
-                          SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode17, lightText),
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: 15),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const TextView(
-                            val: "Masukkan Color",
-                            color: darkText,
-                            size: 15,
-                            weight: FontWeight.w600,
-                          ),
-                          SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode18, lightText),
                         ],
                       ),
                     ),
@@ -1799,7 +1720,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const TextView(
-                            val: "Masukkan Gusset",
+                            val: "Masukkan Nama Layer",
                             color: darkText,
                             size: 15,
                             weight: FontWeight.w600,
@@ -1815,13 +1736,13 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const TextView(
-                            val: "Masukkan W",
+                            val: "Masukkan Ketebalan",
                             color: darkText,
                             size: 15,
                             weight: FontWeight.w600,
                           ),
                           SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode0, lightText),
+                          TextFieldYa3(lightText),
                         ],
                       ),
                     ),
@@ -1835,13 +1756,13 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const TextView(
-                            val: "Masukkan C",
+                            val: "Masukkan Width",
                             color: darkText,
                             size: 15,
                             weight: FontWeight.w600,
                           ),
                           SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode0, lightText),
+                          TextFieldYa3(lightText),
                         ],
                       ),
                     ),
@@ -1851,13 +1772,85 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const TextView(
-                            val: "Masukkan Color",
+                            val: "Masukkan Width 1",
                             color: darkText,
                             size: 15,
                             weight: FontWeight.w600,
                           ),
                           SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode0, lightText),
+                          TextFieldYa3(lightText),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan RM",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa3(lightText),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "",
+                            color: lightText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextField(
+                            readOnly: true,
+                            showCursor: false,
+                            style: GoogleFonts.inter(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 13,
+                            ),
+                            onChanged: (value) {},
+                            decoration: InputDecoration(
+                              fillColor: lightText,
+                              hintStyle: GoogleFonts.inter(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 13,
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 0, horizontal: 10),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide: const BorderSide(
+                                  width: 1.5,
+                                  color: lightText,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide: const BorderSide(
+                                  color: lightText,
+                                ),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide: const BorderSide(
+                                  color: lightText,
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -1878,7 +1871,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const TextView(
-                            val: "Masukkan Gusset",
+                            val: "Masukkan Nama Layer",
                             color: darkText,
                             size: 15,
                             weight: FontWeight.w600,
@@ -1894,13 +1887,13 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const TextView(
-                            val: "Masukkan W",
+                            val: "Masukkan Ketebalan",
                             color: darkText,
                             size: 15,
                             weight: FontWeight.w600,
                           ),
                           SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode0, lightText),
+                          TextFieldYa3(lightText),
                         ],
                       ),
                     ),
@@ -1914,13 +1907,13 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const TextView(
-                            val: "Masukkan C",
+                            val: "Masukkan Width",
                             color: darkText,
                             size: 15,
                             weight: FontWeight.w600,
                           ),
                           SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode0, lightText),
+                          TextFieldYa3(lightText),
                         ],
                       ),
                     ),
@@ -1930,13 +1923,85 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const TextView(
-                            val: "Masukkan Color",
+                            val: "Masukkan Width 2",
                             color: darkText,
                             size: 15,
                             weight: FontWeight.w600,
                           ),
                           SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode0, lightText),
+                          TextFieldYa3(lightText),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan RM",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa3(lightText),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "",
+                            color: lightText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextField(
+                            readOnly: true,
+                            showCursor: false,
+                            style: GoogleFonts.inter(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 13,
+                            ),
+                            onChanged: (value) {},
+                            decoration: InputDecoration(
+                              fillColor: lightText,
+                              hintStyle: GoogleFonts.inter(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 13,
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 0, horizontal: 10),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide: const BorderSide(
+                                  width: 1.5,
+                                  color: lightText,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide: const BorderSide(
+                                  color: lightText,
+                                ),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide: const BorderSide(
+                                  color: lightText,
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -1957,7 +2022,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const TextView(
-                            val: "Masukkan Gusset",
+                            val: "Masukkan Nama Layer",
                             color: darkText,
                             size: 15,
                             weight: FontWeight.w600,
@@ -1973,13 +2038,13 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const TextView(
-                            val: "Masukkan W",
+                            val: "Masukkan Ketebalan",
                             color: darkText,
                             size: 15,
                             weight: FontWeight.w600,
                           ),
                           SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode0, lightText),
+                          TextFieldYa3(lightText),
                         ],
                       ),
                     ),
@@ -1993,13 +2058,13 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const TextView(
-                            val: "Masukkan C",
+                            val: "Masukkan Width",
                             color: darkText,
                             size: 15,
                             weight: FontWeight.w600,
                           ),
                           SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode0, lightText),
+                          TextFieldYa3(lightText),
                         ],
                       ),
                     ),
@@ -2009,13 +2074,85 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const TextView(
-                            val: "Masukkan Color",
+                            val: "Masukkan Width 3",
                             color: darkText,
                             size: 15,
                             weight: FontWeight.w600,
                           ),
                           SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode0, lightText),
+                          TextFieldYa3(lightText),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan RM",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa3(lightText),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "",
+                            color: lightText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextField(
+                            readOnly: true,
+                            showCursor: false,
+                            style: GoogleFonts.inter(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 13,
+                            ),
+                            onChanged: (value) {},
+                            decoration: InputDecoration(
+                              fillColor: lightText,
+                              hintStyle: GoogleFonts.inter(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 13,
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 0, horizontal: 10),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide: const BorderSide(
+                                  width: 1.5,
+                                  color: lightText,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide: const BorderSide(
+                                  color: lightText,
+                                ),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide: const BorderSide(
+                                  color: lightText,
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -2036,7 +2173,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const TextView(
-                            val: "Masukkan Gusset",
+                            val: "Masukkan Nama Layer",
                             color: darkText,
                             size: 15,
                             weight: FontWeight.w600,
@@ -2052,13 +2189,13 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const TextView(
-                            val: "Masukkan W",
+                            val: "Masukkan Ketebalan",
                             color: darkText,
                             size: 15,
                             weight: FontWeight.w600,
                           ),
                           SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode0, lightText),
+                          TextFieldYa3(lightText),
                         ],
                       ),
                     ),
@@ -2072,13 +2209,13 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const TextView(
-                            val: "Masukkan C",
+                            val: "Masukkan Width",
                             color: darkText,
                             size: 15,
                             weight: FontWeight.w600,
                           ),
                           SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode0, lightText),
+                          TextFieldYa3(lightText),
                         ],
                       ),
                     ),
@@ -2088,13 +2225,85 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const TextView(
-                            val: "Masukkan Color",
+                            val: "Masukkan Width 4",
                             color: darkText,
                             size: 15,
                             weight: FontWeight.w600,
                           ),
                           SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode0, lightText),
+                          TextFieldYa3(lightText),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan RM",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa3(lightText),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "",
+                            color: lightText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextField(
+                            readOnly: true,
+                            showCursor: false,
+                            style: GoogleFonts.inter(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 13,
+                            ),
+                            onChanged: (value) {},
+                            decoration: InputDecoration(
+                              fillColor: lightText,
+                              hintStyle: GoogleFonts.inter(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 13,
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 0, horizontal: 10),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide: const BorderSide(
+                                  width: 1.5,
+                                  color: lightText,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide: const BorderSide(
+                                  color: lightText,
+                                ),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide: const BorderSide(
+                                  color: lightText,
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -2115,7 +2324,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const TextView(
-                            val: "Masukkan Gusset",
+                            val: "Masukkan Nama Layer",
                             color: darkText,
                             size: 15,
                             weight: FontWeight.w600,
@@ -2131,13 +2340,13 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const TextView(
-                            val: "Masukkan W",
+                            val: "Masukkan Ketebalan",
                             color: darkText,
                             size: 15,
                             weight: FontWeight.w600,
                           ),
                           SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode0, lightText),
+                          TextFieldYa3(lightText),
                         ],
                       ),
                     ),
@@ -2151,13 +2360,13 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const TextView(
-                            val: "Masukkan C",
+                            val: "Masukkan Width",
                             color: darkText,
                             size: 15,
                             weight: FontWeight.w600,
                           ),
                           SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode0, lightText),
+                          TextFieldYa3(lightText),
                         ],
                       ),
                     ),
@@ -2167,13 +2376,85 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const TextView(
-                            val: "Masukkan Color",
+                            val: "Masukkan Width 5",
                             color: darkText,
                             size: 15,
                             weight: FontWeight.w600,
                           ),
                           SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode0, lightText),
+                          TextFieldYa3(lightText),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan RM",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa3(lightText),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "",
+                            color: lightText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextField(
+                            readOnly: true,
+                            showCursor: false,
+                            style: GoogleFonts.inter(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 13,
+                            ),
+                            onChanged: (value) {},
+                            decoration: InputDecoration(
+                              fillColor: lightText,
+                              hintStyle: GoogleFonts.inter(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 13,
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 0, horizontal: 10),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide: const BorderSide(
+                                  width: 1.5,
+                                  color: lightText,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide: const BorderSide(
+                                  color: lightText,
+                                ),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide: const BorderSide(
+                                  color: lightText,
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -2194,7 +2475,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const TextView(
-                            val: "Masukkan Gusset",
+                            val: "Masukkan Nama Layer",
                             color: darkText,
                             size: 15,
                             weight: FontWeight.w600,
@@ -2210,13 +2491,13 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const TextView(
-                            val: "Masukkan W",
+                            val: "Masukkan Ketebalan",
                             color: darkText,
                             size: 15,
                             weight: FontWeight.w600,
                           ),
                           SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode0, lightText),
+                          TextFieldYa3(lightText),
                         ],
                       ),
                     ),
@@ -2230,13 +2511,13 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const TextView(
-                            val: "Masukkan C",
+                            val: "Masukkan Width",
                             color: darkText,
                             size: 15,
                             weight: FontWeight.w600,
                           ),
                           SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode0, lightText),
+                          TextFieldYa3(lightText),
                         ],
                       ),
                     ),
@@ -2246,13 +2527,85 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const TextView(
-                            val: "Masukkan Color",
+                            val: "Masukkan Width 6",
                             color: darkText,
                             size: 15,
                             weight: FontWeight.w600,
                           ),
                           SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode0, lightText),
+                          TextFieldYa3(lightText),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "Masukkan RM",
+                            color: darkText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextFieldYa3(lightText),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextView(
+                            val: "",
+                            color: lightText,
+                            size: 15,
+                            weight: FontWeight.w600,
+                          ),
+                          SizedBox(height: 5),
+                          TextField(
+                            readOnly: true,
+                            showCursor: false,
+                            style: GoogleFonts.inter(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 13,
+                            ),
+                            onChanged: (value) {},
+                            decoration: InputDecoration(
+                              fillColor: lightText,
+                              hintStyle: GoogleFonts.inter(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 13,
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 0, horizontal: 10),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide: const BorderSide(
+                                  width: 1.5,
+                                  color: lightText,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide: const BorderSide(
+                                  color: lightText,
+                                ),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide: const BorderSide(
+                                  color: lightText,
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
