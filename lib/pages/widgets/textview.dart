@@ -675,11 +675,10 @@ datRow4(value1, value2, value3, value4, context) {
   );
 }
 
-textFieldYa(color) {
+textFieldYa(color, controller) {
   return TextField(
     readOnly: false,
-    // controller:
-    //     _controllerJumlahBarangTambahPenjualan,
+    controller: controller,
     showCursor: false,
     style: GoogleFonts.inter(
       fontWeight: FontWeight.w500,
@@ -716,12 +715,12 @@ textFieldYa(color) {
   );
 }
 
-TextFieldYa2(FocusNode focus, color) {
+textFieldYa2(FocusNode focus, color, controller) {
   return TextField(
     focusNode: focus,
     readOnly: false,
-    // controller:
-    //     _controllerJumlahBarangTambahPenjualan,
+    controller:
+        controller,
     showCursor: true,
     style: GoogleFonts.inter(
       fontWeight: FontWeight.w500,
@@ -759,11 +758,11 @@ TextFieldYa2(FocusNode focus, color) {
   );
 }
 
-TextFieldYa3(color) {
+textFieldYa3(color, controller) {
   return TextField(
     readOnly: false,
-    // controller:
-    //     _controllerJumlahBarangTambahPenjualan,
+    controller:
+        controller,
     showCursor: true,
     style: GoogleFonts.inter(
       fontWeight: FontWeight.w500,

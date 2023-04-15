@@ -6,7 +6,6 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'global_var.dart';
-import 'pages/auth/ui_auth.dart';
 import 'pages/home/ui_home.dart';
 
 void main() {

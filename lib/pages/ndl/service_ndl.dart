@@ -53,4 +53,81 @@ class ServicesNDL {
       throw Exception("Failed to GET data");
     }
   }
+
+  // Jumlah Page NDL
+  Future pageCount() async {
+    var url = Uri.parse("$pathAPI/NDL/page-ndl");
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      var jsonRespStatus = json.decode(response.body)['status'];
+      var jsonRespMessage = json.decode(response.body)['message'];
+      var jsonRespData = json.decode(response.body)['data'];
+      return [jsonRespStatus, jsonRespMessage, jsonRespData];
+    } else {
+      throw Exception("Failed to GET data");
+    }
+  }
+
+  // Read NDL List Detail sesuai WS NO
+  Future readWsnoDetail(wsno) async {
+    var url = Uri.parse("$pathAPI/NDL/Read-NDL-wsno?ws_no=$wsno");
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      var jsonRespStatus = json.decode(response.body)['status'];
+      var jsonRespMessage = json.decode(response.body)['message'];
+      var jsonRespData = json.decode(response.body)['data'];
+      return [jsonRespStatus, jsonRespMessage, jsonRespData];
+    } else {
+      throw Exception("Failed to GET data");
+    }
+  }
+
+  Future updateWsnoDetail(
+      wsNo,
+      tambahDataTanggal,
+      customerDeliveryDate,
+      jobDone,
+      orderStatus,
+      cylinderStatus,
+      gol,
+      cust,
+      itemName,
+      model,
+      up,
+      repeatNdl,
+      toleransi,
+      orderNdl,
+      layer,
+      detailLayer) async {
+    var url = Uri.parse("$pathAPI/NDL/update-ndl");
+    final response = await http.put(url, body: {
+      'ws_no': wsNo,
+      'tambah_data_tanggal': tambahDataTanggal,
+      'customer_delivery_date': customerDeliveryDate,
+      'job_done': jobDone,
+      'order_status': orderStatus,
+      'cylinder_status': cylinderStatus,
+      'gol': gol,
+      'cust': cust,
+      'item_name': itemName,
+      'model': model,
+      'up': up,
+      'repeat_ndl': repeatNdl,
+      'toleransi': toleransi,
+      'order_ndl': orderNdl,
+      'layer': layer,
+      'detail_layer': detailLayer,
+    });
+
+    if (response.statusCode == 200) {
+      var jsonRespStatus = json.decode(response.body)['status'];
+      var jsonRespMessage = json.decode(response.body)['message'];
+      var jsonRespData = json.decode(response.body)['data'];
+      return [jsonRespStatus, jsonRespMessage, jsonRespData];
+    } else {
+      throw Exception("Failed to PUT data");
+    }
+  }
 }

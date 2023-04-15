@@ -10,7 +10,10 @@ import 'package:ndlproject_desktop/pages/widgets/textview.dart';
 import 'package:ndlproject_desktop/themes/colors.dart';
 import 'package:number_paginator/number_paginator.dart';
 
+import '../ndl/service_ndl.dart';
+
 ServicesRecap _servicesRecap = ServicesRecap();
+ServicesNDL _servicesNDL = ServicesNDL();
 
 class AdminControllerRecapPage extends StatefulWidget {
   const AdminControllerRecapPage({Key? key}) : super(key: key);
@@ -62,15 +65,38 @@ class RecapPage extends StatefulWidget {
 }
 
 class _RecapPageState extends State<RecapPage> {
-  int numberOfPage = 100;
+  int numberOfPage = 1;
   int currentPage = 0;
 
   late Future recapList;
+
+  String controllerStatus = "";
+  final TextEditingController controllerDPeriod = TextEditingController();
+  final TextEditingController controllerComment = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     recapList = _servicesRecap.readRecap(1);
+    getPageCount();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    controllerDPeriod.dispose();
+    controllerComment.dispose();
+  }
+
+  Future getPageCount() async {
+    var response = await _servicesNDL.pageCount();
+    if (response[0] != 404) {
+      numberOfPage = response[2]['page'];
+      if (mounted) {
+        setState(() {});
+      }
+    }
   }
 
   showEdit(dw, dh) {
@@ -241,10 +267,27 @@ class _RecapPageState extends State<RecapPage> {
     });
   }
 
+  Future updateRecap(context, wsNo, statusRkp, dperiod, comment) async {
+    var response = await _servicesRecap.updateStatusRecap(
+        wsNo, statusRkp, dperiod, comment);
+    if (response[0] != 404) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: TextView(val: "Berhasil Mengupdate Data"),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: TextView(val: "Gagal Mengupdate File"),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final deviceWidth = MediaQuery.of(context).size.width;
-    final deviceHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
         body: ScrollConfiguration(
@@ -538,45 +581,48 @@ class _RecapPageState extends State<RecapPage> {
                                                                             child:
                                                                                 DropdownSearch<String>(
                                                                               dropdownDecoratorProps: DropDownDecoratorProps(
-                                                                                  textAlign: TextAlign.left,
-                                                                                  dropdownSearchDecoration: InputDecoration(
-                                                                                    filled: true,
-                                                                                    fillColor: Colors.transparent,
-                                                                                    iconColor: darkText,
-                                                                                    contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                                                                                    focusedBorder: OutlineInputBorder(
-                                                                                      borderRadius: BorderRadius.circular(10),
-                                                                                      borderSide: const BorderSide(
-                                                                                        color: darkText,
-                                                                                      ),
+                                                                                textAlign: TextAlign.left,
+                                                                                dropdownSearchDecoration: InputDecoration(
+                                                                                  filled: true,
+                                                                                  fillColor: Colors.transparent,
+                                                                                  iconColor: darkText,
+                                                                                  contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                                                                                  focusedBorder: OutlineInputBorder(
+                                                                                    borderRadius: BorderRadius.circular(10),
+                                                                                    borderSide: const BorderSide(
+                                                                                      color: darkText,
                                                                                     ),
-                                                                                    enabledBorder: OutlineInputBorder(
-                                                                                      borderRadius: BorderRadius.circular(10),
-                                                                                      borderSide: const BorderSide(
-                                                                                        color: darkText,
-                                                                                      ),
+                                                                                  ),
+                                                                                  enabledBorder: OutlineInputBorder(
+                                                                                    borderRadius: BorderRadius.circular(10),
+                                                                                    borderSide: const BorderSide(
+                                                                                      color: darkText,
                                                                                     ),
-                                                                                    border: OutlineInputBorder(
-                                                                                      borderRadius: BorderRadius.circular(10),
-                                                                                      borderSide: const BorderSide(
-                                                                                        color: darkText,
-                                                                                      ),
+                                                                                  ),
+                                                                                  border: OutlineInputBorder(
+                                                                                    borderRadius: BorderRadius.circular(10),
+                                                                                    borderSide: const BorderSide(
+                                                                                      color: darkText,
                                                                                     ),
-                                                                                  )),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
                                                                               popupProps: const PopupProps.menu(
                                                                                 fit: FlexFit.loose,
                                                                                 showSelectedItems: false,
                                                                                 menuProps: MenuProps(backgroundColor: Color(0xffeee8f4)),
                                                                               ),
                                                                               items: const [
-                                                                                "Completed 1",
-                                                                                "Completed 2",
-                                                                                "Completed 3",
+                                                                                "0",
+                                                                                "1",
                                                                               ],
                                                                               onChanged: (val) {
-                                                                                setState(() {});
+                                                                                setState(() {
+                                                                                  debugPrint(val);
+                                                                                  controllerStatus = val.toString();
+                                                                                });
                                                                               },
-                                                                              selectedItem: "",
+                                                                              selectedItem: snapData[2][index]['status_rekap'].toString(),
                                                                             ),
                                                                           ),
                                                                           const SizedBox(
@@ -597,47 +643,32 @@ class _RecapPageState extends State<RecapPage> {
                                                                             width:
                                                                                 MediaQuery.of(context).size.width * 0.5,
                                                                             child:
-                                                                                DropdownSearch<String>(
-                                                                              dropdownDecoratorProps: DropDownDecoratorProps(
-                                                                                  textAlign: TextAlign.left,
-                                                                                  dropdownSearchDecoration: InputDecoration(
-                                                                                    filled: true,
-                                                                                    fillColor: Colors.transparent,
-                                                                                    iconColor: darkText,
-                                                                                    contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                                                                                    focusedBorder: OutlineInputBorder(
-                                                                                      borderRadius: BorderRadius.circular(10),
-                                                                                      borderSide: const BorderSide(
-                                                                                        color: darkText,
-                                                                                      ),
-                                                                                    ),
-                                                                                    enabledBorder: OutlineInputBorder(
-                                                                                      borderRadius: BorderRadius.circular(10),
-                                                                                      borderSide: const BorderSide(
-                                                                                        color: darkText,
-                                                                                      ),
-                                                                                    ),
-                                                                                    border: OutlineInputBorder(
-                                                                                      borderRadius: BorderRadius.circular(10),
-                                                                                      borderSide: const BorderSide(
-                                                                                        color: darkText,
-                                                                                      ),
-                                                                                    ),
-                                                                                  )),
-                                                                              popupProps: const PopupProps.menu(
-                                                                                fit: FlexFit.loose,
-                                                                                showSelectedItems: false,
-                                                                                menuProps: MenuProps(backgroundColor: Color(0xffeee8f4)),
-                                                                              ),
-                                                                              items: const [
-                                                                                "Completed 1",
-                                                                                "Completed 2",
-                                                                                "Completed 3",
-                                                                              ],
-                                                                              onChanged: (val) {
-                                                                                setState(() {});
-                                                                              },
-                                                                              selectedItem: "",
+                                                                                textFieldYa(
+                                                                              Colors.transparent,
+                                                                              controllerDPeriod,
+                                                                            ),
+                                                                          ),
+                                                                          const SizedBox(
+                                                                              height: 25),
+                                                                          const TextView(
+                                                                            val:
+                                                                                "Update Comment",
+                                                                            color:
+                                                                                darkText,
+                                                                            size:
+                                                                                16,
+                                                                            weight:
+                                                                                FontWeight.w600,
+                                                                          ),
+                                                                          const SizedBox(
+                                                                              height: 13),
+                                                                          SizedBox(
+                                                                            width:
+                                                                                MediaQuery.of(context).size.width * 0.5,
+                                                                            child:
+                                                                                textFieldYa(
+                                                                              Colors.transparent,
+                                                                              controllerComment,
                                                                             ),
                                                                           ),
                                                                           const SizedBox(
@@ -658,7 +689,12 @@ class _RecapPageState extends State<RecapPage> {
                                                                                   ),
                                                                                 ),
                                                                                 onPressed: () {
-                                                                                  Navigator.pop(context);
+                                                                                  updateRecap(context, snapData[2][index]['ws_no'], controllerStatus, controllerDPeriod.text, controllerComment.text).whenComplete(() {
+                                                                                    controllerComment.clear();
+                                                                                    controllerDPeriod.clear();
+                                                                                    controllerStatus = "";
+                                                                                    recapList = _servicesRecap.readRecap(currentPage + 1).whenComplete(() => Navigator.pop(context));
+                                                                                  });
                                                                                 },
                                                                                 child: const TextView(
                                                                                   val: "Submit",
@@ -670,17 +706,21 @@ class _RecapPageState extends State<RecapPage> {
                                                                               const SizedBox(width: 20),
                                                                               ElevatedButton(
                                                                                 onPressed: () {
+                                                                                  controllerComment.clear();
+                                                                                  controllerDPeriod.clear();
+                                                                                  controllerStatus = "";
                                                                                   Navigator.pop(context);
                                                                                 },
                                                                                 style: ElevatedButton.styleFrom(
-                                                                                    padding: const EdgeInsets.symmetric(horizontal: 55, vertical: 22),
-                                                                                    shape: RoundedRectangleBorder(
-                                                                                      borderRadius: BorderRadius.circular(5),
-                                                                                    ),
-                                                                                    side: const BorderSide(
-                                                                                        width: 2, // the thickness
-                                                                                        color: colorThird // the color of the border
-                                                                                        )),
+                                                                                  padding: const EdgeInsets.symmetric(horizontal: 55, vertical: 22),
+                                                                                  shape: RoundedRectangleBorder(
+                                                                                    borderRadius: BorderRadius.circular(5),
+                                                                                  ),
+                                                                                  side: const BorderSide(
+                                                                                      width: 2, // the thickness
+                                                                                      color: colorThird // the color of the border
+                                                                                      ),
+                                                                                ),
                                                                                 child: const TextView(
                                                                                   val: "Batal",
                                                                                   color: colorThird,
@@ -704,7 +744,8 @@ class _RecapPageState extends State<RecapPage> {
                                                     },
                                                   );
                                                 },
-                                              );
+                                              ).whenComplete(
+                                                  () => setState(() {}));
                                             },
                                             child: Container(
                                               width: 40,
@@ -792,6 +833,12 @@ class _DetailRecapPageState extends State<DetailRecapPage> {
   String _formattedDateInsert = "";
   String _dateInsert = "";
 
+  final TextEditingController controllerNamaPO = TextEditingController();
+  final TextEditingController controllerMeter = TextEditingController();
+  final TextEditingController controllerKg = TextEditingController();
+  final TextEditingController controllerPrice = TextEditingController();
+  final TextEditingController controllerLayer = TextEditingController();
+
   Future<void> selectFilterDateInsert(context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -830,6 +877,37 @@ class _DetailRecapPageState extends State<DetailRecapPage> {
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    controllerNamaPO.dispose();
+    controllerMeter.dispose();
+    controllerKg.dispose();
+    controllerPrice.dispose();
+    controllerLayer.dispose();
+  }
+
+  Future insertPO(
+      context, wsNo, layer, namaPo, tanggal, meter, kg, diffPc) async {
+    var response = await _servicesRecap.inputPO(
+        wsNo, layer, namaPo, tanggal, meter, kg, diffPc);
+
+    if (response[0] != 404) {
+      ScaffoldMessenger.of(this.context).showSnackBar(
+        const SnackBar(
+          content: TextView(val: "Data Berhasil Dikirim"),
+        ),
+      );
+    } else if (response[0] == 404) {
+      ScaffoldMessenger.of(this.context).showSnackBar(
+        const SnackBar(
+          content: TextView(val: "Gagal Mengirim Data"),
+        ),
+      );
+    }
   }
 
   _showInsertData(context) {
@@ -889,13 +967,32 @@ class _DetailRecapPageState extends State<DetailRecapPage> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           const TextView(
+                                            val: "Layer",
+                                            size: 15,
+                                            color: darkText,
+                                            weight: FontWeight.w500,
+                                          ),
+                                          const SizedBox(height: 5),
+                                          textFieldYa(
+                                              lightText, controllerLayer),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const TextView(
                                             val: "Nama PO Supplier",
                                             size: 15,
                                             color: darkText,
                                             weight: FontWeight.w500,
                                           ),
                                           const SizedBox(height: 5),
-                                          textFieldYa(lightText),
+                                          textFieldYa(
+                                              lightText, controllerNamaPO),
                                         ],
                                       ),
                                     ),
@@ -970,7 +1067,8 @@ class _DetailRecapPageState extends State<DetailRecapPage> {
                                             weight: FontWeight.w500,
                                           ),
                                           const SizedBox(height: 5),
-                                          textFieldYa(lightText),
+                                          textFieldYa(
+                                              lightText, controllerMeter),
                                         ],
                                       ),
                                     ),
@@ -987,7 +1085,7 @@ class _DetailRecapPageState extends State<DetailRecapPage> {
                                             weight: FontWeight.w500,
                                           ),
                                           const SizedBox(height: 5),
-                                          textFieldYa(lightText),
+                                          textFieldYa(lightText, controllerKg),
                                         ],
                                       ),
                                     ),
@@ -1004,7 +1102,8 @@ class _DetailRecapPageState extends State<DetailRecapPage> {
                                             weight: FontWeight.w500,
                                           ),
                                           const SizedBox(height: 5),
-                                          textFieldYa(lightText),
+                                          textFieldYa(
+                                              lightText, controllerPrice),
                                         ],
                                       ),
                                     ),
@@ -1080,7 +1179,6 @@ class _DetailRecapPageState extends State<DetailRecapPage> {
 
   @override
   Widget build(BuildContext context) {
-    final deviceWidth = MediaQuery.of(context).size.width;
     final deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: ScrollConfiguration(

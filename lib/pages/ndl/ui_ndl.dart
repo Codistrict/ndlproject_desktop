@@ -64,7 +64,7 @@ class NdlPage extends StatefulWidget {
 }
 
 class _NdlPageState extends State<NdlPage> {
-  int numberOfPage = 100;
+  int numberOfPage = 1;
   int currentPage = 0;
 
   DateTime _selectedDate = DateTime.now();
@@ -77,6 +77,17 @@ class _NdlPageState extends State<NdlPage> {
   void initState() {
     super.initState();
     ndlList = _servicesNDL.readNDL(1);
+    getPageCount();
+  }
+
+  Future getPageCount() async {
+    var response = await _servicesNDL.pageCount();
+    if (response[0] != 404) {
+      numberOfPage = response[2]['page'];
+      if (mounted) {
+        setState(() {});
+      }
+    }
   }
 
   Future<void> selectFilterDate(context) async {
@@ -781,6 +792,9 @@ class _NdlPageState extends State<NdlPage> {
                                                 children: [
                                                   GestureDetector(
                                                     onTap: () {
+                                                      _globalWsNo = snapData[2]
+                                                              [index]['ws_no']
+                                                          .toString();
                                                       widget.controllerPageNdl
                                                           .animateToPage(1,
                                                               duration:
@@ -969,9 +983,15 @@ class _NdlPageState extends State<NdlPage> {
   }
 }
 
+String _globalWsNo = "0000";
+
 class EditNdlPage extends StatefulWidget {
   final PageController controllerPageNdlEdit;
-  const EditNdlPage({required this.controllerPageNdlEdit, super.key});
+
+  const EditNdlPage({
+    super.key,
+    required this.controllerPageNdlEdit,
+  });
 
   @override
   State<EditNdlPage> createState() => _EditNdlPageState();
@@ -1013,10 +1033,190 @@ class _EditNdlPageState extends State<EditNdlPage> {
   final FocusNode myFocusNode24 = FocusNode();
   final FocusNode myFocusNodeUp = FocusNode();
 
-  // void dispose() {
-  //   focusNode.dispose();
-  //   super.dispose();
-  // }
+  final TextEditingController controllerJobDone = TextEditingController();
+  final TextEditingController controllerCylinderStatus =
+      TextEditingController();
+  final TextEditingController controllerOrderStatus = TextEditingController();
+  final TextEditingController controllerNamaCust = TextEditingController();
+  final TextEditingController controllerGol = TextEditingController();
+  final TextEditingController controllerModel = TextEditingController();
+  final TextEditingController controllerNamaItem = TextEditingController();
+  final TextEditingController controllerRepeat = TextEditingController();
+  final TextEditingController controllerUp = TextEditingController();
+  final TextEditingController controllerOrderMasuk = TextEditingController();
+  final TextEditingController controllerToleransi = TextEditingController();
+
+// Layer 1
+  final TextEditingController controller1Nama = TextEditingController();
+  final TextEditingController controller1Ketebalan = TextEditingController();
+  final TextEditingController controller1Width = TextEditingController();
+  final TextEditingController controller1Width1 = TextEditingController();
+  final TextEditingController controller1Rm = TextEditingController();
+
+// Layer 2
+  final TextEditingController controller2Nama = TextEditingController();
+  final TextEditingController controller2Ketebalan = TextEditingController();
+  final TextEditingController controller2Width = TextEditingController();
+  final TextEditingController controller2Width2 = TextEditingController();
+  final TextEditingController controller2Rm = TextEditingController();
+
+// Layer 3
+  final TextEditingController controller3Nama = TextEditingController();
+  final TextEditingController controller3Ketebalan = TextEditingController();
+  final TextEditingController controller3Width = TextEditingController();
+  final TextEditingController controller3Width3 = TextEditingController();
+  final TextEditingController controller3Rm = TextEditingController();
+
+// Layer 4
+  final TextEditingController controller4Nama = TextEditingController();
+  final TextEditingController controller4Ketebalan = TextEditingController();
+  final TextEditingController controller4Width = TextEditingController();
+  final TextEditingController controller4Width4 = TextEditingController();
+  final TextEditingController controller4Rm = TextEditingController();
+
+// Layer 5
+  final TextEditingController controller5Nama = TextEditingController();
+  final TextEditingController controller5Ketebalan = TextEditingController();
+  final TextEditingController controller5Width = TextEditingController();
+  final TextEditingController controller5Width5 = TextEditingController();
+  final TextEditingController controller5Rm = TextEditingController();
+
+// Layer 6
+  final TextEditingController controller6Nama = TextEditingController();
+  final TextEditingController controller6Ketebalan = TextEditingController();
+  final TextEditingController controller6Width = TextEditingController();
+  final TextEditingController controller6Width6 = TextEditingController();
+  final TextEditingController controller6Rm = TextEditingController();
+
+  late Future wsNoDetail;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _controllerNamaBarangTambahPenjualan.addListener(() {
+      setState(() {
+        //_getStockTemp();
+      });
+    });
+    readWSnoDetail(_globalWsNo);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    controllerJobDone.dispose();
+    controllerCylinderStatus.dispose();
+    controllerOrderStatus.dispose();
+    controllerNamaCust.dispose();
+    controllerGol.dispose();
+    controllerModel.dispose();
+    controllerNamaItem.dispose();
+    controllerRepeat.dispose();
+    controllerUp.dispose();
+    controllerOrderMasuk.dispose();
+    controllerToleransi.dispose();
+    // Layer 1
+    controller1Nama.dispose();
+    controller1Ketebalan.dispose();
+    controller1Width.dispose();
+    controller1Width1.dispose();
+    controller1Rm.dispose();
+    // Layer 2
+    controller2Nama.dispose();
+    controller2Ketebalan.dispose();
+    controller2Width.dispose();
+    controller2Width2.dispose();
+    controller2Rm.dispose();
+    // Layer 3
+    controller3Nama.dispose();
+    controller3Ketebalan.dispose();
+    controller3Width.dispose();
+    controller3Width3.dispose();
+    controller3Rm.dispose();
+    // Layer 4
+    controller4Nama.dispose();
+    controller4Ketebalan.dispose();
+    controller4Width.dispose();
+    controller4Width4.dispose();
+    controller4Rm.dispose();
+    // Layer 5
+    controller5Nama.dispose();
+    controller5Ketebalan.dispose();
+    controller5Width.dispose();
+    controller5Width5.dispose();
+    controller5Rm.dispose();
+    // Layer 6
+    controller6Nama.dispose();
+    controller6Ketebalan.dispose();
+    controller6Width.dispose();
+    controller6Width6.dispose();
+    controller6Rm.dispose();
+  }
+
+  Future readWSnoDetail(wsNo) async {
+    var response = await _servicesNDL.readWsnoDetail(wsNo);
+    if (response[0] != 404) {
+      for (var element in response[2]) {
+        debugPrint(element.toString());
+        _date1 = element['tambah_data_tanggal'].toString();
+        _date2 = element['customer_delivery_date'].toString();
+        controllerJobDone.text = element['job_done'].toString();
+        controllerCylinderStatus.text = element['cylider_status'].toString();
+        controllerOrderStatus.text = element['order_status'].toString();
+        controllerNamaCust.text = element['cust'].toString();
+        controllerGol.text = element['gol'].toString();
+        controllerModel.text = element['model'].toString();
+        controllerNamaItem.text = element['item_name'].toString();
+        controllerRepeat.text = element['repeat_ndl'].toString();
+        controllerUp.text = element['up'].toString();
+        controllerOrderMasuk.text = element['order_ndl'][0].toString();
+        controllerToleransi.text = element['toleransi'].toString();
+        // Layer 1
+        controller1Nama.text = element['layer_datail1'][0].toString();
+        controller1Ketebalan.text = element['layer_datail2'][0].toString();
+        controller1Width.text = element['layer_datai4'][0].toString();
+        controller1Width1.text = element['width_layer'][0].toString();
+        controller1Rm.text = element['rm_layer'][0].toString();
+        // Layer 2
+        controller2Nama.text = element['layer_datail1'][1].toString();
+        controller2Ketebalan.text = element['layer_datail2'][1].toString();
+        controller2Width.text = element['layer_datai4'][1].toString();
+        controller2Width2.text = element['width_layer'][1].toString();
+        controller2Rm.text = element['rm_layer'][1].toString();
+        // Layer 3
+        controller3Nama.text = element['layer_datail1'][2].toString();
+        controller3Ketebalan.text = element['layer_datail2'][2].toString();
+        controller3Width.text = element['layer_datai4'][2].toString();
+        controller3Width3.text = element['width_layer'][2].toString();
+        controller3Rm.text = element['rm_layer'][2].toString();
+        // Layer 4
+        controller4Nama.text = element['layer_datail1'][3].toString();
+        controller4Ketebalan.text = element['layer_datail2'][3].toString();
+        controller4Width.text = element['layer_datai4'][3].toString();
+        controller4Width4.text = element['width_layer'][3].toString();
+        controller4Rm.text = element['rm_layer'][3].toString();
+        // Layer 5
+        controller5Nama.text = element['layer_datail1'][4].toString();
+        controller5Ketebalan.text = element['layer_datail2'][4].toString();
+        controller5Width.text = element['layer_datai4'][4].toString();
+        controller5Width5.text = element['width_layer'][4].toString();
+        controller5Rm.text = element['rm_layer'][4].toString();
+        // Layer 6
+        controller6Nama.text = element['layer_datail1'][5].toString();
+        controller6Ketebalan.text = element['layer_datail2'][5].toString();
+        controller6Width.text = element['layer_datai4'][5].toString();
+        controller6Width6.text = element['width_layer'][5].toString();
+        controller6Rm.text = element['rm_layer'][5].toString();
+      }
+      if (mounted) {
+        setState(() {});
+      }
+    } else if (response[0] != 404) {
+      debugPrint(response[1]);
+    }
+  }
 
   void _jumToWidget(focusKirim) {
     FocusScope.of(context).requestFocus(focusKirim);
@@ -1031,14 +1231,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
       builder: (context, child) {
         return Theme(
             data: Theme.of(context).copyWith(
-              colorScheme: ColorScheme.light(
+              colorScheme: const ColorScheme.light(
                 primary: Color(0xff13293D),
                 onPrimary: lightText,
                 onSurface: darkText,
               ),
               textButtonTheme: TextButtonThemeData(
                 style: TextButton.styleFrom(
-                  foregroundColor: Color(0xff13293D), // button text color
+                  foregroundColor: const Color(0xff13293D), // button text color
                 ),
               ),
             ),
@@ -1065,14 +1265,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
       builder: (context, child) {
         return Theme(
             data: Theme.of(context).copyWith(
-              colorScheme: ColorScheme.light(
+              colorScheme: const ColorScheme.light(
                 primary: Color(0xff13293D),
                 onPrimary: lightText,
                 onSurface: darkText,
               ),
               textButtonTheme: TextButtonThemeData(
                 style: TextButton.styleFrom(
-                  foregroundColor: Color(0xff13293D), // button text color
+                  foregroundColor: const Color(0xff13293D), // button text color
                 ),
               ),
             ),
@@ -1113,28 +1313,15 @@ class _EditNdlPageState extends State<EditNdlPage> {
 
   int indexTambah = 1;
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    _controllerNamaBarangTambahPenjualan.addListener(() {
-      setState(() {
-        //_getStockTemp();
-      });
-    });
-    super.initState();
-  }
-
   Future searchData(String param) async {
     List<String> result = _namaStockArray
-        .where((Element) => Element.toLowerCase().contains(param.toLowerCase()))
+        .where((value) => value.toLowerCase().contains(param.toLowerCase()))
         .toList();
     return result;
   }
 
   @override
   Widget build(BuildContext context) {
-    final deviceWidth = MediaQuery.of(context).size.width;
-    final deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -1161,20 +1348,20 @@ class _EditNdlPageState extends State<EditNdlPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const TextView(
-                  val: "Ws No : 0001",
+                TextView(
+                  val: "Ws No : $_globalWsNo",
                   color: darkText,
                   size: 18,
                   weight: FontWeight.w700,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 const TextView(
                   val: "Pilih Kolom Yang Ingin Di Edit",
                   color: darkText,
                   size: 15,
                   weight: FontWeight.w600,
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 Row(
                   children: [
                     Expanded(
@@ -1302,7 +1489,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                               _jumToWidget(myFocusNode24);
                             }
                           });
-                          print(suggestion);
+                          debugPrint(suggestion.toString());
                         },
                         getImmediateSuggestions: true,
                         hideSuggestionsOnKeyboardHide: false,
@@ -1313,7 +1500,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: TextField(
                         readOnly: true,
@@ -1357,7 +1544,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1372,7 +1559,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                               weight: FontWeight.w600,
                             ),
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           Container(
                             decoration: BoxDecoration(
                               border: Border.all(
@@ -1382,7 +1569,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                               borderRadius: BorderRadius.circular(5),
                             ),
                             child: Padding(
-                              padding: EdgeInsets.all(9),
+                              padding: const EdgeInsets.all(9),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -1406,7 +1593,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1417,7 +1604,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           Container(
                             decoration: BoxDecoration(
                               border: Border.all(
@@ -1427,7 +1614,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                               borderRadius: BorderRadius.circular(5),
                             ),
                             child: Padding(
-                              padding: EdgeInsets.all(9),
+                              padding: const EdgeInsets.all(9),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -1453,7 +1640,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1466,12 +1653,13 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode, lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa2(
+                              myFocusNode, lightText, controllerJobDone),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1482,14 +1670,15 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode4, lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa2(myFocusNode4, lightText,
+                              controllerCylinderStatus),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1502,12 +1691,13 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode3, lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa2(
+                              myFocusNode3, lightText, controllerOrderStatus),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1518,14 +1708,15 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode6, lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa2(
+                              myFocusNode6, lightText, controllerNamaCust),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1538,12 +1729,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode5, lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa2(myFocusNode5, lightText, controllerGol),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1554,14 +1745,15 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode8, lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa2(
+                              myFocusNode8, lightText, controllerModel),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1574,12 +1766,13 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode7, lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa2(
+                              myFocusNode7, lightText, controllerNamaItem),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1590,14 +1783,15 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode10, lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa2(
+                              myFocusNode10, lightText, controllerRepeat),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1610,12 +1804,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode9, lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa2(myFocusNode9, lightText, controllerUp),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1626,14 +1820,15 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode12, lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa2(
+                              myFocusNode12, lightText, controllerOrderMasuk),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1646,12 +1841,13 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode11, lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa2(
+                              myFocusNode11, lightText, controllerToleransi),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1662,7 +1858,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           TextField(
                             readOnly: true,
                             showCursor: false,
@@ -1705,14 +1901,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                     ),
                   ],
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 const TextView(
                   val: "Layer 1",
                   color: darkText,
                   size: 22,
                   weight: FontWeight.w700,
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Row(
                   children: [
                     Expanded(
@@ -1725,12 +1921,13 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode19, lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa2(
+                              myFocusNode19, lightText, controller1Nama),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1741,14 +1938,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa3(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa3(lightText, controller1Ketebalan),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1761,12 +1958,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa3(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa3(lightText, controller1Width),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1777,14 +1974,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa3(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa3(lightText, controller1Width1),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1797,12 +1994,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa3(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa3(lightText, controller1Rm),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1813,7 +2010,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           TextField(
                             readOnly: true,
                             showCursor: false,
@@ -1856,14 +2053,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                     ),
                   ],
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 const TextView(
                   val: "Layer 2",
                   color: darkText,
                   size: 22,
                   weight: FontWeight.w700,
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Row(
                   children: [
                     Expanded(
@@ -1876,12 +2073,13 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode20, lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa2(
+                              myFocusNode20, lightText, controller2Nama),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1892,14 +2090,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa3(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa3(lightText, controller2Ketebalan),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1912,12 +2110,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa3(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa3(lightText, controller2Width),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1928,14 +2126,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa3(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa3(lightText, controller2Width2),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -1948,12 +2146,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa3(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa3(lightText, controller2Rm),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1964,7 +2162,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           TextField(
                             readOnly: true,
                             showCursor: false,
@@ -2007,14 +2205,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                     ),
                   ],
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 const TextView(
                   val: "Layer 3",
                   color: darkText,
                   size: 22,
                   weight: FontWeight.w700,
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Row(
                   children: [
                     Expanded(
@@ -2027,12 +2225,13 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode21, lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa2(
+                              myFocusNode21, lightText, controller3Nama),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -2043,14 +2242,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa3(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa3(lightText, controller3Ketebalan),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -2063,12 +2262,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa3(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa3(lightText, controller3Width),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -2079,14 +2278,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa3(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa3(lightText, controller3Width3),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -2099,12 +2298,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa3(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa3(lightText, controller3Rm),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -2115,7 +2314,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           TextField(
                             readOnly: true,
                             showCursor: false,
@@ -2158,14 +2357,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                     ),
                   ],
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 const TextView(
                   val: "Layer 4",
                   color: darkText,
                   size: 22,
                   weight: FontWeight.w700,
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Row(
                   children: [
                     Expanded(
@@ -2178,12 +2377,13 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode22, lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa2(
+                              myFocusNode22, lightText, controller4Nama),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -2194,14 +2394,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa3(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa3(lightText, controller4Ketebalan),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -2214,12 +2414,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa3(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa3(lightText, controller4Width),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -2230,14 +2430,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa3(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa3(lightText, controller4Width4),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -2250,12 +2450,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa3(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa3(lightText, controller4Rm),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -2266,7 +2466,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           TextField(
                             readOnly: true,
                             showCursor: false,
@@ -2309,14 +2509,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                     ),
                   ],
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 const TextView(
                   val: "Layer 5",
                   color: darkText,
                   size: 22,
                   weight: FontWeight.w700,
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Row(
                   children: [
                     Expanded(
@@ -2329,12 +2529,13 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode23, lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa2(
+                              myFocusNode23, lightText, controller5Nama),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -2345,14 +2546,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa3(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa3(lightText, controller5Ketebalan),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -2365,12 +2566,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa3(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa3(lightText, controller5Width),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -2381,14 +2582,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa3(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa3(lightText, controller5Width5),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -2401,12 +2602,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa3(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa3(lightText, controller5Rm),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -2417,7 +2618,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           TextField(
                             readOnly: true,
                             showCursor: false,
@@ -2460,14 +2661,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                     ),
                   ],
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 const TextView(
                   val: "Layer 6",
                   color: darkText,
                   size: 22,
                   weight: FontWeight.w700,
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Row(
                   children: [
                     Expanded(
@@ -2480,12 +2681,13 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa2(myFocusNode24, lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa2(
+                              myFocusNode24, lightText, controller6Nama),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -2496,14 +2698,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa3(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa3(lightText, controller6Ketebalan),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -2516,12 +2718,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa3(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa3(lightText, controller6Width),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -2532,14 +2734,14 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa3(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa3(lightText, controller6Width6),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -2552,12 +2754,12 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
-                          TextFieldYa3(lightText),
+                          const SizedBox(height: 5),
+                          textFieldYa3(lightText, controller6Rm),
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -2568,7 +2770,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                             size: 15,
                             weight: FontWeight.w600,
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           TextField(
                             readOnly: true,
                             showCursor: false,
@@ -2611,12 +2813,13 @@ class _EditNdlPageState extends State<EditNdlPage> {
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     ElevatedButton(
                       onPressed: () {
+                        _globalWsNo = "0000";
                         widget.controllerPageNdlEdit.animateToPage(0,
                             duration: const Duration(milliseconds: 250),
                             curve: Curves.ease);
@@ -2627,7 +2830,7 @@ class _EditNdlPageState extends State<EditNdlPage> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          side: BorderSide(
+                          side: const BorderSide(
                               width: 2, // the thickness
                               color: colorThird // the color of the border
                               )),
@@ -2647,15 +2850,105 @@ class _EditNdlPageState extends State<EditNdlPage> {
                     const SizedBox(width: 20),
                     ElevatedButton(
                       style: TextButton.styleFrom(
+                        foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(
                             horizontal: 55, vertical: 22),
-                        primary: Colors.white,
                         backgroundColor: navButtonThird,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        String layerName =
+                            "|layer1||layer2||layer3||layer4||layer5||layer6|";
+                        String layer1 =
+                            "|${controller1Nama.text}||${controller1Ketebalan.text}||${controller1Width.text}||${controller1Width1.text}||${controller1Rm.text}|";
+                        String layer2 =
+                            "|${controller2Nama.text}||${controller2Ketebalan.text}||${controller2Width.text}||${controller2Width2.text}||${controller2Rm.text}|";
+                        String layer3 =
+                            "|${controller3Nama.text}||${controller3Ketebalan.text}||${controller3Width.text}||${controller3Width3.text}||${controller3Rm.text}|";
+                        String layer4 =
+                            "|${controller4Nama.text}||${controller4Ketebalan.text}||${controller4Width.text}||${controller4Width4.text}||${controller4Rm.text}|";
+                        String layer5 =
+                            "|${controller5Nama.text}||${controller5Ketebalan.text}||${controller5Width.text}||${controller5Width5.text}||${controller5Rm.text}|";
+                        String layer6 =
+                            "|${controller6Nama.text}||${controller6Ketebalan.text}||${controller6Width.text}||${controller6Width6.text}||${controller6Rm.text}|";
+                        String layerDetail =
+                            layer1 + layer2 + layer3 + layer4 + layer5 + layer6;
+                        _servicesNDL
+                            .updateWsnoDetail(
+                                _globalWsNo,
+                                _date1,
+                                _date2,
+                                controllerJobDone.text,
+                                controllerOrderStatus.text,
+                                controllerCylinderStatus.text,
+                                controllerGol.text,
+                                controllerNamaCust.text,
+                                controllerNamaItem.text,
+                                controllerModel.text,
+                                controllerUp.text,
+                                controllerRepeat.text,
+                                controllerToleransi.text,
+                                controllerOrderMasuk.text,
+                                layerName,
+                                layerDetail)
+                            .whenComplete(() {
+                          _globalWsNo = "0000";
+
+                          controllerJobDone.clear();
+                          controllerCylinderStatus.clear();
+                          controllerOrderStatus.clear();
+                          controllerNamaCust.clear();
+                          controllerGol.clear();
+                          controllerModel.clear();
+                          controllerNamaItem.clear();
+                          controllerRepeat.clear();
+                          controllerUp.clear();
+                          controllerOrderMasuk.clear();
+                          controllerToleransi.clear();
+                          // Layer 1
+                          controller1Nama.clear();
+                          controller1Ketebalan.clear();
+                          controller1Width.clear();
+                          controller1Width1.clear();
+                          controller1Rm.clear();
+                          // Layer 2
+                          controller2Nama.clear();
+                          controller2Ketebalan.clear();
+                          controller2Width.clear();
+                          controller2Width2.clear();
+                          controller2Rm.clear();
+                          // Layer 3
+                          controller3Nama.clear();
+                          controller3Ketebalan.clear();
+                          controller3Width.clear();
+                          controller3Width3.clear();
+                          controller3Rm.clear();
+                          // Layer 4
+                          controller4Nama.clear();
+                          controller4Ketebalan.clear();
+                          controller4Width.clear();
+                          controller4Width4.clear();
+                          controller4Rm.clear();
+                          // Layer 5
+                          controller5Nama.clear();
+                          controller5Ketebalan.clear();
+                          controller5Width.clear();
+                          controller5Width5.clear();
+                          controller5Rm.clear();
+                          // Layer 6
+                          controller6Nama.clear();
+                          controller6Ketebalan.clear();
+                          controller6Width.clear();
+                          controller6Width6.clear();
+                          controller6Rm.clear();
+
+                          widget.controllerPageNdlEdit.animateToPage(0,
+                              duration: const Duration(milliseconds: 250),
+                              curve: Curves.ease);
+                        });
+                      },
                       child: const TextView(
                         val: "Simpan",
                         color: lightText,
@@ -2688,6 +2981,7 @@ class ConfirmNDL extends StatefulWidget {
 
 class _ConfirmNDLState extends State<ConfirmNDL> {
   late Future ndlList;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -2893,324 +3187,164 @@ class _ConfirmNDLState extends State<ConfirmNDL> {
 
                                           // Layer 1
                                           datRow4(
-                                              snapData[2][index]['layer_datail1'].length > 0
-                                                  ? snapData[2][index]
-                                                      ['layer_datail1'][0]
-                                                  : " ",
-                                              snapData[2][index]['layer_datail2'].length >
-                                                      0
-                                                  ? snapData[2][index]
-                                                      ['layer_datail2'][0]
-                                                  : " ",
-                                              snapData[2][index]['layer_datail3']
-                                                          .length >
-                                                      0
-                                                  ? snapData[2][index]
-                                                      ['layer_datail3'][0]
-                                                  : " ",
+                                              snapData[2][index]
+                                                  ['layer_datail1'][0],
+                                              snapData[2][index]
+                                                  ['layer_datail2'][0],
+                                              snapData[2][index]
+                                                  ['layer_datail3'][0],
                                               snapData[2][index]['layer_datai4']
-                                                          .length >
-                                                      0
-                                                  ? snapData[2][index]
-                                                      ['layer_datai4'][0]
-                                                  : " ",
+                                                  [0],
                                               context),
                                           datRow1(
                                               snapData[2][index]['width_layer']
-                                                          .length >
-                                                      0
-                                                  ? snapData[2][index]
-                                                      ['width_layer'][0]
-                                                  : " ",
+                                                  [0],
                                               2,
                                               context),
                                           datRow1(
-                                              snapData[2][index]['rm_layer']
-                                                          .length >
-                                                      0
-                                                  ? snapData[2][index]
-                                                      ['rm_layer'][0]
-                                                  : " ",
+                                              snapData[2][index]['rm_layer'][0],
                                               2,
                                               context),
                                           datRow1(
                                               snapData[2][index]['diff_layer']
-                                                          .length >
-                                                      0
-                                                  ? snapData[2][index]
-                                                      ['diff_layer'][0]
-                                                  : " ",
+                                                  [0],
                                               2,
                                               context),
 
                                           // Layer 2
                                           datRow4(
-                                              snapData[2][index]['layer_datail1'].length > 1
-                                                  ? snapData[2][index]
-                                                      ['layer_datail1'][1]
-                                                  : " ",
-                                              snapData[2][index]['layer_datail2'].length >
-                                                      1
-                                                  ? snapData[2][index]
-                                                      ['layer_datail2'][1]
-                                                  : " ",
-                                              snapData[2][index]['layer_datail3']
-                                                          .length >
-                                                      1
-                                                  ? snapData[2][index]
-                                                      ['layer_datail3'][1]
-                                                  : " ",
+                                              snapData[2][index]
+                                                  ['layer_datail1'][1],
+                                              snapData[2][index]
+                                                  ['layer_datail2'][1],
+                                              snapData[2][index]
+                                                  ['layer_datail3'][1],
                                               snapData[2][index]['layer_datai4']
-                                                          .length >
-                                                      1
-                                                  ? snapData[2][index]
-                                                      ['layer_datai4'][1]
-                                                  : " ",
+                                                  [1],
                                               context),
                                           datRow1(
                                               snapData[2][index]['width_layer']
-                                                          .length >
-                                                      1
-                                                  ? snapData[2][index]
-                                                      ['width_layer'][1]
-                                                  : " ",
+                                                  [1],
                                               2,
                                               context),
                                           datRow1(
-                                              snapData[2][index]['rm_layer']
-                                                          .length >
-                                                      1
-                                                  ? snapData[2][index]
-                                                      ['rm_layer'][1]
-                                                  : " ",
+                                              snapData[2][index]['rm_layer'][1],
                                               2,
                                               context),
                                           datRow1(
                                               snapData[2][index]['diff_layer']
-                                                          .length >
-                                                      1
-                                                  ? snapData[2][index]
-                                                      ['diff_layer'][1]
-                                                  : " ",
+                                                  [1],
                                               2,
                                               context),
 
                                           // Layer 3
                                           datRow4(
-                                              snapData[2][index]['layer_datail1'].length > 2
-                                                  ? snapData[2][index]
-                                                      ['layer_datail1'][2]
-                                                  : " ",
-                                              snapData[2][index]['layer_datail2'].length >
-                                                      2
-                                                  ? snapData[2][index]
-                                                      ['layer_datail2'][2]
-                                                  : " ",
-                                              snapData[2][index]['layer_datail3']
-                                                          .length >
-                                                      2
-                                                  ? snapData[2][index]
-                                                      ['layer_datail3'][2]
-                                                  : " ",
+                                              snapData[2][index]
+                                                  ['layer_datail1'][2],
+                                              snapData[2][index]
+                                                  ['layer_datail2'][2],
+                                              snapData[2][index]
+                                                  ['layer_datail3'][2],
                                               snapData[2][index]['layer_datai4']
-                                                          .length >
-                                                      2
-                                                  ? snapData[2][index]
-                                                      ['layer_datai4'][2]
-                                                  : " ",
+                                                  [2],
                                               context),
                                           datRow1(
                                               snapData[2][index]['width_layer']
-                                                          .length >
-                                                      2
-                                                  ? snapData[2][index]
-                                                      ['width_layer'][2]
-                                                  : " ",
+                                                  [2],
                                               2,
                                               context),
                                           datRow1(
-                                              snapData[2][index]['rm_layer']
-                                                          .length >
-                                                      2
-                                                  ? snapData[2][index]
-                                                      ['rm_layer'][2]
-                                                  : " ",
+                                              snapData[2][index]['rm_layer'][2],
                                               2,
                                               context),
                                           datRow1(
                                               snapData[2][index]['diff_layer']
-                                                          .length >
-                                                      2
-                                                  ? snapData[2][index]
-                                                      ['diff_layer'][2]
-                                                  : " ",
+                                                  [2],
                                               2,
                                               context),
 
                                           // Layer 4
                                           datRow4(
-                                              snapData[2][index]['layer_datail1'].length > 3
-                                                  ? snapData[2][index]
-                                                      ['layer_datail1'][3]
-                                                  : " ",
-                                              snapData[2][index]['layer_datail2'].length >
-                                                      3
-                                                  ? snapData[2][index]
-                                                      ['layer_datail2'][3]
-                                                  : " ",
-                                              snapData[2][index]['layer_datail3']
-                                                          .length >
-                                                      3
-                                                  ? snapData[2][index]
-                                                      ['layer_datail3'][3]
-                                                  : " ",
+                                              snapData[2][index]
+                                                  ['layer_datail1'][3],
+                                              snapData[2][index]
+                                                  ['layer_datail2'][3],
+                                              snapData[2][index]
+                                                  ['layer_datail3'][3],
                                               snapData[2][index]['layer_datai4']
-                                                          .length >
-                                                      3
-                                                  ? snapData[2][index]
-                                                      ['layer_datai4'][3]
-                                                  : " ",
+                                                  [3],
                                               context),
                                           datRow1(
                                               snapData[2][index]['width_layer']
-                                                          .length >
-                                                      3
-                                                  ? snapData[2][index]
-                                                      ['width_layer'][3]
-                                                  : " ",
+                                                  [3],
                                               2,
                                               context),
                                           datRow1(
-                                              snapData[2][index]['rm_layer']
-                                                          .length >
-                                                      3
-                                                  ? snapData[2][index]
-                                                      ['rm_layer'][3]
-                                                  : " ",
+                                              snapData[2][index]['rm_layer'][3],
                                               2,
                                               context),
                                           datRow1(
                                               snapData[2][index]['diff_layer']
-                                                          .length >
-                                                      3
-                                                  ? snapData[2][index]
-                                                      ['diff_layer'][3]
-                                                  : " ",
+                                                  [3],
                                               2,
                                               context),
 
                                           // Layer 5
                                           datRow4(
-                                              snapData[2][index]['layer_datail1'].length > 4
-                                                  ? snapData[2][index]
-                                                      ['layer_datail1'][4]
-                                                  : " ",
-                                              snapData[2][index]['layer_datail2'].length >
-                                                      4
-                                                  ? snapData[2][index]
-                                                      ['layer_datail2'][4]
-                                                  : " ",
-                                              snapData[2][index]['layer_datail3']
-                                                          .length >
-                                                      4
-                                                  ? snapData[2][index]
-                                                      ['layer_datail3'][4]
-                                                  : " ",
+                                              snapData[2][index]
+                                                  ['layer_datail1'][4],
+                                              snapData[2][index]
+                                                  ['layer_datail2'][4],
+                                              snapData[2][index]
+                                                  ['layer_datail3'][4],
                                               snapData[2][index]['layer_datai4']
-                                                          .length >
-                                                      4
-                                                  ? snapData[2][index]
-                                                      ['layer_datai4'][4]
-                                                  : " ",
+                                                  [4],
                                               context),
                                           datRow1(
                                               snapData[2][index]['width_layer']
-                                                          .length >
-                                                      4
-                                                  ? snapData[2][index]
-                                                      ['width_layer'][4]
-                                                  : " ",
+                                                  [4],
                                               2,
                                               context),
                                           datRow1(
-                                              snapData[2][index]['rm_layer']
-                                                          .length >
-                                                      4
-                                                  ? snapData[2][index]
-                                                      ['rm_layer'][4]
-                                                  : " ",
+                                              snapData[2][index]['rm_layer'][4],
                                               2,
                                               context),
                                           datRow1(
                                               snapData[2][index]['diff_layer']
-                                                          .length >
-                                                      4
-                                                  ? snapData[2][index]
-                                                      ['diff_layer'][4]
-                                                  : " ",
+                                                  [4],
                                               2,
                                               context),
 
                                           // Layer 6
                                           datRow4(
-                                              snapData[2][index]['layer_datail1'].length > 5
-                                                  ? snapData[2][index]
-                                                      ['layer_datail1'][5]
-                                                  : " ",
-                                              snapData[2][index]['layer_datail2'].length >
-                                                      5
-                                                  ? snapData[2][index]
-                                                      ['layer_datail2'][5]
-                                                  : " ",
-                                              snapData[2][index]['layer_datail3']
-                                                          .length >
-                                                      5
-                                                  ? snapData[2][index]
-                                                      ['layer_datail3'][5]
-                                                  : " ",
+                                              snapData[2][index]
+                                                  ['layer_datail1'][5],
+                                              snapData[2][index]
+                                                  ['layer_datail2'][5],
+                                              snapData[2][index]
+                                                  ['layer_datail3'][5],
                                               snapData[2][index]['layer_datai4']
-                                                          .length >
-                                                      5
-                                                  ? snapData[2][index]
-                                                      ['layer_datai4'][5]
-                                                  : " ",
+                                                  [5],
                                               context),
                                           datRow1(
                                               snapData[2][index]['width_layer']
-                                                          .length >
-                                                      5
-                                                  ? snapData[2][index]
-                                                      ['width_layer'][5]
-                                                  : " ",
+                                                  [5],
                                               2,
                                               context),
                                           datRow1(
-                                              snapData[2][index]['rm_layer']
-                                                          .length >
-                                                      5
-                                                  ? snapData[2][index]
-                                                      ['rm_layer'][5]
-                                                  : " ",
+                                              snapData[2][index]['rm_layer'][5],
                                               2,
                                               context),
                                           datRow1(
                                               snapData[2][index]['diff_layer']
-                                                          .length >
-                                                      5
-                                                  ? snapData[2][index]
-                                                      ['diff_layer'][5]
-                                                  : " ",
+                                                  [5],
                                               2,
                                               context),
 
                                           // After Layer
                                           datRow1(
                                               snapData[2][index]['lyr_layer']
-                                                          .length >
-                                                      0
-                                                  ? snapData[2][index]
-                                                      ['lyr_layer'][0]
-                                                  : " ",
+                                                  [0],
                                               2,
                                               context),
                                           datRow1(
@@ -3219,92 +3353,52 @@ class _ConfirmNDLState extends State<ConfirmNDL> {
                                               context),
                                           datRow1(
                                               snapData[2][index]['adh_layer']
-                                                          .length >
-                                                      0
-                                                  ? snapData[2][index]
-                                                      ['adh_layer'][0]
-                                                  : " ",
+                                                  [0],
                                               2,
                                               context),
                                           datRow1(
                                               snapData[2][index]['lyr_layer']
-                                                          .length >
-                                                      1
-                                                  ? snapData[2][index]
-                                                      ['lyr_layer'][1]
-                                                  : " ",
+                                                  [1],
                                               2,
                                               context),
                                           datRow1(
                                               snapData[2][index]['adh_layer']
-                                                          .length >
-                                                      1
-                                                  ? snapData[2][index]
-                                                      ['adh_layer'][1]
-                                                  : " ",
+                                                  [1],
                                               2,
                                               context),
                                           datRow1(
                                               snapData[2][index]['lyr_layer']
-                                                          .length >
-                                                      2
-                                                  ? snapData[2][index]
-                                                      ['lyr_layer'][2]
-                                                  : " ",
+                                                  [2],
                                               2,
                                               context),
                                           datRow1(
                                               snapData[2][index]['adh_layer']
-                                                          .length >
-                                                      2
-                                                  ? snapData[2][index]
-                                                      ['adh_layer'][2]
-                                                  : " ",
+                                                  [2],
                                               2,
                                               context),
                                           datRow1(
                                               snapData[2][index]['lyr_layer']
-                                                          .length >
-                                                      3
-                                                  ? snapData[2][index]
-                                                      ['lyr_layer'][3]
-                                                  : " ",
+                                                  [3],
                                               2,
                                               context),
                                           datRow1(
                                               snapData[2][index]['adh_layer']
-                                                          .length >
-                                                      3
-                                                  ? snapData[2][index]
-                                                      ['adh_layer'][3]
-                                                  : " ",
+                                                  [3],
                                               2,
                                               context),
                                           datRow1(
                                               snapData[2][index]['lyr_layer']
-                                                          .length >
-                                                      4
-                                                  ? snapData[2][index]
-                                                      ['lyr_layer'][4]
-                                                  : " ",
+                                                  [4],
                                               2,
                                               context),
                                           datRow1(
                                               snapData[2][index]['adh_layer']
-                                                          .length >
-                                                      4
-                                                  ? snapData[2][index]
-                                                      ['adh_layer'][4]
-                                                  : " ",
+                                                  [4],
                                               2,
                                               context),
                                           datRow1(
                                               snapData[2][index]['lyr_layer']
-                                                          .length >
-                                                      5
-                                                  ? snapData[2][index]
-                                                      ['lyr_layer'][5]
-                                                  : " ",
+                                                  [5],
                                               2,
                                               context),
                                           datRow1(
